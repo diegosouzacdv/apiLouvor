@@ -1,26 +1,37 @@
 package com.pv.louvor.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pv.louvor.model.Igreja;
+import com.pv.louvor.services.IgrejaService;
 
 @RestController
 @RequestMapping(value="/igrejas")
 public class IgrejaResource {
 
+	@Autowired
+	private IgrejaService service;
+	
 	@GetMapping
-	public List<Igreja> listar() {
-		
-	Igreja i1 = new Igreja(1, "Águas Claras");
-	Igreja i2 = new Igreja(1, "Samambaia");
-	List<Igreja> lista = new ArrayList<>();
-	lista.add(i1);
-	lista.add(i2);
-	return lista;
+	public ResponseEntity<List<Igreja>> findAll() {
+		List<Igreja> obj = service.buscarTodos();
+		return ResponseEntity.ok().body(obj);
+
+ 	}
+
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Igreja> find(@PathVariable Integer id) {
+	
+		Igreja obj = service.buscar(id);
+		return ResponseEntity.ok().body(obj);
+
  	}
 }
