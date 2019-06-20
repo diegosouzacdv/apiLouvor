@@ -1,15 +1,21 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.annotation.Generated;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Categoria implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -22,14 +28,18 @@ public class Categoria implements Serializable{
 	@Column(name="cat_nome")
 	private String nome;
 	
+	@JsonBackReference("categorias")
+	@ManyToMany(mappedBy = "categorias")
+	private List<Musica> musicas;
+	
 	public Categoria() {
 		
 	}
-	
+
 	public Categoria(Integer id, String nome) {
 		super();
-		this.setId(id);
-		this.setNome(nome);
+		this.id = id;
+		this.nome = nome;
 	}
 
 	public Integer getId() {
@@ -53,7 +63,6 @@ public class Categoria implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
@@ -71,18 +80,9 @@ public class Categoria implements Serializable{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
 		return true;
 	}
-
-
 	
 	
-
-		
 	
 }

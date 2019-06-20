@@ -1,14 +1,20 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Grupo implements Serializable{
 
 private static final long serialVersionUID = 1L;
@@ -21,14 +27,18 @@ private static final long serialVersionUID = 1L;
 	@Column(name="gru_nome")
 	private String nome;
 	
+	@JsonBackReference("grupo")
+	@ManyToMany(mappedBy = "grupo")
+	private List<Musica> musicas;
+	
 	public Grupo() {
 		
 	}
-	
+
 	public Grupo(Integer id, String nome) {
 		super();
-		this.setId(id);
-		this.setNome(nome);
+		this.id = id;
+		this.nome = nome;
 	}
 
 	public Integer getId() {
@@ -45,6 +55,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public List<Musica> getMusicas() {
+		return musicas;
+	}
+
+	public void setMusicas(List<Musica> musicas) {
+		this.musicas = musicas;
 	}
 
 	@Override
@@ -76,7 +94,5 @@ private static final long serialVersionUID = 1L;
 		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}
-	
-	
+	}	
 	}

@@ -4,17 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class Tutorial implements Serializable{
 
 private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="tut_nomeMusica")
-	private Musica musica;
 	
 	@Column(name="tut_violao")
 	private List<String> violao;
@@ -33,25 +28,6 @@ private static final long serialVersionUID = 1L;
 	
 	public Tutorial() {
 		
-	}
-
-	public Tutorial(Musica musica, List<String> violao, List<String> guitarra, List<String> baixo, List<String> bateria,
-			List<String> teclado) {
-		super();
-		this.musica = musica;
-		this.violao = violao;
-		this.guitarra = guitarra;
-		this.baixo = baixo;
-		this.bateria = bateria;
-		this.teclado = teclado;
-	}
-
-	public Musica getMusica() {
-		return musica;
-	}
-
-	public void setMusica(Musica musica) {
-		this.musica = musica;
 	}
 
 	public List<String> getViolao() {
@@ -92,30 +68,5 @@ private static final long serialVersionUID = 1L;
 
 	public void setTeclado(List<String> teclado) {
 		this.teclado = teclado;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((musica == null) ? 0 : musica.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Tutorial other = (Tutorial) obj;
-		if (musica == null) {
-			if (other.musica != null)
-				return false;
-		} else if (!musica.equals(other.musica))
-			return false;
-		return true;
 	}
 }

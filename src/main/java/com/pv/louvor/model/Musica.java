@@ -1,51 +1,73 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 @Entity
+@JsonIgnoreProperties
+@JsonIgnoreType
 public class Musica implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="mus_id")
 	private Integer id;
+	
 	@Column(name="mus_nome")
 	private String nome;
-	@Column(name="mus_grupo")
-	private Grupo grupo;
-	@Column(name="mus_categoria")
-	private Categoria categoria;
+	
+	@ManyToMany()
+	@JoinTable(name= "MUSICA_GRUPO",
+		joinColumns = @JoinColumn(name = "musica_id"),
+		inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+	private List<Grupo> grupo;
+	
+	@ManyToMany()
+	@JoinTable(name= "MUSICA_CATEGORIA",
+		joinColumns = @JoinColumn(name = "musica_id"),
+		inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private List<Categoria> categorias;
+	
 	@Column(name="mus_estudo")
+	@Embedded
 	private Estudo estudo;
+	
 	@Column(name="mus_dataInserida")
-	private Date dataInserida;
+	private LocalDate dataInserida;
+	
 	@Column(name="mus_notaOriginal")
 	private String notaOriginal;
-	@Column(name="mus_notaTocada")
-	private String notaTocada;
 	
+	@Column(name="mus_notaTocada")
+	private String notaTocada;	
 
 	public Musica() {
 		
 	}
 
-	public Musica(Integer id, String nome, Grupo grupo, Categoria categoria, Estudo estudo, Date dataInserida,
+	public Musica(Integer id, String nome, LocalDate dataInserida,
 			String notaOriginal, String notaTocada) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.grupo = grupo;
-		this.categoria = categoria;
-		this.estudo = estudo;
 		this.dataInserida = dataInserida;
 		this.notaOriginal = notaOriginal;
 		this.notaTocada = notaTocada;
@@ -67,20 +89,36 @@ public class Musica implements Serializable{
 		this.nome = nome;
 	}
 
-	public Grupo getGrupo() {
+	public List<Grupo> getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(Grupo grupo) {
+	public void setGrupo(List<Grupo> grupo) {
 		this.grupo = grupo;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
+	public List<Categoria> getCategorias() {
+		return categorias;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public String getNotaOriginal() {
+		return notaOriginal;
+	}
+
+	public void setNotaOriginal(String notaOriginal) {
+		this.notaOriginal = notaOriginal;
+	}
+
+	public String getNotaTocada() {
+		return notaTocada;
+	}
+
+	public void setNotaTocada(String notaTocada) {
+		this.notaTocada = notaTocada;
 	}
 
 	public Estudo getEstudo() {
@@ -91,11 +129,11 @@ public class Musica implements Serializable{
 		this.estudo = estudo;
 	}
 
-	public Date getDataInserida() {
+	public LocalDate getDataInserida() {
 		return dataInserida;
 	}
 
-	public void setDataInserida(Date dataInserida) {
+	public void setDataInserida(LocalDate dataInserida) {
 		this.dataInserida = dataInserida;
 	}
 

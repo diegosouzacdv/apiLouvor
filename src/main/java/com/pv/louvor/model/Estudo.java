@@ -4,17 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
-@Entity
+@Embeddable
 public class Estudo implements Serializable{
 
 private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="est_nomeMusica")
-	private Musica musica;
 	
 	@Column(name="est_letra")
 	private String letra;
@@ -25,38 +21,30 @@ private static final long serialVersionUID = 1L;
 	@Column(name="est_bpm")
 	private Integer bpm;
 	
-	@Column(name="est_guiaInstrumental")
-	private List<String> guiaInstrumental;
+	@Column(name="est_guia_instrumental")
+	private String guiaInstrumental;
 	
-	@Column(name="est_guiaVocal")
-	private List<String> guiaVocal;
-	
-	@Column(name="est_tutorial")
+	@Column(name="est_guia_vocal")
+	private String guiaVocal;
+
+	@Embedded
 	private List<Tutorial> tutorial;
 	
 	public Estudo() {
 		
 	}
 
-	public Estudo(Musica musica, String letra, String cifra, Integer bpm, List<String> guiaInstrumental,
-			List<String> guiaVocal, List<Tutorial> tutorial) {
+	public Estudo(String letra, String cifra, Integer bpm, String guiaInstrumental, String guiaVocal
+			) {
 		super();
-		this.musica = musica;
 		this.letra = letra;
 		this.cifra = cifra;
 		this.bpm = bpm;
 		this.guiaInstrumental = guiaInstrumental;
 		this.guiaVocal = guiaVocal;
-		this.tutorial = tutorial;
 	}
 
-	public Musica getMusica() {
-		return musica;
-	}
 
-	public void setMusica(Musica musica) {
-		this.musica = musica;
-	}
 
 	public String getLetra() {
 		return letra;
@@ -82,19 +70,19 @@ private static final long serialVersionUID = 1L;
 		this.bpm = bpm;
 	}
 
-	public List<String> getGuiaInstrumental() {
+	public String getGuiaInstrumental() {
 		return guiaInstrumental;
 	}
 
-	public void setGuiaInstrumental(List<String> guiaInstrumental) {
+	public void setGuiaInstrumental(String guiaInstrumental) {
 		this.guiaInstrumental = guiaInstrumental;
 	}
 
-	public List<String> getGuiaVocal() {
+	public String getGuiaVocal() {
 		return guiaVocal;
 	}
 
-	public void setGuiaVocal(List<String> guiaVocal) {
+	public void setGuiaVocal(String guiaVocal) {
 		this.guiaVocal = guiaVocal;
 	}
 
@@ -104,30 +92,5 @@ private static final long serialVersionUID = 1L;
 
 	public void setTutorial(List<Tutorial> tutorial) {
 		this.tutorial = tutorial;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((musica == null) ? 0 : musica.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Estudo other = (Estudo) obj;
-		if (musica == null) {
-			if (other.musica != null)
-				return false;
-		} else if (!musica.equals(other.musica))
-			return false;
-		return true;
 	}
 }
