@@ -2,7 +2,6 @@ package com.pv.louvor.model;
 
 import java.io.Serializable;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,23 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Categoria implements Serializable{
+public class Grupo implements Serializable{
 
-	private static final long serialVersionUID = 1L;
-	
+private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="cat_id")
+	@Column(name="gru_id")
 	private Integer id;
 	
-	@Column(name="cat_nome")
+	@Column(name="gru_nome")
 	private String nome;
 	
-	public Categoria() {
+	public Grupo() {
 		
 	}
 	
-	public Categoria(Integer id, String nome) {
+	public Grupo(Integer id, String nome) {
 		super();
 		this.setId(id);
 		this.setNome(nome);
@@ -65,7 +64,7 @@ public class Categoria implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Grupo other = (Grupo) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -78,11 +77,6 @@ public class Categoria implements Serializable{
 			return false;
 		return true;
 	}
-
-
 	
 	
-
-		
-	
-}
+	}

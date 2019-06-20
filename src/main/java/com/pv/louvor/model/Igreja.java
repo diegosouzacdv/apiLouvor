@@ -2,6 +2,7 @@ package com.pv.louvor.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,9 @@ public class Igreja implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="igr_id")
 	private Integer id;
+	@Column(name="igr_nome")
 	private String nome;
 	
 	public Igreja() {

@@ -9,9 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.pv.louvor.model.Categoria;
 import com.pv.louvor.model.Funcao;
+import com.pv.louvor.model.Grupo;
 import com.pv.louvor.model.Igreja;
+import com.pv.louvor.model.Musica;
 import com.pv.louvor.repositories.CategoriaRepository;
 import com.pv.louvor.repositories.FuncaoRepository;
+import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
 
 @SpringBootApplication
@@ -25,6 +28,9 @@ public class ApiLouvorApplication implements CommandLineRunner{
 	
 	@Autowired
 	private IgrejaRepository igrejaRepository;
+	
+	@Autowired
+	private GrupoRepository grupoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiLouvorApplication.class, args);
@@ -47,6 +53,10 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		Igreja i2 = new Igreja(null, "Violonista");
 		igrejaRepository.save(Arrays.asList(i1, i2));
 		
+		//Grupo
+		Grupo g1 = new Grupo(null, "Avivah");
+		Grupo g2 = new Grupo(null, "HillSong");
+		grupoRepository.save(Arrays.asList(g1, g2));
 	}
 
 }
