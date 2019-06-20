@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Funcao;
 import com.pv.louvor.repositories.FuncaoRepository;
+import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class FuncaoService  {
@@ -21,6 +22,10 @@ public class FuncaoService  {
 
 	public Funcao buscar(Integer id) {
 		Funcao obj = repo.findOne(id);
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
+					", Tipo: " + Funcao.class.getName());
+		}
 		return obj;
 	}
 }

@@ -26,13 +26,10 @@ public class CategoriaResource {
 
  	}
 
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
-	
 		Categoria obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
-
  	}
 
 }

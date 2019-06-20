@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Igreja;
 import com.pv.louvor.repositories.IgrejaRepository;
+import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class IgrejaService  {
@@ -21,6 +22,10 @@ public class IgrejaService  {
 
 	public Igreja buscar(Integer id) {
 		Igreja obj = repo.findOne(id);
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
+					", Tipo: " + Igreja.class.getName());
+		}
 		return obj;
 	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.repositories.MusicaRepository;
+import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class MusicaService {
@@ -21,6 +22,10 @@ public class MusicaService {
 
 	public Musica buscar(Integer id) {
 		Musica obj = repo.findOne(id);
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
+					", Tipo: " + Musica.class.getName());
+		}
 		return obj;
 	}
 

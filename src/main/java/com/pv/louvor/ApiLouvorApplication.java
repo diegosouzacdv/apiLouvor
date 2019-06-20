@@ -56,8 +56,8 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		fucaoRepository.save(Arrays.asList(f1, f2));
 		
 		//Igrejas
-		Igreja i1 = new Igreja(null, "Ministro");
-		Igreja i2 = new Igreja(null, "Violonista");
+		Igreja i1 = new Igreja(null, "Águas Claras");
+		Igreja i2 = new Igreja(null, "Samambaia");
 		igrejaRepository.save(Arrays.asList(i1, i2));
 		
 		//Grupo
