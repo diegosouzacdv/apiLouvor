@@ -2,14 +2,11 @@ package com.pv.louvor.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,6 +47,10 @@ public class Musica implements Serializable{
 	@Embedded
 	private Estudo estudo;
 	
+	@Column(name="mus_tutorial")
+	@Embedded
+	private Tutorial tutorial;
+	
 	@Column(name="mus_dataInserida")
 	private LocalDate dataInserida;
 	
@@ -58,6 +59,7 @@ public class Musica implements Serializable{
 	
 	@Column(name="mus_notaTocada")
 	private String notaTocada;	
+	
 
 	public Musica() {
 		
@@ -135,6 +137,14 @@ public class Musica implements Serializable{
 
 	public void setDataInserida(LocalDate dataInserida) {
 		this.dataInserida = dataInserida;
+	}
+	
+	public Tutorial getTutorial() {
+		return tutorial;
+	}
+
+	public void setTutorial(Tutorial tutorial) {
+		this.tutorial = tutorial;
 	}
 
 	@Override

@@ -1,11 +1,10 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+
 
 @Embeddable
 public class Estudo implements Serializable{
@@ -26,9 +25,6 @@ private static final long serialVersionUID = 1L;
 	
 	@Column(name="est_guia_vocal")
 	private String guiaVocal;
-
-	@Embedded
-	private List<Tutorial> tutorial;
 	
 	public Estudo() {
 		
@@ -84,13 +80,5 @@ private static final long serialVersionUID = 1L;
 
 	public void setGuiaVocal(String guiaVocal) {
 		this.guiaVocal = guiaVocal;
-	}
-
-	public List<Tutorial> getTutorial() {
-		return tutorial;
-	}
-
-	public void setTutorial(List<Tutorial> tutorial) {
-		this.tutorial = tutorial;
 	}
 }

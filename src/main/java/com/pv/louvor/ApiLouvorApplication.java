@@ -14,6 +14,7 @@ import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Grupo;
 import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.Tutorial;
 import com.pv.louvor.repositories.CategoriaRepository;
 import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.GrupoRepository;
@@ -65,16 +66,27 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		Grupo g2 = new Grupo(null, "HillSong");
 		grupoRepository.save(Arrays.asList(g1, g2));
 		
+		//Tutorial
+		Tutorial t1 = new Tutorial();
+		t1.setBaixo(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t1.setBateria(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t1.setGuitarra(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t1.setTeclado(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t1.setViolao(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		
 		//Estudo
 		Estudo e1 = new Estudo("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", "https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", 
 				120, "https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW", 
-				"https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW");
+				"https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW");		
+		
 		//Musica
 		Musica m1 = new Musica(null, "O Senhor é Bom",LocalDate.now(), "D", "D");
 		m1.setEstudo(e1);
 		m1.setGrupo(Arrays.asList(g1));
 		m1.setCategorias(Arrays.asList(c1));
+		m1.setTutorial(t1);	
 		musicaRepository.save(m1);
 	}
+	
 
 }
