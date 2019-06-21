@@ -3,7 +3,7 @@ package com.pv.louvor.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 
@@ -13,23 +13,23 @@ public class Tutorial implements Serializable{
 private static final long serialVersionUID = 1L;
 	
 	@ElementCollection
-	@Column(name="tut_violao")
+	@CollectionTable(name="tut_violao")
 	private List<String> violao;
 	
 	@ElementCollection
-	@Column(name="tut_guitarra")
+	@CollectionTable(name="tut_guitarra")
 	private List<String> guitarra;
 	
 	@ElementCollection
-	@Column(name="tut_baixo")
+	@CollectionTable(name="tut_baixo")
 	private List<String> baixo;
 	
 	@ElementCollection
-	@Column(name="tut_bateria")
+	@CollectionTable(name="tut_bateria")
 	private List<String> bateria;
 	
 	@ElementCollection
-	@Column(name="tut_teclado")
+	@CollectionTable(name="tut_teclado")
 	private List<String> teclado;
 	
 	public Tutorial() {

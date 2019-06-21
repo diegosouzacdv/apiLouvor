@@ -31,14 +31,17 @@ private static final long serialVersionUID = 1L;
 	@ManyToMany(mappedBy = "grupo")
 	private List<Musica> musicas;
 	
+	private boolean ativo;
+	
 	public Grupo() {
 		
 	}
 
-	public Grupo(Integer id, String nome) {
+	public Grupo(Integer id, String nome, boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.ativo = ativo;
 	}
 
 	public Integer getId() {
@@ -63,6 +66,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setMusicas(List<Musica> musicas) {
 		this.musicas = musicas;
+	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

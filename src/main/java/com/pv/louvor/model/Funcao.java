@@ -1,14 +1,21 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Funcao implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -20,6 +27,10 @@ public class Funcao implements Serializable{
 	
 	@Column(name="fun_nome")
 	private String nome;
+	
+	@JsonBackReference("funcao")
+	@ManyToMany(mappedBy = "funcao", cascade = CascadeType.ALL)
+	private List<Usuario> usuario;
 	
 	public Funcao() {
 		
@@ -45,6 +56,14 @@ public class Funcao implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Usuario> getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(List<Usuario> usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

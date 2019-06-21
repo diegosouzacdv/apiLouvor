@@ -33,14 +33,14 @@ public class Musica implements Serializable{
 	
 	@ManyToMany()
 	@JoinTable(name= "MUSICA_GRUPO",
-		joinColumns = @JoinColumn(name = "musica_id"),
-		inverseJoinColumns = @JoinColumn(name = "grupo_id"))
+		joinColumns = @JoinColumn(name = "mus_id"),
+		inverseJoinColumns = @JoinColumn(name = "gru_id"))
 	private List<Grupo> grupo;
 	
 	@ManyToMany()
 	@JoinTable(name= "MUSICA_CATEGORIA",
-		joinColumns = @JoinColumn(name = "musica_id"),
-		inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+		joinColumns = @JoinColumn(name = "mus_id"),
+		inverseJoinColumns = @JoinColumn(name = "cat_id"))
 	private List<Categoria> categorias;
 	
 	@Column(name="mus_estudo")
@@ -60,19 +60,22 @@ public class Musica implements Serializable{
 	@Column(name="mus_notaTocada")
 	private String notaTocada;	
 	
+	private boolean ativo;
+	
 
 	public Musica() {
 		
 	}
 
 	public Musica(Integer id, String nome, LocalDate dataInserida,
-			String notaOriginal, String notaTocada) {
+			String notaOriginal, String notaTocada, boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.dataInserida = dataInserida;
 		this.notaOriginal = notaOriginal;
 		this.notaTocada = notaTocada;
+		this.ativo = ativo;
 	}
 
 	public Integer getId() {
@@ -145,6 +148,14 @@ public class Musica implements Serializable{
 
 	public void setTutorial(Tutorial tutorial) {
 		this.tutorial = tutorial;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override
