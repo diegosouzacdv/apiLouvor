@@ -2,6 +2,7 @@ package com.pv.louvor;
 
 import java.io.ObjectInputStream.GetField;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,9 @@ import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Grupo;
 import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.NotasMusicais;
 import com.pv.louvor.model.Pessoa;
+import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Tutorial;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.repositories.CategoriaRepository;
@@ -23,6 +26,7 @@ import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.MusicaRepository;
+import com.pv.louvor.repositories.RepertorioRepository;
 import com.pv.louvor.repositories.UsuarioRepository;
 
 @SpringBootApplication
@@ -45,6 +49,9 @@ public class ApiLouvorApplication implements CommandLineRunner{
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private RepertorioRepository repertorioRepository;
 
 
 	public static void main(String[] args) {
@@ -85,10 +92,12 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		//Estudo
 		Estudo e1 = new Estudo("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", "https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", 
 				120, "https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW", 
-				"https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW");		
+				"https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW");	
+		
+		//NotasMusicais
 		
 		//Musica
-		Musica m1 = new Musica(null, "O Senhor é Bom",LocalDate.now(), "D", "D", true);
+		Musica m1 = new Musica(null, "O Senhor é Bom", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), NotasMusicais.D, NotasMusicais.D, true);
 		m1.setEstudo(e1);
 		m1.setGrupo(Arrays.asList(g1));
 		m1.setCategorias(Arrays.asList(c1));
@@ -105,6 +114,11 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		u1.setFuncao(Arrays.asList(f3));
 		u2.setFuncao(Arrays.asList(f1,f2,f3));
 		usuarioRepository.save(Arrays.asList(u1, u2));
+		
+		//Repertorio
+		Repertorio r1 = new Repertorio(null, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		//r1.setMusica(Arrays.asList(m1));
+		repertorioRepository.save(r1);
 		}
 	
 	@SuppressWarnings("unused")

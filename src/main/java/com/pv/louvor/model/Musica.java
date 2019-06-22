@@ -2,17 +2,22 @@ package com.pv.louvor.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
@@ -31,7 +36,7 @@ public class Musica implements Serializable{
 	@Column(name="mus_nome")
 	private String nome;
 	
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name= "MUSICA_GRUPO",
 		joinColumns = @JoinColumn(name = "mus_id"),
 		inverseJoinColumns = @JoinColumn(name = "gru_id"))
@@ -43,6 +48,9 @@ public class Musica implements Serializable{
 		inverseJoinColumns = @JoinColumn(name = "cat_id"))
 	private List<Categoria> categorias;
 	
+	@OneToMany(mappedBy = "id.musica")
+	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
+	
 	@Column(name="mus_estudo")
 	@Embedded
 	private Estudo estudo;
@@ -52,30 +60,37 @@ public class Musica implements Serializable{
 	private Tutorial tutorial;
 	
 	@Column(name="mus_dataInserida")
-	private LocalDate dataInserida;
+	private String dataInserida;
 	
 	@Column(name="mus_notaOriginal")
-	private String notaOriginal;
+	private Integer notaOriginal;
 	
 	@Column(name="mus_notaTocada")
-	private String notaTocada;	
+	private Integer notaTocada;	
 	
 	private boolean ativo;
 	
-
 	public Musica() {
 		
 	}
 
-	public Musica(Integer id, String nome, LocalDate dataInserida,
-			String notaOriginal, String notaTocada, boolean ativo) {
+	public Musica(Integer id, String nome, String dataInserida,
+			NotasMusicais notaOriginal, NotasMusicais notaTocada, boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.dataInserida = dataInserida;
-		this.notaOriginal = notaOriginal;
-		this.notaTocada = notaTocada;
+		this.notaOriginal = notaOriginal.getCod();
+		this.notaTocada = notaTocada.getCod();
 		this.ativo = ativo;
+	}
+	
+	public List<Repertorio> getRepertorios() {
+		List<Repertorio> lista = new ArrayList<>();
+		for (MusicaRepertorio x : musicasRepertorio) {
+			lista.add(x.getRepertorio());
+		}
+		return lista;
 	}
 
 	public Integer getId() {
@@ -110,20 +125,12 @@ public class Musica implements Serializable{
 		this.categorias = categorias;
 	}
 
-	public String getNotaOriginal() {
-		return notaOriginal;
+	public Set<MusicaRepertorio> getMusicasRepertorio() {
+		return musicasRepertorio;
 	}
 
-	public void setNotaOriginal(String notaOriginal) {
-		this.notaOriginal = notaOriginal;
-	}
-
-	public String getNotaTocada() {
-		return notaTocada;
-	}
-
-	public void setNotaTocada(String notaTocada) {
-		this.notaTocada = notaTocada;
+	public void setMusicasRepertorio(Set<MusicaRepertorio> musicasRepertorio) {
+		this.musicasRepertorio = musicasRepertorio;
 	}
 
 	public Estudo getEstudo() {
@@ -134,20 +141,36 @@ public class Musica implements Serializable{
 		this.estudo = estudo;
 	}
 
-	public LocalDate getDataInserida() {
-		return dataInserida;
-	}
-
-	public void setDataInserida(LocalDate dataInserida) {
-		this.dataInserida = dataInserida;
-	}
-	
 	public Tutorial getTutorial() {
 		return tutorial;
 	}
 
 	public void setTutorial(Tutorial tutorial) {
 		this.tutorial = tutorial;
+	}
+
+	public String getDataInserida() {
+		return dataInserida;
+	}
+
+	public void setDataInserida(String dataInserida) {
+		this.dataInserida = dataInserida;
+	}
+
+	public Integer getNotaOriginal() {
+		return notaOriginal;
+	}
+
+	public void setNotaOriginal(Integer notaOriginal) {
+		this.notaOriginal = notaOriginal;
+	}
+
+	public Integer getNotaTocada() {
+		return notaTocada;
+	}
+
+	public void setNotaTocada(Integer notaTocada) {
+		this.notaTocada = notaTocada;
 	}
 
 	public boolean isAtivo() {
