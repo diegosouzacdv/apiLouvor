@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -28,8 +29,8 @@ public class Funcao implements Serializable{
 	@Column(name="fun_nome")
 	private String nome;
 	
-	@JsonBackReference("funcao")
-	@ManyToMany(mappedBy = "funcao", cascade = CascadeType.ALL)
+	@JsonIgnore
+	@ManyToMany(mappedBy = "funcao")
 	private List<Usuario> usuario;
 	
 	public Funcao() {

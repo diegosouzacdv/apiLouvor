@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Igreja;
 import com.pv.louvor.repositories.IgrejaRepository;
+import com.pv.louvor.services.exceptions.DataIntegrityException;
+import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -20,12 +22,42 @@ public class IgrejaService  {
 		return obj;
 	}
 
-	public Igreja buscar(Integer id) {
+	public Igreja find(Integer id) {
 		Igreja obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
 					", Tipo: " + Igreja.class.getName());
 		}
 		return obj;
+	}
+
+	public Igreja insert(Igreja obj) {
+		obj.setId(null);
+		isExist(obj);
+		return repo.save(obj);
+	}
+
+	public Igreja update(Igreja obj) {
+		find(obj.getId());
+		isExist(obj);
+		return repo.save(obj);
+	}
+	
+	public Igreja isExist(Igreja obj) {
+	Igreja obj1 = repo.findByNome(obj.getNome());
+		if(obj1 != null && obj1.getNome().equals(obj.getNome())) {
+			throw new ObjectFoundException("Objeto Já existe com Id: " + obj.getId() + 
+					", Tipo: " + Igreja.class.getName());
+		}		
+		return obj;
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		} catch (DataIntegrityException e) {
+			throw new DataIntegrityException("Não é possível excluir!");
+		}
 	}
 }

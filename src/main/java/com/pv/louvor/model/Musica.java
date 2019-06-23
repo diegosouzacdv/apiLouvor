@@ -1,7 +1,6 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,14 +18,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 @Entity
-@JsonIgnoreProperties
-@JsonIgnoreType
 public class Musica implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -44,14 +40,15 @@ public class Musica implements Serializable{
 		inverseJoinColumns = @JoinColumn(name = "gru_id"))
 	private List<Grupo> grupo;
 	
-	@ManyToMany()
+	
+	@ManyToMany
 	@JoinTable(name= "MUSICA_CATEGORIA",
 		joinColumns = @JoinColumn(name = "mus_id"),
 		inverseJoinColumns = @JoinColumn(name = "cat_id"))
 	private List<Categoria> categorias;
 	
-	@OneToMany(mappedBy = "id.musica")
 	@JsonIgnore
+	@OneToMany(mappedBy = "id.musica")
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
 	@Column(name="mus_estudo")

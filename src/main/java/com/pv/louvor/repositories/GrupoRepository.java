@@ -7,5 +7,7 @@ import com.pv.louvor.model.Grupo;
 
 @Repository
 public interface GrupoRepository  extends JpaRepository<Grupo, Integer>{
+
+	Grupo findByNome(String nome);
 	
 }

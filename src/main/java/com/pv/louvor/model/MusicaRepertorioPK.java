@@ -17,8 +17,17 @@ public class MusicaRepertorioPK implements Serializable{
 	@JoinColumn(name="mus_id")
 	private Musica musica;
 	
+	@ManyToOne
+	@JoinColumn(name="rep_id")
 	private Repertorio repertorio;
 
+	public Repertorio getRepertorio() {
+		return repertorio;
+	}
+	
+	public void setRepertorio(Repertorio repertorio) {
+		this.repertorio = repertorio;
+	}
 	public Musica getMusica() {
 		return musica;
 	}
@@ -27,13 +36,6 @@ public class MusicaRepertorioPK implements Serializable{
 		this.musica = musica;
 	}
 
-	public Repertorio getRepertorio() {
-		return repertorio;
-	}
-
-	public void setRepertorio(Repertorio repertorio) {
-		this.repertorio = repertorio;
-	}
 
 	@Override
 	public int hashCode() {

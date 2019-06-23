@@ -7,5 +7,7 @@ import com.pv.louvor.model.Igreja;
 
 @Repository
 public interface IgrejaRepository extends JpaRepository<Igreja, Integer>{
+
+	Igreja findByNome(String nome);
 	
 }

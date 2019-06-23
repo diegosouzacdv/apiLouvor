@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.repositories.RepertorioRepository;
+import com.pv.louvor.services.exceptions.DataIntegrityException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -20,12 +21,31 @@ public class RepertorioService {
 		return obj;
 	}
 
-	public Repertorio buscar(Integer id) {
+	public Repertorio find(Integer id) {
 		Repertorio obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
 					", Tipo: " + Repertorio.class.getName());
 		}
 		return obj;
+	}
+
+	public Repertorio insert(Repertorio obj) {
+		obj.setId(null);
+		return repo.save(obj);
+	}
+
+	public Repertorio update(Repertorio obj) {
+		find(obj.getId());
+		return repo.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		} catch (DataIntegrityException e) {
+			throw new DataIntegrityException("Não é possível excluir!");
+		}
 	}
 }

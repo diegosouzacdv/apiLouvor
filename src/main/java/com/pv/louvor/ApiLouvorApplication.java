@@ -1,6 +1,5 @@
 package com.pv.louvor;
 
-import java.io.ObjectInputStream.GetField;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -11,11 +10,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.pv.louvor.model.Categoria;
+import com.pv.louvor.model.Equipe;
 import com.pv.louvor.model.Estudo;
 import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Grupo;
 import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.NotasMusicais;
 import com.pv.louvor.model.Pessoa;
 import com.pv.louvor.model.Repertorio;
@@ -25,6 +26,7 @@ import com.pv.louvor.repositories.CategoriaRepository;
 import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
+import com.pv.louvor.repositories.MusicaRepertorioRepository;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
 import com.pv.louvor.repositories.UsuarioRepository;
@@ -52,6 +54,9 @@ public class ApiLouvorApplication implements CommandLineRunner{
 	
 	@Autowired
 	private RepertorioRepository repertorioRepository;
+	
+	@Autowired
+	private MusicaRepertorioRepository musicaRepertorioRepository;
 
 
 	public static void main(String[] args) {
@@ -89,6 +94,13 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		t1.setTeclado(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
 		t1.setViolao(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
 		
+		Tutorial t2 = new Tutorial();
+		t2.setBaixo(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t2.setBateria(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t2.setGuitarra(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t2.setTeclado(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		t2.setViolao(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+		
 		//Estudo
 		Estudo e1 = new Estudo("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", "https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", 
 				120, "https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW", 
@@ -102,7 +114,13 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		m1.setGrupo(Arrays.asList(g1));
 		m1.setCategorias(Arrays.asList(c1));
 		m1.setTutorial(t1);	
-		musicaRepository.save(m1);
+		Musica m2 = new Musica(null, "O Senhor é Bom", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), NotasMusicais.D, NotasMusicais.D, true);
+		m2.setEstudo(e1);
+		m2.setGrupo(Arrays.asList(g1));
+		m2.setCategorias(Arrays.asList(c1));
+		m2.setTutorial(t2);	
+		musicaRepository.save(Arrays.asList(m1,m2));
+		
 		
 		//Pessoa
 		Pessoa p1 = new Pessoa("Admin", "(xx)xxxxx-xxxx");
@@ -115,11 +133,33 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		u2.setFuncao(Arrays.asList(f1,f2,f3));
 		usuarioRepository.save(Arrays.asList(u1, u2));
 		
+		//Equipe
+		Equipe eq1 = new Equipe();
+		eq1.setBaterista(u1.getPessoa().getNome());
+		eq1.setGuitarrista(u2.getPessoa().getNome());
+		eq1.setMinistro(Arrays.asList(u1.getPessoa().getNome()));
+		eq1.setTecladista(u2.getPessoa().getNome());
+		eq1.setViolonista(u2.getPessoa().getNome());
+		
+
 		//Repertorio
 		Repertorio r1 = new Repertorio(null, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		//r1.setMusica(Arrays.asList(m1));
+		r1.setEquipeDoDia(eq1);
+		
 		repertorioRepository.save(r1);
+
+		//MusicaRepertorio
+		MusicaRepertorio ms1 = new MusicaRepertorio(r1, m1);
+		MusicaRepertorio ms2 = new MusicaRepertorio(r1, m2);
+		
+		r1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2));
+		m1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2));
+		
+
+		musicaRepertorioRepository.save(Arrays.asList(ms1,ms2));
 		}
+	
+
 	
 	@SuppressWarnings("unused")
 	private String geradorSenha(String senha) {
@@ -128,6 +168,7 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		//encoder.encode(senha);
 		return senha;
 	}
+	
 	
 	//System.out.println(encoder.encode("admin.planaltosei"));
 	//System.out.println(encoder.encode("victor.planaltosei"));

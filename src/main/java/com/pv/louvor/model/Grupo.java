@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -27,7 +27,7 @@ private static final long serialVersionUID = 1L;
 	@Column(name="gru_nome")
 	private String nome;
 	
-	@JsonBackReference("grupo")
+	@JsonIgnore
 	@ManyToMany(mappedBy = "grupo")
 	private List<Musica> musicas;
 	

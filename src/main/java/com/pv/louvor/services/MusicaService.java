@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.repositories.MusicaRepository;
+import com.pv.louvor.services.exceptions.DataIntegrityException;
+import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -20,7 +22,7 @@ public class MusicaService {
 		return obj;
 	}
 
-	public Musica buscar(Integer id) {
+	public Musica find(Integer id) {
 		Musica obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
@@ -29,4 +31,33 @@ public class MusicaService {
 		return obj;
 	}
 
+	public Musica insert(Musica obj) {
+		obj.setId(null);
+		isExist(obj);
+		return repo.save(obj);
+	}
+
+	public Musica update(Musica obj) {
+		find(obj.getId());
+		isExist(obj);
+		return repo.save(obj);
+	}
+	
+	public Musica isExist(Musica obj) {
+	Musica obj1 = repo.findByNome(obj.getNome());
+		if(obj1 != null && obj1.getNome().equals(obj.getNome())) {
+			throw new ObjectFoundException("Objeto Já existe com Id: " + obj.getId() + 
+					", Tipo: " + Musica.class.getName());
+		}		
+		return obj;
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		} catch (DataIntegrityException e) {
+			throw new DataIntegrityException("Não é possível excluir!");
+		}
+	}
 }

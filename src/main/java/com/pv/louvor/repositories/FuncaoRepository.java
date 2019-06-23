@@ -7,5 +7,7 @@ import com.pv.louvor.model.Funcao;
 
 @Repository
 public interface FuncaoRepository extends JpaRepository<Funcao, Integer>{
+
+	Funcao findByNome(String nome);
 	
 }

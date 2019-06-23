@@ -6,53 +6,50 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class MusicaRepertorio implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@EmbeddedId
 	@JsonIgnore
+	@EmbeddedId
 	private MusicaRepertorioPK id = new MusicaRepertorioPK();
-	
-	private Integer quantMusica;
 	
 	public MusicaRepertorio() {
 		
 	}
 
-	public MusicaRepertorio(Musica musica, Repertorio repertorio) {
+	public MusicaRepertorio(Repertorio repertorio, Musica musica) {
 		super();
-		this.id.setMusica(musica);
-		this.id.setRepertorio(repertorio);
+		id.setRepertorio(repertorio);
+		id.setMusica(musica);
+	}
+	
+	@JsonIgnore
+	public Repertorio getRepertorio() {
+		return id.getRepertorio();
+	}
+	
+	public void setRepertorio(Repertorio repertorio) {
+		id.setRepertorio(repertorio);
 	}
 
-	public Integer getQuantMusica() {
-		return quantMusica;
+	public Musica getMusica() {
+		return id.getMusica();
 	}
-
-	public void setQuantMusica(Integer quantMusica) {
-		this.quantMusica = quantMusica;
+	
+	public void setMusica(Musica musica) {
+		id.setMusica(musica);
 	}
-
+	
+	
 	public MusicaRepertorioPK getId() {
 		return id;
 	}
 
 	public void setId(MusicaRepertorioPK id) {
 		this.id = id;
-	}
-	
-	public Musica getMusica() {
-		return id.getMusica();
-	}
-	
-	@JsonIgnore
-	public Repertorio getRepertorio() {
-		return id.getRepertorio();
 	}
 
 	@Override
@@ -79,6 +76,16 @@ public class MusicaRepertorio implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "MusicaRepertorio [id=" + id + ", getRepertorio()=" + getRepertorio() + ", getMusica()=" + getMusica()
+				+ ", getId()=" + getId() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+	
+	
 	
 	
 }

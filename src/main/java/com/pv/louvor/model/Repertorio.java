@@ -13,10 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Repertorio implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -35,12 +32,7 @@ public class Repertorio implements Serializable{
 	@OneToMany(mappedBy = "id.repertorio")
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
-//	@ManyToMany()
-//	@JoinTable(name= "REPERTORIO_MUSICA",
-//		joinColumns = @JoinColumn(name = "rep_id"),
-//		inverseJoinColumns = @JoinColumn(name = "mus_id"))
-//	private List<Musica> musica;
-		
+	private Integer quantMusica;
 	
 	public Repertorio() {
 		
@@ -83,6 +75,14 @@ public class Repertorio implements Serializable{
 	public void setMusicasRepertorio(Set<MusicaRepertorio> musicasRepertorio) {
 		this.musicasRepertorio = musicasRepertorio;
 	}
+	
+	public Integer getQuantMusica() {
+		return quantMusica;
+	}
+
+	public void setQuantMusica(Integer quantMusica) {
+		this.quantMusica = quantMusica;
+	}
 
 	@Override
 	public int hashCode() {
@@ -108,4 +108,15 @@ public class Repertorio implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Repertorio [id=" + id + ", data=" + data + ", equipeDoDia=" + equipeDoDia + ", musicasRepertorio="
+				+ musicasRepertorio + ", quantMusica=" + quantMusica + ", getId()=" + getId() + ", getData()="
+				+ getData() + ", getEquipeDoDia()=" + getEquipeDoDia() + ", getMusicasRepertorio()="
+				+ getMusicasRepertorio() + ", getQuantMusica()=" + getQuantMusica() + ", hashCode()=" + hashCode()
+				+ ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
+	}
+	
+	
 }

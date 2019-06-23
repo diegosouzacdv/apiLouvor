@@ -84,5 +84,7 @@ public class Equipe implements Serializable{
 
 	public void setTecladista(String tecladista) {
 		this.tecladista = tecladista;
-	}	
+	}
+
+	
 }

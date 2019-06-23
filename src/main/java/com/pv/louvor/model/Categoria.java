@@ -3,7 +3,6 @@ package com.pv.louvor.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -28,7 +27,7 @@ public class Categoria implements Serializable{
 	@Column(name="cat_nome")
 	private String nome;
 	
-	@JsonBackReference("categorias")
+	@JsonIgnore
 	@ManyToMany(mappedBy = "categorias")
 	private List<Musica> musicas;
 	
@@ -56,6 +55,14 @@ public class Categoria implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public List<Musica> getMusicas() {
+		return musicas;
+	}
+
+	public void setMusicas(List<Musica> musicas) {
+		this.musicas = musicas;
 	}
 
 	@Override

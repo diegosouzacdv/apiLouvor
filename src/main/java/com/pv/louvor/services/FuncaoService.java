@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Funcao;
 import com.pv.louvor.repositories.FuncaoRepository;
+import com.pv.louvor.services.exceptions.DataIntegrityException;
+import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -20,12 +22,42 @@ public class FuncaoService  {
 		return obj;
 	}
 
-	public Funcao buscar(Integer id) {
+	public Funcao find(Integer id) {
 		Funcao obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
 					", Tipo: " + Funcao.class.getName());
 		}
 		return obj;
+	}
+
+	public Funcao insert(Funcao obj) {
+		obj.setId(null);
+		isExist(obj);
+		return repo.save(obj);
+	}
+
+	public Funcao update(Funcao obj) {
+		find(obj.getId());
+		isExist(obj);
+		return repo.save(obj);
+	}
+	
+	public Funcao isExist(Funcao obj) {
+	Funcao obj1 = repo.findByNome(obj.getNome());
+		if(obj1 != null && obj1.getNome().equals(obj.getNome())) {
+			throw new ObjectFoundException("Objeto Já existe com Id: " + obj.getId() + 
+					", Tipo: " + Funcao.class.getName());
+		}		
+		return obj;
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.delete(id);
+		} catch (DataIntegrityException e) {
+			throw new DataIntegrityException("Não é ´possível excluir!");
+		}
 	}
 }
