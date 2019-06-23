@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -14,6 +15,7 @@ public class MusicaRepertorio implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
+	@JsonIgnore
 	private MusicaRepertorioPK id = new MusicaRepertorioPK();
 	
 	private Integer quantMusica;
@@ -48,6 +50,7 @@ public class MusicaRepertorio implements Serializable{
 		return id.getMusica();
 	}
 	
+	@JsonIgnore
 	public Repertorio getRepertorio() {
 		return id.getRepertorio();
 	}

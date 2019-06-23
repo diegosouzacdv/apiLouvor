@@ -19,6 +19,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
@@ -49,6 +51,7 @@ public class Musica implements Serializable{
 	private List<Categoria> categorias;
 	
 	@OneToMany(mappedBy = "id.musica")
+	@JsonIgnore
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
 	@Column(name="mus_estudo")
@@ -85,6 +88,7 @@ public class Musica implements Serializable{
 		this.ativo = ativo;
 	}
 	
+	@JsonIgnore
 	public List<Repertorio> getRepertorios() {
 		List<Repertorio> lista = new ArrayList<>();
 		for (MusicaRepertorio x : musicasRepertorio) {
