@@ -42,12 +42,11 @@ public class GrupoResource {
 	
 	@GetMapping("/page")
 	public ResponseEntity<Page<Grupo>> findPage(@RequestParam(value="page", defaultValue = "0") Integer page, 
-			@RequestParam(value="linesPerPage", defaultValue = "1") Integer linesPerPage, 
+			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue = "ASC") String direction) {
 		Page<Grupo> obj = service.findPage(page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(obj);
-
  	}
 	
 	@PostMapping

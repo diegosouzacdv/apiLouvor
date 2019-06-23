@@ -3,8 +3,12 @@ package com.pv.louvor.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.repositories.RepertorioRepository;
 import com.pv.louvor.services.exceptions.DataIntegrityException;
@@ -47,5 +51,10 @@ public class RepertorioService {
 		} catch (DataIntegrityException e) {
 			throw new DataIntegrityException("Não é possível excluir!");
 		}
+	}
+
+	public Page<Repertorio> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
+		return repo.findAll(pageRequest);
 	}
 }
