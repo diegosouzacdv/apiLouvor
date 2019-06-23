@@ -3,6 +3,9 @@ package com.pv.louvor.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Grupo;
@@ -61,5 +64,8 @@ public class GrupoService {
 		}
 	}
 	
-
+	public Page<Grupo> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
+		return repo.findAll(pageRequest);
+	}
 }
