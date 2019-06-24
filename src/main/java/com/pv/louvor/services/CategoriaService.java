@@ -3,11 +3,11 @@ package com.pv.louvor.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Categoria;
 import com.pv.louvor.repositories.CategoriaRepository;
-import com.pv.louvor.services.exceptions.DataIntegrityException;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -56,8 +56,8 @@ public class CategoriaService {
 		find(id);
 		try {
 			repo.delete(id);
-		} catch (DataIntegrityException e) {
-			throw new DataIntegrityException("Não é possível excluir!");
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityViolationException("Não é possível excluir!");
 		}
 	}
 }

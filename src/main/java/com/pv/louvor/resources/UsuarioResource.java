@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Usuario;
-import com.pv.louvor.model.Usuario;
 import com.pv.louvor.services.UsuarioService;
 
 @RestController
