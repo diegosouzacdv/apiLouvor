@@ -2,6 +2,8 @@ package com.pv.louvor.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -33,7 +35,8 @@ public class UsuarioService {
 		}
 		return obj;
 	}
-
+	
+	@Transactional
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
 		obj.setAtivo(false);

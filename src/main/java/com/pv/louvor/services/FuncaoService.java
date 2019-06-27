@@ -2,6 +2,8 @@ package com.pv.louvor.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ public class FuncaoService  {
 		return obj;
 	}
 
+	@Transactional
 	public Funcao insert(Funcao obj) {
 		obj.setId(null);
 		isExist(obj);
