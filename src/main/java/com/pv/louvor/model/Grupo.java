@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -24,6 +27,8 @@ private static final long serialVersionUID = 1L;
 	@Column(name="gru_id")
 	private Integer id;
 	
+	@NotEmpty(message="Nome é obrigatório")
+	@Length(min=5, max=80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	@Column(name="gru_nome")
 	private String nome;
 	
@@ -37,11 +42,10 @@ private static final long serialVersionUID = 1L;
 		
 	}
 
-	public Grupo(Integer id, String nome, boolean ativo) {
+	public Grupo(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.ativo = ativo;
 	}
 
 	public Integer getId() {

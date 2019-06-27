@@ -3,6 +3,8 @@ package com.pv.louvor.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +52,7 @@ public class GrupoResource {
  	}
 	
 	@PostMapping
-	public ResponseEntity<Grupo> insert(@RequestBody Grupo obj) {
+	public ResponseEntity<Grupo> insert(@Valid @RequestBody Grupo obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();

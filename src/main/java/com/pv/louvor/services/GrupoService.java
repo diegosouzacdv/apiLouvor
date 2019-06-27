@@ -36,6 +36,7 @@ public class GrupoService {
 
 	public Grupo insert(Grupo obj) {
 		obj.setId(null);
+		obj.setAtivo(true);
 		isExist(obj);
 		return repo.save(obj);
 	}

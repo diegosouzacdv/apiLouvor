@@ -3,6 +3,8 @@ package com.pv.louvor.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.services.MusicaService;
 
@@ -51,7 +52,7 @@ public class MusicaResource {
  	}
 	
 	@PostMapping
-	public ResponseEntity<Musica> insert(@RequestBody Musica obj) {
+	public ResponseEntity<Musica> insert(@Valid @RequestBody Musica obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();

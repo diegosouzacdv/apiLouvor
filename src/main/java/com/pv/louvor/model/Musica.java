@@ -18,9 +18,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 @Entity
 public class Musica implements Serializable{
@@ -31,6 +32,8 @@ public class Musica implements Serializable{
 	@Column(name="mus_id")
 	private Integer id;
 	
+	@NotEmpty(message="Nome é obrigatório")
+	@Length(min=5, max=80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	@Column(name="mus_nome")
 	private String nome;
 	
@@ -39,7 +42,6 @@ public class Musica implements Serializable{
 		joinColumns = @JoinColumn(name = "mus_id"),
 		inverseJoinColumns = @JoinColumn(name = "gru_id"))
 	private List<Grupo> grupo;
-	
 	
 	@ManyToMany
 	@JoinTable(name= "MUSICA_CATEGORIA",
@@ -59,9 +61,10 @@ public class Musica implements Serializable{
 	@Embedded
 	private Tutorial tutorial;
 	
+	@NotEmpty
 	@Column(name="mus_dataInserida")
 	private String dataInserida;
-	
+
 	@Column(name="mus_notaOriginal")
 	private Integer notaOriginal;
 	

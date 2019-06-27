@@ -36,6 +36,7 @@ public class MusicaService {
 
 	public Musica insert(Musica obj) {
 		obj.setId(null);
+		obj.setAtivo(true);
 		isExist(obj);
 		return repo.save(obj);
 	}

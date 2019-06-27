@@ -36,6 +36,7 @@ public class UsuarioService {
 
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
+		obj.setAtivo(false);
 		isExist(obj);
 		return repo.save(obj);
 	}

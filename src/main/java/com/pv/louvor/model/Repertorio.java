@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 public class Repertorio implements Serializable{
 
@@ -23,6 +25,7 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_id")
 	private Integer id;
 	
+	@NotEmpty(message="Data é obrigatório")
 	@Column(name="rep_data")
 	private String data;
 	

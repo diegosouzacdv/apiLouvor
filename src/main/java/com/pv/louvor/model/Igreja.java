@@ -1,16 +1,16 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -23,8 +23,13 @@ public class Igreja implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="igr_id")
 	private Integer id;
+	
+	@NotEmpty(message="Nome é obrigatório")
+	@Length(min=5, max=80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	@Column(name="igr_nome")
 	private String nome;
+	
+	private boolean ativo;
 	
 	public Igreja() {
 		
@@ -50,6 +55,14 @@ public class Igreja implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

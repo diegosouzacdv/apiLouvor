@@ -33,7 +33,7 @@ public class RepertorioService {
 		return obj;
 	}
 
-	public Repertorio insert(Repertorio obj) {
+	public Repertorio insert(Repertorio obj) {		
 		obj.setId(null);
 		return repo.save(obj);
 	}

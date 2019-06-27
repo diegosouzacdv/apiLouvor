@@ -36,6 +36,7 @@ public class IgrejaService  {
 
 	public Igreja insert(Igreja obj) {
 		obj.setId(null);
+		obj.setAtivo(true);
 		isExist(obj);
 		return repo.save(obj);
 	}

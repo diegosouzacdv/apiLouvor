@@ -23,7 +23,6 @@ import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Tutorial;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.repositories.CategoriaRepository;
-import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
@@ -37,8 +36,8 @@ public class ApiLouvorApplication implements CommandLineRunner{
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	@Autowired
-	private FuncaoRepository funcaoRepository;
+//	@Autowired
+//	private FuncaoRepository funcaoRepository;
 	
 	@Autowired
 	private IgrejaRepository igrejaRepository;
@@ -82,8 +81,8 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		igrejaRepository.save(Arrays.asList(i1, i2));
 		
 		//Grupo
-		Grupo g1 = new Grupo(null, "Avivah", true);
-		Grupo g2 = new Grupo(null, "HillSong", true);
+		Grupo g1 = new Grupo(null, "Avivah");
+		Grupo g2 = new Grupo(null, "HillSong");
 		grupoRepository.save(Arrays.asList(g1, g2));
 		
 		//Tutorial
