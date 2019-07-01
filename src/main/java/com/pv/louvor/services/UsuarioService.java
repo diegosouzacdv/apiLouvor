@@ -1,7 +1,9 @@
 package com.pv.louvor.services;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.pv.louvor.model.Usuario;
+import com.pv.louvor.model.dto.UsuarioNewDTO;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
@@ -21,6 +25,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private UsuarioRepository repo;
+	
+	@Autowired
+	private HttpServletRequest request;
 
 	public List<Usuario> buscarTodos() {
 		List<Usuario> obj = repo.findAll();
@@ -36,27 +43,12 @@ public class UsuarioService {
 		return obj;
 	}
 	
-	@Transactional
-	public Usuario insert(Usuario obj) {
-		obj.setId(null);
-		obj.setAtivo(false);
-		isExist(obj);
-		return repo.save(obj);
-	}
+	
 
 	public Usuario update(Usuario obj) {
+		this.isExistePorId(obj);
 		find(obj.getId());
-		isExist(obj);
 		return repo.save(obj);
-	}
-	
-	public Usuario isExist(Usuario obj) {
-	Usuario obj1 = repo.findByEmail(obj.getEmail());
-		if(obj1 != null && obj1.getEmail().equals(obj.getEmail())) {
-			throw new ObjectFoundException("Usuário Já existe com Id: " + obj.getId() + 
-					", Tipo: " + Usuario.class.getName());
-		}		
-		return obj;
 	}
 	
 	public void delete(Integer id) {
@@ -72,4 +64,39 @@ public class UsuarioService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
 		return repo.findAll(pageRequest);
 	}
+
+	@Transactional
+	public Usuario insert(Usuario obj) {
+		this.isExistePorEmail(obj);
+		obj.setId(null);
+		obj.setAtivo(false);
+		return repo.save(obj);
+	}
+
+	public Usuario fromDTO(UsuarioNewDTO objDTO) {
+		Usuario user = new Usuario(null, objDTO.getNome(), objDTO.getTelefone(), objDTO.getEmail(), objDTO.getSenha());
+		return user;
+	}
+	
+	public Usuario isExistePorEmail(Usuario obj) {
+		Usuario obj1 = repo.findByEmail(obj.getEmail());
+			if(obj1 != null && obj1.getEmail().equals(obj.getEmail())) {
+				throw new ObjectFoundException("Usuário Já existe com esse e-mail: " + obj.getEmail());
+			}		
+			return obj;
+		}
+		
+		public Usuario isExistePorId(Usuario obj) {
+			@SuppressWarnings("unchecked")
+			Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+			Integer uriID = Integer.parseInt(map.get("id"));
+			
+			Usuario aux = repo.findByEmail(obj.getEmail());
+			if(aux != null && !aux.getId().equals(uriID)) {
+				throw new ObjectFoundException("Usuário Já existe com esse e-mail: " + obj.getEmail());
+			}
+			return obj;
+		}
+	
+	
 }

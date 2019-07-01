@@ -23,6 +23,7 @@ import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Tutorial;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.repositories.CategoriaRepository;
+import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
@@ -56,6 +57,9 @@ public class ApiLouvorApplication implements CommandLineRunner{
 	
 	@Autowired
 	private MusicaRepertorioRepository musicaRepertorioRepository;
+	
+	@Autowired
+	private FuncaoRepository fucaoRepository;
 
 
 	public static void main(String[] args) {
@@ -73,7 +77,7 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		Funcao f1 = new Funcao(null, "Ministro");
 		Funcao f2 = new Funcao(null, "Violonista");
 		Funcao f3 = new Funcao(null, "Guitarrista");
-		//fucaoRepository.save(Arrays.asList(f1, f2,f3));
+		fucaoRepository.save(Arrays.asList(f1, f2,f3));
 				
 		//Igrejas
 		Igreja i1 = new Igreja(null, "Águas Claras");
@@ -121,15 +125,13 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		musicaRepository.save(Arrays.asList(m1,m2));
 		
 		
-		//Pessoa
-		Pessoa p1 = new Pessoa("Admin", "(xx)xxxxx-xxxx");
-		Pessoa p2 = new Pessoa("Diego Souza", "(61)98576-9860");
-		
 		//Usuario
-		Usuario u1 = new Usuario( null, p2, i1, "diegoguitaibanez@gmail.com", this.geradorSenha("godemais"), false);
-		Usuario u2 = new Usuario( null, p1, i1, "admin@gmail.com", this.geradorSenha("admin"), true);
+		Usuario u1 = new Usuario( null, "Diego", "(xx)xxxxx-xxxx", "diegoguitaibanez@gmail.com", this.geradorSenha("godemais"));
+		Usuario u2 = new Usuario( null, "Admin", "(61)98576-9860", "admin@gmail.com", this.geradorSenha("admin"));
 		u1.setFuncao(Arrays.asList(f3));
 		u2.setFuncao(Arrays.asList(f1,f2,f3));
+		u1.setIgreja(i1);
+		u2.setIgreja(i1);
 		usuarioRepository.save(Arrays.asList(u1, u2));
 		
 		//Equipe

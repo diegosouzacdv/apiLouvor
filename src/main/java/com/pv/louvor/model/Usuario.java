@@ -3,7 +3,6 @@ package com.pv.louvor.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,9 +32,9 @@ public class Usuario implements Serializable{
 	private Integer id;	
 	
 	@Embedded
-	private Pessoa pessoa;
+	private Pessoa pessoa = new Pessoa();
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name="USUARIO_FUNCAO",
 	joinColumns= @JoinColumn(name="usu_id"),
 	inverseJoinColumns= @JoinColumn(name="fun_id"))
@@ -46,8 +44,7 @@ public class Usuario implements Serializable{
 	@JoinColumn(name="igr_id")
 	private Igreja igreja;
 	
-	@Email
-	@NotEmpty
+	@NotEmpty(message="E-mail é obrigatório")
 	private String email;
 	
 	@NotEmpty(message="Senha é obrigatório")
@@ -59,14 +56,13 @@ public class Usuario implements Serializable{
 		
 	}
 
-	public Usuario(Integer id, Pessoa pessoa, Igreja igreja, String email, String senha, boolean ativo) {
+	public Usuario(Integer id, String nome, String telefone, String email, String senha) {
 		super();
 		this.id = id;
-		this.pessoa = pessoa;
-		this.igreja = igreja;
+		this.pessoa.setNome(nome);
+		this.pessoa.setTelefone(telefone);
 		this.email = email;
 		this.senha = senha;
-		this.ativo = ativo;
 	}
 
 	public Integer getId() {

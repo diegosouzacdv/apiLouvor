@@ -38,9 +38,9 @@ public class IgrejaService  {
 
 	@Transactional
 	public Igreja insert(Igreja obj) {
-		obj.setId(null);
-		obj.setAtivo(true);
 		isExist(obj);
+		obj.setAtivo(true);
+		obj.setId(null);
 		return repo.save(obj);
 	}
 

@@ -2,6 +2,7 @@ package com.pv.louvor.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.dto.MusicaDTO;
 import com.pv.louvor.services.MusicaService;
 
 @RestController
@@ -30,9 +32,10 @@ public class MusicaResource {
 	private MusicaService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Musica>> findAll() {
-		List<Musica> obj = service.buscarTodos();
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<List<MusicaDTO>> findAll() {
+		List<Musica> list = service.buscarTodos();
+		List<MusicaDTO> listDto = list.stream().map(obj -> new MusicaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 
  	}
 

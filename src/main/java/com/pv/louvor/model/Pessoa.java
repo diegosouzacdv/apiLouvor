@@ -24,12 +24,6 @@ public class Pessoa implements Serializable{
 		
 	}
 
-	public Pessoa(String nome, String telefone) {
-		super();
-		this.nome = nome;
-		this.telefone = telefone;
-	}
-
 	public String getNome() {
 		return nome;
 	}
