@@ -1,5 +1,7 @@
 package com.pv.louvor.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,7 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.pv.louvor.model.Categoria;
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.repositories.CategoriaRepository;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
@@ -21,6 +25,9 @@ public class MusicaService {
 	
 	@Autowired
 	private MusicaRepository repo;
+	
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 
 	public List<Musica> buscarTodos() {
 		List<Musica> obj = repo.findAll();
@@ -40,6 +47,7 @@ public class MusicaService {
 	public Musica insert(Musica obj) {
 		obj.setId(null);
 		obj.setAtivo(true);
+		obj.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		isExist(obj);
 		return repo.save(obj);
 	}
@@ -68,8 +76,9 @@ public class MusicaService {
 		}
 	}
 
-	public Page<Musica> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Musica> findPage(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findAll(pageRequest);
+		List<Categoria> categorias = categoriaRepository.findAll(ids);
+		return repo.findDistinctByNomeIgnoreCaseContainingAndCategoriasIn(nome, categorias, pageRequest);
 	}
 }

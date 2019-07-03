@@ -1,6 +1,8 @@
 package com.pv.louvor.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Usuario;
+import com.pv.louvor.model.dto.UsuarioDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
 import com.pv.louvor.services.UsuarioService;
 
@@ -27,12 +30,12 @@ public class UsuarioResource {
 	@Autowired
 	private UsuarioService service;
 	
-	/*@GetMapping
-	public ResponseEntity<List<UsuarioNewDTO>> findAll() {
+	@GetMapping
+	public ResponseEntity<List<UsuarioDTO>> findAll() {
 		List<Usuario> list = service.buscarTodos();
-		List<UsuarioNewDTO> listDto = list.stream().map(obj -> new UsuarioNewDTO(obj)).collect(Collectors.toList());
+		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
- 	}*/
+ 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> find(@PathVariable Integer id) {

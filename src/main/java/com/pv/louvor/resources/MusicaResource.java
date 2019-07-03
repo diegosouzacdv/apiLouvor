@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.dto.MusicaDTO;
+import com.pv.louvor.resources.utils.URL;
 import com.pv.louvor.services.MusicaService;
 
 @RestController
@@ -46,12 +47,19 @@ public class MusicaResource {
  	}
 	
 	@GetMapping("/page")
-	public ResponseEntity<Page<Musica>> findPage(@RequestParam(value="page", defaultValue = "0") Integer page, 
+	public ResponseEntity<Page<MusicaDTO>> findPage(
+			@RequestParam(value="nome", defaultValue = "") String nome,
+			@RequestParam(value="categorias", defaultValue = "") String categorias,
+			@RequestParam(value="page", defaultValue = "0") Integer page,
 			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue = "ASC") String direction) {
-		Page<Musica> obj = service.findPage(page, linesPerPage, orderBy, direction);
-		return ResponseEntity.ok().body(obj);
+		String nomeDecoded = URL.decodeParam(nome);
+		System.err.println(nomeDecoded);
+		List<Integer> ids = URL.decodeIntList(categorias);
+		Page<Musica> list = service.findPage(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
+		Page<MusicaDTO> listDTO = list.map(obj -> new MusicaDTO(obj));
+		return ResponseEntity.ok().body(listDTO);
  	}
 	
 	@PostMapping

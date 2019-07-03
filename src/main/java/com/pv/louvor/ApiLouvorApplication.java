@@ -18,7 +18,6 @@ import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.NotasMusicais;
-import com.pv.louvor.model.Pessoa;
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Tutorial;
 import com.pv.louvor.model.Usuario;
@@ -112,12 +111,12 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		//NotasMusicais
 		
 		//Musica
-		Musica m1 = new Musica(null, "O Senhor é Bom", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), NotasMusicais.D, NotasMusicais.D, true);
+		Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 		m1.setEstudo(e1);
 		m1.setGrupo(Arrays.asList(g1));
 		m1.setCategorias(Arrays.asList(c1));
 		m1.setTutorial(t1);	
-		Musica m2 = new Musica(null, "O Senhor é Bom", LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), NotasMusicais.D, NotasMusicais.D, true);
+		Musica m2 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 		m2.setEstudo(e1);
 		m2.setGrupo(Arrays.asList(g1));
 		m2.setCategorias(Arrays.asList(c1));
@@ -144,7 +143,8 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		
 
 		//Repertorio
-		Repertorio r1 = new Repertorio(null, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		Repertorio r1 = new Repertorio();
+		r1.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		r1.setEquipeDoDia(eq1);
 		
 		repertorioRepository.save(r1);

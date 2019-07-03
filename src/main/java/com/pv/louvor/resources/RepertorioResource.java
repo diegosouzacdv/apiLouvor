@@ -2,6 +2,7 @@ package com.pv.louvor.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Repertorio;
+import com.pv.louvor.model.dto.RepertorioDTO;
 import com.pv.louvor.services.RepertorioService;
 
 @RestController
@@ -30,9 +32,10 @@ public class RepertorioResource {
 	private RepertorioService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Repertorio>> findAll() {
-		List<Repertorio> obj = service.buscarTodos();
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<List<RepertorioDTO>> findAll() {
+		List<Repertorio> list = service.buscarTodos();
+		List<RepertorioDTO> listDto = list.stream().map(obj -> new RepertorioDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 
  	}
 

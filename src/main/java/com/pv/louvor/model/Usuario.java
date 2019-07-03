@@ -50,7 +50,7 @@ public class Usuario implements Serializable{
 	@NotEmpty(message="Senha é obrigatório")
 	private String senha;
 	
-	private boolean ativo;
+	private boolean ativo = true;
 	
 	public Usuario() {
 		

@@ -77,12 +77,11 @@ public class Musica implements Serializable{
 		
 	}
 
-	public Musica(Integer id, String nome, String dataInserida,
+	public Musica(Integer id, String nome,
 			NotasMusicais notaOriginal, NotasMusicais notaTocada, boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.dataInserida = dataInserida;
 		this.notaOriginal = notaOriginal.getCod();
 		this.notaTocada = notaTocada.getCod();
 		this.ativo = ativo;

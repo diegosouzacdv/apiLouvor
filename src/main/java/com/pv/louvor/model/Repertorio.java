@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity
 public class Repertorio implements Serializable{
 
@@ -25,26 +23,22 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_id")
 	private Integer id;
 	
-	@NotEmpty(message="Data é obrigatório")
 	@Column(name="rep_data")
 	private String data;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Equipe equipeDoDia;
 
-	@OneToMany(mappedBy = "id.repertorio")
+	@OneToMany(mappedBy = "id.repertorio", cascade = CascadeType.ALL)
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
-	
-	private Integer quantMusica;
 	
 	public Repertorio() {
 		
 	}
 
-	public Repertorio(Integer id, String data) {
+	public Repertorio(Integer id) {
 		super();
 		this.id = id;
-		this.data = data;
 	}
 
 	public Integer getId() {
@@ -79,12 +73,8 @@ public class Repertorio implements Serializable{
 		this.musicasRepertorio = musicasRepertorio;
 	}
 	
-	public Integer getQuantMusica() {
-		return quantMusica;
-	}
-
-	public void setQuantMusica(Integer quantMusica) {
-		this.quantMusica = quantMusica;
+	public double getTotalMusicas() {
+		return musicasRepertorio.size();
 	}
 
 	@Override
@@ -115,11 +105,9 @@ public class Repertorio implements Serializable{
 	@Override
 	public String toString() {
 		return "Repertorio [id=" + id + ", data=" + data + ", equipeDoDia=" + equipeDoDia + ", musicasRepertorio="
-				+ musicasRepertorio + ", quantMusica=" + quantMusica + ", getId()=" + getId() + ", getData()="
-				+ getData() + ", getEquipeDoDia()=" + getEquipeDoDia() + ", getMusicasRepertorio()="
-				+ getMusicasRepertorio() + ", getQuantMusica()=" + getQuantMusica() + ", hashCode()=" + hashCode()
-				+ ", getClass()=" + getClass() + ", toString()=" + super.toString() + "]";
+				+ musicasRepertorio + ", getTotalMusicas()=" + getTotalMusicas() + ", getId()=" + getId()
+				+ ", getData()=" + getData() + ", getEquipeDoDia()=" + getEquipeDoDia() + ", getMusicasRepertorio()="
+				+ getMusicasRepertorio() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
+				+ super.toString() + "]";
 	}
-	
-	
 }

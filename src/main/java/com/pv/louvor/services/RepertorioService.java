@@ -1,5 +1,7 @@
 package com.pv.louvor.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -38,6 +40,7 @@ public class RepertorioService {
 	@Transactional
 	public Repertorio insert(Repertorio obj) {		
 		obj.setId(null);
+		obj.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		return repo.save(obj);
 	}
 
