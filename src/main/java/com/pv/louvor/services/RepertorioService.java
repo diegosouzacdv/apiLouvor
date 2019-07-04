@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
+import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -26,6 +27,9 @@ public class RepertorioService {
 	private RepertorioRepository repo;
 	@Autowired
 	private MusicaRepertorioRepository musicaRepertorioRepository;
+	
+	@Autowired
+	private MusicaRepository musicaRepository;
 	
 	public List<Repertorio> buscarTodos() {
 		List<Repertorio> obj = repo.findAll();
@@ -42,14 +46,16 @@ public class RepertorioService {
 	}
 
 	@Transactional
-	public Repertorio insert(Repertorio obj) {		
+	public Repertorio insert(Repertorio obj) {
 		obj.setId(null);
 		obj =  repo.save(obj);
 		
 		for (MusicaRepertorio mr : obj.getMusicasRepertorio()) {
+			mr.setMusica(musicaRepository.findOne(mr.getMusica().getId()));
 			mr.setRepertorio(obj);
 		}
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
+		System.err.println(obj);
 		return obj;
 	}
 

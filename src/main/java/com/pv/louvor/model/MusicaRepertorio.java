@@ -79,13 +79,10 @@ public class MusicaRepertorio implements Serializable{
 
 	@Override
 	public String toString() {
-		return "MusicaRepertorio [id=" + id + ", getRepertorio()=" + getRepertorio() + ", getMusica()=" + getMusica()
-				+ ", getId()=" + getId() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
-				+ super.toString() + "]";
-	}
+		StringBuilder builder = new StringBuilder();
+		//builder.append(id);
+		builder.append(id.toString());
 
-	
-	
-	
-	
+		return builder.toString();
+	}
 }

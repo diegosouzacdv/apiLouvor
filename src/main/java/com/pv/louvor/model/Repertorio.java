@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javassist.expr.Instanceof;
+
 @Entity
 public class Repertorio implements Serializable{
 
@@ -77,7 +79,8 @@ public class Repertorio implements Serializable{
 	}
 	
 	public double getTotalMusicas() {
-		return musicasRepertorio.size();
+		int quant = musicasRepertorio.size();
+		return Integer.valueOf(quant);
 	}
 
 	@Override
@@ -107,10 +110,38 @@ public class Repertorio implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Repertorio [id=" + id + ", data=" + data + ", equipeDoDia=" + equipeDoDia + ", musicasRepertorio="
-				+ musicasRepertorio + ", getTotalMusicas()=" + getTotalMusicas() + ", getId()=" + getId()
-				+ ", getData()=" + getData() + ", getEquipeDoDia()=" + getEquipeDoDia() + ", getMusicasRepertorio()="
-				+ getMusicasRepertorio() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass() + ", toString()="
-				+ super.toString() + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Repertorio número: ");
+		builder.append(getId());
+		builder.append("\n");
+		builder.append("Data: ");
+		builder.append(getData());
+		builder.append("\n");
+		builder.append("Equipe do Dia: ");
+		builder.append("\n");
+		builder.append("Ministros: ");
+		builder.append(getEquipeDoDia().getMinistro());
+		builder.append(" Instrumental: ");
+		builder.append("Baterista: ");
+		builder.append(getEquipeDoDia().getBaterista());
+		builder.append(" Guitarrista: ");
+		builder.append(getEquipeDoDia().getGuitarrista());
+		builder.append(" Tecladista: ");
+		builder.append(getEquipeDoDia().getTecladista());
+		builder.append(" Violinista: ");
+		builder.append(getEquipeDoDia().getViolonista());
+		builder.append("\n");
+		builder.append("Repertorio: ");
+		builder.append("\n");
+		for (MusicaRepertorio mr : getMusicasRepertorio()) {
+			builder.append(mr.toString() + " ");
+			builder.append("\n");
+		}
+		builder.append(" Total de Músicas: ");
+		builder.append(getTotalMusicas());
+
+		return builder.toString();
 	}
+
+
 }

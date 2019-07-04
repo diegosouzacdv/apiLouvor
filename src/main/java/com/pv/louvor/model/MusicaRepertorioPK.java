@@ -67,6 +67,15 @@ public class MusicaRepertorioPK implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Música :");
+		builder.append("\n");
+		builder.append(musica.getNome() + " *GRUPO: " + musica.getGrupo().getNome() +  " *NOTA: " + musica.getNotaTocada() + " *CATEGORIA: " + musica.getCategorias().getNome() + "\n" );
+		return builder.toString();
+	}
 	
 	
 }
