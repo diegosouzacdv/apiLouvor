@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 public class Repertorio implements Serializable{
 
@@ -23,13 +25,14 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_id")
 	private Integer id;
 	
+	@NotEmpty()
 	@Column(name="rep_data")
 	private String data;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Equipe equipeDoDia;
 
-	@OneToMany(mappedBy = "id.repertorio", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id.repertorio")
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
 	public Repertorio() {

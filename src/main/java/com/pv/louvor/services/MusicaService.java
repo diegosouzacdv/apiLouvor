@@ -45,7 +45,7 @@ public class MusicaService {
 
 	@Transactional
 	public Musica insert(Musica obj) {
-		obj.setId(null);
+		//obj.setId(null);
 		obj.setAtivo(true);
 		obj.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		isExist(obj);

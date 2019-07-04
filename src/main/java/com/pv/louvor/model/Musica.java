@@ -61,10 +61,11 @@ public class Musica implements Serializable{
 	@Embedded
 	private Tutorial tutorial;
 	
-	@NotEmpty
+	@NotEmpty()
 	@Column(name="mus_dataInserida")
 	private String dataInserida;
 
+	
 	@Column(name="mus_notaOriginal")
 	private Integer notaOriginal;
 	

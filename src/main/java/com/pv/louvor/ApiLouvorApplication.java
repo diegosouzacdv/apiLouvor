@@ -80,7 +80,9 @@ public class ApiLouvorApplication implements CommandLineRunner{
 				
 		//Igrejas
 		Igreja i1 = new Igreja(null, "Águas Claras");
+		i1.setAtivo(true);
 		Igreja i2 = new Igreja(null, "Samambaia");
+		i2.setAtivo(true);
 		igrejaRepository.save(Arrays.asList(i1, i2));
 		
 		//Grupo
@@ -113,11 +115,13 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		//Musica
 		Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 		m1.setEstudo(e1);
+		m1.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		m1.setGrupo(Arrays.asList(g1));
 		m1.setCategorias(Arrays.asList(c1));
 		m1.setTutorial(t1);	
 		Musica m2 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 		m2.setEstudo(e1);
+		m2.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		m2.setGrupo(Arrays.asList(g1));
 		m2.setCategorias(Arrays.asList(c1));
 		m2.setTutorial(t2);	

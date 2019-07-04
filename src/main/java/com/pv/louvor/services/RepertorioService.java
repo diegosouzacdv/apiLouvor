@@ -13,7 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Repertorio;
+import com.pv.louvor.repositories.MusicaRepertorioRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -22,6 +24,8 @@ public class RepertorioService {
 	
 	@Autowired
 	private RepertorioRepository repo;
+	@Autowired
+	private MusicaRepertorioRepository musicaRepertorioRepository;
 	
 	public List<Repertorio> buscarTodos() {
 		List<Repertorio> obj = repo.findAll();
@@ -40,8 +44,13 @@ public class RepertorioService {
 	@Transactional
 	public Repertorio insert(Repertorio obj) {		
 		obj.setId(null);
-		obj.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		return repo.save(obj);
+		obj =  repo.save(obj);
+		
+		for (MusicaRepertorio mr : obj.getMusicasRepertorio()) {
+			mr.setRepertorio(obj);
+		}
+		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
+		return obj;
 	}
 
 	public Repertorio update(Repertorio obj) {
