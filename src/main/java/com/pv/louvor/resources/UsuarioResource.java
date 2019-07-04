@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioDTO;
+import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
 import com.pv.louvor.services.UsuarioService;
 
@@ -34,6 +35,13 @@ public class UsuarioResource {
 	public ResponseEntity<List<UsuarioDTO>> findAll() {
 		List<Usuario> list = service.buscarTodos();
 		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+ 	}
+	
+	@GetMapping("/email")
+	public ResponseEntity<List<UsuarioEmailDTO>> findAllEmail() {
+		List<Usuario> list = service.buscarTodos();
+		List<UsuarioEmailDTO> listDto = list.stream().map(obj -> new UsuarioEmailDTO(obj.getEmail())).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}
 

@@ -2,6 +2,7 @@ package com.pv.louvor.services;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.pv.louvor.model.Usuario;
+import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
@@ -32,6 +34,12 @@ public class UsuarioService {
 	public List<Usuario> buscarTodos() {
 		List<Usuario> obj = repo.findAll();
 		return obj;
+	}
+	
+	public List<UsuarioEmailDTO> buscarTodosEmails() {
+		List<Usuario> list = repo.findAll();
+		List<UsuarioEmailDTO> listDto = list.stream().map(obj -> new UsuarioEmailDTO(obj.getEmail())).collect(Collectors.toList());
+		return listDto;
 	}
 
 	public Usuario find(Integer id) {

@@ -31,6 +31,9 @@ public class RepertorioService {
 	@Autowired
 	private MusicaRepository musicaRepository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public List<Repertorio> buscarTodos() {
 		List<Repertorio> obj = repo.findAll();
 		return obj;
@@ -55,7 +58,7 @@ public class RepertorioService {
 			mr.setRepertorio(obj);
 		}
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
-		System.err.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 
