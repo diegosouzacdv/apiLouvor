@@ -11,14 +11,18 @@ public class MusicaDTO implements Serializable{
 	
 	private Integer id;
 	private String nome;
+	private String grupo;
+	
 	
 	public MusicaDTO() {
 		
 	}
 	
+	
 	public MusicaDTO(Musica obj) {
 		id = obj.getId();
 		nome = obj.getNome();
+		grupo = obj.getGrupo().getNome();
 	}
 
 
@@ -39,5 +43,13 @@ public class MusicaDTO implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}	
+	}
+
+	public String getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(String grupo) {
+		this.grupo = grupo;
+	}
 }

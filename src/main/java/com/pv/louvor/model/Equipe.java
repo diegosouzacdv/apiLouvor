@@ -23,6 +23,8 @@ public class Equipe implements Serializable{
 	@Column(name = "equ_id")
 	private Integer id;
 	
+	
+	
 	@ElementCollection
 	private List<String> ministro;
 	

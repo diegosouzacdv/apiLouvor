@@ -87,7 +87,9 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		
 		//Grupo
 		Grupo g1 = new Grupo(null, "Avivah");
+		g1.setAtivo(true);
 		Grupo g2 = new Grupo(null, "HillSong");
+		g2.setAtivo(true);
 		grupoRepository.save(Arrays.asList(g1, g2));
 		
 		//Tutorial
@@ -116,14 +118,14 @@ public class ApiLouvorApplication implements CommandLineRunner{
 		Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 		m1.setEstudo(e1);
 		m1.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		m1.setGrupo(Arrays.asList(g1));
-		m1.setCategorias(Arrays.asList(c1));
+		m1.setGrupo(g1);
+		m1.setCategorias(c1);
 		m1.setTutorial(t1);	
 		Musica m2 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 		m2.setEstudo(e1);
 		m2.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		m2.setGrupo(Arrays.asList(g1));
-		m2.setCategorias(Arrays.asList(c1));
+		m2.setGrupo(g1);
+		m2.setCategorias(c1);
 		m2.setTutorial(t2);	
 		musicaRepository.save(Arrays.asList(m1,m2));
 		

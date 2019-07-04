@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Length;
@@ -37,17 +38,14 @@ public class Musica implements Serializable{
 	@Column(name="mus_nome")
 	private String nome;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name= "MUSICA_GRUPO",
-		joinColumns = @JoinColumn(name = "mus_id"),
-		inverseJoinColumns = @JoinColumn(name = "gru_id"))
-	private List<Grupo> grupo;
 	
-	@ManyToMany
-	@JoinTable(name= "MUSICA_CATEGORIA",
-		joinColumns = @JoinColumn(name = "mus_id"),
-		inverseJoinColumns = @JoinColumn(name = "cat_id"))
-	private List<Categoria> categorias;
+	@ManyToOne
+    @JoinColumn(name = "gru_id")
+	private Grupo grupo;
+	
+	@ManyToOne
+    @JoinColumn(name = "cat_id")
+	private Categoria categorias;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "id.musica")
@@ -61,7 +59,6 @@ public class Musica implements Serializable{
 	@Embedded
 	private Tutorial tutorial;
 	
-	@NotEmpty()
 	@Column(name="mus_dataInserida")
 	private String dataInserida;
 
@@ -78,6 +75,7 @@ public class Musica implements Serializable{
 		
 	}
 
+	
 	public Musica(Integer id, String nome,
 			NotasMusicais notaOriginal, NotasMusicais notaTocada, boolean ativo) {
 		super();
@@ -113,19 +111,20 @@ public class Musica implements Serializable{
 		this.nome = nome;
 	}
 
-	public List<Grupo> getGrupo() {
+	public Grupo getGrupo() {
 		return grupo;
 	}
 
-	public void setGrupo(List<Grupo> grupo) {
+	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
 	}
 
-	public List<Categoria> getCategorias() {
+	public Categoria getCategorias() {
 		return categorias;
 	}
 
-	public void setCategorias(List<Categoria> categorias) {
+
+	public void setCategorias(Categoria categorias) {
 		this.categorias = categorias;
 	}
 
