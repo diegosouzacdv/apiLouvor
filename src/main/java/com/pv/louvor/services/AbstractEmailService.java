@@ -28,14 +28,19 @@ public abstract class AbstractEmailService implements EmailService{
 		SimpleMailMessage sm = new SimpleMailMessage();
 		for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
 			sm.setTo(email.getEmail());
+			sm.setBcc(email.getEmail());
+			sm.setCc(email.getEmail());
 			sm.setFrom(sender);
 			sm.setSubject("Repertório do dia: " + obj.getData());
 			sm.setSentDate(new Date(System.currentTimeMillis()));
 			sm.setText(obj.toString());
-			System.err.println(email.getEmail());
+			System.err.println(obj.toString());
 		}
 		return sm;
 	}
+	
+	
+	
 		
 	}
 
