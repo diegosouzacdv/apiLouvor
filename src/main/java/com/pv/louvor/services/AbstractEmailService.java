@@ -1,7 +1,6 @@
 package com.pv.louvor.services;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +8,6 @@ import org.springframework.mail.SimpleMailMessage;
 
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
-import com.pv.louvor.repositories.UsuarioRepository;
-import com.pv.louvor.resources.UsuarioResource;
 
 public abstract class AbstractEmailService implements EmailService{
 	
@@ -35,9 +32,10 @@ public abstract class AbstractEmailService implements EmailService{
 			sm.setSubject("Repertório do dia: " + obj.getData());
 			sm.setSentDate(new Date(System.currentTimeMillis()));
 			sm.setText(obj.toString());
+			//System.err.println(email.getEmail());
 		}
 		
-		return null;
+		return sm;
 	}
 		
 	}
