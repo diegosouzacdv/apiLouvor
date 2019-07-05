@@ -34,7 +34,6 @@ public abstract class AbstractEmailService implements EmailService{
 			sm.setText(obj.toString());
 			//System.err.println(email.getEmail());
 		}
-		
 		return sm;
 	}
 		
