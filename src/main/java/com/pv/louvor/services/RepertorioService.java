@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Repertorio;
+import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
@@ -33,6 +34,9 @@ public class RepertorioService {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private UsuarioService usuario;
 	
 	public List<Repertorio> buscarTodos() {
 		List<Repertorio> obj = repo.findAll();
@@ -58,7 +62,9 @@ public class RepertorioService {
 			mr.setRepertorio(obj);
 		}
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
-		emailService.sendOrderConfirmationEmail(obj);
+		for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
+		emailService.sendOrderConfirmationHtmlEmail(obj, email.getEmail());
+		}
 		return obj;
 	}
 

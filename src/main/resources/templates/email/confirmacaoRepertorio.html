@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:remove="all">Novo Repertorio</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+ .bodyBegin {
+  	margin: 0;
+  	padding: 0;
+  	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  	background: #453e3e;
+  	z-index:999;
+  }
+  
+  .box{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   padding: 40px;
+   background: #453e3e;
+   background: rgba(0,0,0,.8);
+   border-radius: 25px;
+   box-sizing: border-box;
+   box-shadow: 0 15px 25px rgba(0,0,0,.5);
+   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+   z-index:999;
+  }
+  
+  .box h1 {
+  	margin: 0 0 30px;
+  	padding: 0;
+  	color: #fff;
+  	text-align: center;
+  }
+  
+  .box p {
+  	margin: 0 0 30px;
+  	padding: 0;
+  	color: #fff;
+  }
+  
+   .box span {
+  	margin: 0 0 30px;
+  	padding: 0;
+  	color: #fff;
+  }
+  
+  .box h2 {
+  	margin: 0 0 30px;
+  	padding: 0;
+  	color: #fff;
+  }
+  
+  .box table {
+  position: relative;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  border-collapse: collapse;
+  }
+  
+  .tabela td, .tabela th {
+  	border: 5px solid #ddd;
+  	padding: 8px;
+  }
+  
+  .tabela tr:nth-child(even){
+  background-color: #f2f2f2;
+  color: #000;
+  }
+  
+   .tabela tr:hover {
+   background-color: #453e3e;
+   color:#f2f2f2;
+   }
+</style>
+</head>
+<body>
+	<div class="bodyBegin">
+	<div class="box">
+		<h1>Repertorio número: <span th:text="${repertorio.id}"> </span></h1>
+		<h2>Data: <span th:text="${repertorio.data}"></span></h2>
+		<h2>Equipe do dia:</h2>
+		<table class="tabela" border="1">
+			<tr>
+				<th>Ministros</th>
+				<th>Guitarrista</th>
+				<th>Violonista</th>
+				<th>Baterista</th>
+				<th>Tecladista</th>
+			</tr>
+			<tr> 
+			<td th:text="${repertorio.equipeDoDia.ministro}"> Ministros</td>
+			<td th:text="${repertorio.equipeDoDia.guitarrista}"> Guitarrista</td>
+			<td th:text="${repertorio.equipeDoDia.violonista}">Violonista </td>
+			<td th:text="${repertorio.equipeDoDia.baterista}"> Baterista</td>
+			<td th:text="${repertorio.equipeDoDia.tecladista}"> Tecladista</td>
+			</tr>
+		</table>
+		<h2>Repertório:</h2>
+		<table class="tabela" border="1">
+			<tr>
+				<th>Nome</th>
+				<th>Grupo</th>
+				<th>Categoria</th>
+				<th>Tom</th>
+			</tr>
+			<tr th:each="musica : ${repertorio.musicasRepertorio}">
+				<td th:text="${musica.id.musica.nome}">nome</td>
+				<td th:text="${musica.id.musica.grupo.nome}">Grupo</td>
+				<td th:text="${musica.id.musica.categorias.nome}">categoria</td>
+				<td th:text="${musica.id.musica.notaTocada}">tom</td>
+				
+			</tr>
+			
+		</table>
+		
+		<h2>
+			Quantidade de música: 
+			<span th:text="${#numbers.formatInteger(repertorio.getTotalMusicas(),2,'POINT')}"></span>
+		</h2>
+	</div>
+	</div>
+</body>
+</html>
