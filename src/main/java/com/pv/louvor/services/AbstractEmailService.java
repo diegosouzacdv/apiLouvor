@@ -32,7 +32,7 @@ public abstract class AbstractEmailService implements EmailService{
 			sm.setSubject("Repertório do dia: " + obj.getData());
 			sm.setSentDate(new Date(System.currentTimeMillis()));
 			sm.setText(obj.toString());
-			//System.err.println(email.getEmail());
+			System.err.println(email.getEmail());
 		}
 		return sm;
 	}
