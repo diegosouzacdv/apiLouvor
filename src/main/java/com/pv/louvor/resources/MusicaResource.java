@@ -55,7 +55,6 @@ public class MusicaResource {
 			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue = "ASC") String direction) {
 		String nomeDecoded = URL.decodeParam(nome);
-		System.err.println(nomeDecoded);
 		List<Integer> ids = URL.decodeIntList(categorias);
 		Page<Musica> list = service.findPage(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
 		Page<MusicaDTO> listDTO = list.map(obj -> new MusicaDTO(obj));

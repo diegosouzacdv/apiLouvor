@@ -1,29 +1,20 @@
 package com.pv.louvor.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.pv.louvor.model.Repertorio;
-import com.pv.louvor.model.dto.UsuarioEmailDTO;
 
 public abstract class AbstractEmailService implements EmailService{
-	
-	@Autowired
-	private UsuarioService usuario;
 	
 	@Autowired
 	private TemplateEngine templateEngine;
@@ -33,28 +24,6 @@ public abstract class AbstractEmailService implements EmailService{
 	
 	@Value("${default.sender}")
 	private String sender;
-		
-	@Override
-	public void sendOrderConfirmationEmail(Repertorio obj) {
-		SimpleMailMessage sm = prepareSimpleMailMessageFromRepertorio(obj);
-		sendEmail(sm);
-	}
-
-	protected SimpleMailMessage prepareSimpleMailMessageFromRepertorio(Repertorio obj) {
-		
-		SimpleMailMessage sm = new SimpleMailMessage();
-		for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
-			sm.setTo(email.getEmail());
-			sm.setBcc(email.getEmail());
-			sm.setCc(email.getEmail());
-			sm.setFrom(sender);
-			sm.setSubject("Repertório do dia: " + obj.getData());
-			sm.setSentDate(new Date(System.currentTimeMillis()));
-			sm.setText(obj.toString());
-			System.err.println(obj.toString());
-		}
-		return sm;
-	}
 	
 	protected String htmlFromTemplatePedido(Repertorio obj) {
 		Context context = new Context();
@@ -70,7 +39,7 @@ public abstract class AbstractEmailService implements EmailService{
 			mm = prepareMimeMessageFromRepertorio(obj, email);
 			sendHtmlEmail(mm);
 		} catch (MessagingException e) {
-			sendOrderConfirmationEmail(obj);
+			System.err.println(e);
 		}
 		
 	}

@@ -15,8 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -44,10 +43,9 @@ public class Usuario implements Serializable{
 	@JoinColumn(name="igr_id")
 	private Igreja igreja;
 	
-	@NotEmpty(message="E-mail é obrigatório")
 	private String email;
 	
-	@NotEmpty(message="Senha é obrigatório")
+	@JsonIgnore
 	private String senha;
 	
 	private boolean ativo = true;

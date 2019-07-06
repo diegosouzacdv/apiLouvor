@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Categoria;
@@ -58,12 +59,15 @@ public class DBService {
 	@Autowired
 	private FuncaoRepository fucaoRepository;
 	
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 
 	public void instantiateTestDatabase() {
 		
 		
-		//Categorias
-				Categoria c1 = new Categoria(null, "Rádipa");
+				//Categorias
+				Categoria c1 = new Categoria(null, "Rápida");
 				Categoria c2 = new Categoria(null, "Média-Rápida");
 				categoriaRepository.save(Arrays.asList(c1, c2));
 				
@@ -126,8 +130,8 @@ public class DBService {
 				
 				
 				//Usuario
-				Usuario u1 = new Usuario( null, "Diego", "(xx)xxxxx-xxxx", "diegoguitaibanez@gmail.com", this.geradorSenha("godemais"));
-				Usuario u2 = new Usuario( null, "Admin", "(61)98576-9860", "admin@gmail.com", this.geradorSenha("admin"));
+				Usuario u1 = new Usuario( null, "Diego", "(xx)xxxxx-xxxx", "diegoguitaibanez@gmail.com", pe.encode("godemais"));
+				Usuario u2 = new Usuario( null, "Admin", "(61)98576-9860", "admin@gmail.com", pe.encode("admin"));
 				u1.setFuncao(Arrays.asList(f3));
 				u2.setFuncao(Arrays.asList(f1,f2,f3));
 				u1.setIgreja(i1);
@@ -160,22 +164,6 @@ public class DBService {
 
 				musicaRepertorioRepository.save(Arrays.asList(ms1,ms2));
 				}
-			
-
-			
-			@SuppressWarnings("unused")
-			private String geradorSenha(String senha) {
-				String encoder = "";
-				//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-				//encoder.encode(senha);
-				return senha;
-			}
-			
-			
-			//System.out.println(encoder.encode("admin.planaltosei"));
-			//System.out.println(encoder.encode("victor.planaltosei"));
-			
-			
 
 		
 	}
