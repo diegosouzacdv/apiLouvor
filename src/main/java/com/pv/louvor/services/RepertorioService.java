@@ -12,11 +12,16 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.MusicaRepertorio;
+import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Repertorio;
+import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
+import com.pv.louvor.repositories.UsuarioRepository;
+import com.pv.louvor.security.UserSS;
+import com.pv.louvor.services.exceptions.AuthorizationException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -36,6 +41,9 @@ public class RepertorioService {
 	@Autowired
 	private UsuarioService usuario;
 	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
 	public List<Repertorio> buscarTodos() {
 		List<Repertorio> obj = repo.findAll();
 		return obj;
@@ -52,6 +60,11 @@ public class RepertorioService {
 
 	@Transactional
 	public Repertorio insert(Repertorio obj) {
+		UserSS user = UserService.authenticated();
+		if(user != null && user.hasRole(Perfil.ADMIN)) {
+			Usuario usuario = usuarioRepository.findByEmail(user.getUsername());
+			obj.setCriador(usuario.getPessoa().getNome());
+		}
 		obj.setId(null);
 		obj =  repo.save(obj);
 		

@@ -10,10 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.pv.louvor.model.dto.UsuarioDTO;
 
 import javassist.expr.Instanceof;
 
@@ -36,6 +39,8 @@ public class Repertorio implements Serializable{
 
 	@OneToMany(mappedBy = "id.repertorio")
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
+	
+	private String criador;
 	
 	public Repertorio() {
 		
@@ -78,10 +83,20 @@ public class Repertorio implements Serializable{
 		this.musicasRepertorio = musicasRepertorio;
 	}
 	
+	
+	public String getCriador() {
+		return criador;
+	}
+
+	public void setCriador(String criador) {
+		this.criador = criador;
+	}
+
 	public double getTotalMusicas() {
 		int quant = musicasRepertorio.size();
 		return Integer.valueOf(quant);
 	}
+	
 
 	@Override
 	public int hashCode() {

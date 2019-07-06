@@ -52,7 +52,6 @@ public class UsuarioService {
 	public Usuario find(Integer id) {
 		
 		UserSS user = UserService.authenticated();
-		System.err.println(user);
 		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			
 			throw new AuthorizationException("Acesso Negado");
