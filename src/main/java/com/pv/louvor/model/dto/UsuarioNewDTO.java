@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.pv.louvor.model.Usuario;
+
 public class UsuarioNewDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -18,6 +20,13 @@ public class UsuarioNewDTO implements Serializable{
 	private String senha;
 	
 	public UsuarioNewDTO() {
+	}
+	
+	public UsuarioNewDTO(Usuario obj) {
+		nome = obj.getPessoa().getNome();
+		telefone = obj.getPessoa().getTelefone();
+		email = obj.getEmail();
+		senha = obj.getSenha();
 	}
 
 	public String getNome() {
