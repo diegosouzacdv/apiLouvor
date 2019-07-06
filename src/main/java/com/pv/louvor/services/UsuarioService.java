@@ -16,10 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
 import com.pv.louvor.repositories.UsuarioRepository;
+import com.pv.louvor.security.UserSS;
+import com.pv.louvor.services.exceptions.AuthorizationException;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -47,6 +50,14 @@ public class UsuarioService {
 	}
 
 	public Usuario find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		System.err.println(user);
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
 		Usuario obj = repo.findOne(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException("Usuário não encontrado! Id: " + id + 

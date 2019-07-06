@@ -48,7 +48,6 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(listDto);
  	}
 
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> find(@PathVariable Integer id) {
 		Usuario obj = service.find(id);
