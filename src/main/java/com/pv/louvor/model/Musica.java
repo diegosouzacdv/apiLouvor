@@ -64,10 +64,10 @@ public class Musica implements Serializable{
 
 	
 	@Column(name="mus_notaOriginal")
-	private Integer notaOriginal;
+	private String notaOriginal;
 	
 	@Column(name="mus_notaTocada")
-	private Integer notaTocada;	
+	private String notaTocada;	
 	
 	private boolean ativo;
 	
@@ -81,8 +81,8 @@ public class Musica implements Serializable{
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.notaOriginal = notaOriginal.getCod();
-		this.notaTocada = notaTocada.getCod();
+		this.notaOriginal = notaOriginal.getDescricao();
+		this.notaTocada = notaTocada.getDescricao();
 		this.ativo = ativo;
 	}
 	
@@ -160,19 +160,19 @@ public class Musica implements Serializable{
 		this.dataInserida = dataInserida;
 	}
 
-	public Integer getNotaOriginal() {
+	public String getNotaOriginal() {
 		return notaOriginal;
 	}
 
-	public void setNotaOriginal(Integer notaOriginal) {
+	public void setNotaOriginal(String notaOriginal) {
 		this.notaOriginal = notaOriginal;
 	}
 
-	public Integer getNotaTocada() {
+	public String getNotaTocada() {
 		return notaTocada;
 	}
 
-	public void setNotaTocada(Integer notaTocada) {
+	public void setNotaTocada(String notaTocada) {
 		this.notaTocada = notaTocada;
 	}
 
