@@ -17,6 +17,7 @@ import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.NotasMusicais;
+import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Tutorial;
 import com.pv.louvor.model.Usuario;
@@ -132,6 +133,7 @@ public class DBService {
 				//Usuario
 				Usuario u1 = new Usuario( null, "Diego", "(xx)xxxxx-xxxx", "diegoguitaibanez@gmail.com", pe.encode("godemais"));
 				Usuario u2 = new Usuario( null, "Admin", "(61)98576-9860", "admin@gmail.com", pe.encode("admin"));
+				u2.addPerfil(Perfil.ADMIN);
 				u1.setFuncao(Arrays.asList(f3));
 				u2.setFuncao(Arrays.asList(f1,f2,f3));
 				u1.setIgreja(i1);

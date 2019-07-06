@@ -2,7 +2,9 @@ package com.pv.louvor.model.dto;
 
 
 import java.io.Serializable;
+import java.util.Set;
 
+import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 
 public class UsuarioDTO implements Serializable{
@@ -12,6 +14,7 @@ public class UsuarioDTO implements Serializable{
 	private Integer id;
 	private String nome;
 	private boolean ativo;
+	private Set<Perfil> perfil;
 	
 	public UsuarioDTO() {
 		
@@ -21,6 +24,7 @@ public class UsuarioDTO implements Serializable{
 		id = obj.getId();
 		nome = obj.getPessoa().getNome();
 		ativo = obj.isAtivo();
+		perfil = obj.getPerfis();
 	}
 	
 	public boolean isAtivo() {
@@ -48,5 +52,13 @@ public class UsuarioDTO implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Set<Perfil> getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Set<Perfil> perfil) {
+		this.perfil = perfil;
 	}	
 }

@@ -1,11 +1,17 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,6 +45,10 @@ public class Usuario implements Serializable{
 	inverseJoinColumns= @JoinColumn(name="fun_id"))
 	private List<Funcao> funcao;
 	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<Integer>();
+	
 	@ManyToOne
 	@JoinColumn(name="igr_id")
 	private Igreja igreja;
@@ -51,7 +61,7 @@ public class Usuario implements Serializable{
 	private boolean ativo = true;
 	
 	public Usuario() {
-		
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Usuario(Integer id, String nome, String telefone, String email, String senha) {
@@ -61,6 +71,7 @@ public class Usuario implements Serializable{
 		this.pessoa.setTelefone(telefone);
 		this.email = email;
 		this.senha = senha;
+		addPerfil(Perfil.USUARIO);
 	}
 
 	public Integer getId() {
@@ -117,6 +128,14 @@ public class Usuario implements Serializable{
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.ToEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 
 	@Override
