@@ -1,5 +1,6 @@
 package com.pv.louvor.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.pv.louvor.model.Perfil;
@@ -37,6 +39,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private HttpServletRequest request;
+	
+	@Autowired
+	private S3Services s3Service;;
 
 	public List<Usuario> buscarTodos() {
 		List<Usuario> obj = repo.findAll();
@@ -120,5 +125,7 @@ public class UsuarioService {
 			return obj;
 		}
 	
-	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
+	}
 }
