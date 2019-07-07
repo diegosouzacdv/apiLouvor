@@ -42,7 +42,7 @@ public class UsuarioResource {
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/email")
+	@GetMapping("/allemail")
 	public ResponseEntity<List<UsuarioEmailDTO>> findAllEmail() {
 		List<Usuario> list = service.buscarTodos();
 		List<UsuarioEmailDTO> listDto = list.stream().map(obj -> new UsuarioEmailDTO(obj.getEmail())).collect(Collectors.toList());
@@ -52,6 +52,12 @@ public class UsuarioResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> find(@PathVariable Integer id) {
 		Usuario obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+ 	}
+	
+	@GetMapping("/email")
+	public ResponseEntity<Usuario> findByEmail(@RequestParam(value="value") String email) {
+		Usuario obj = service.findByEmail(email);
 		return ResponseEntity.ok().body(obj);
  	}
 	
