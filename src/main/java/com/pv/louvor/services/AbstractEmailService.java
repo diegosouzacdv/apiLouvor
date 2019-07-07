@@ -7,12 +7,14 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import com.pv.louvor.model.Repertorio;
+import com.pv.louvor.model.Usuario;
 
 public abstract class AbstractEmailService implements EmailService{
 	
@@ -24,6 +26,22 @@ public abstract class AbstractEmailService implements EmailService{
 	
 	@Value("${default.sender}")
 	private String sender;
+	
+	@Override
+	public void sendOrderConfirmationEmail(Repertorio obj) {
+		SimpleMailMessage sm = prepareSimpleMailMessageFromPedido(obj);
+		sendEmail(sm);
+	}
+
+	protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Repertorio obj) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo("");
+		sm.setFrom(sender);
+		sm.setSubject("Pedido confirmado! Código: " + obj.getId());
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText(obj.toString());
+		return sm;
+	}
 	
 	protected String htmlFromTemplatePedido(Repertorio obj) {
 		Context context = new Context();
@@ -57,6 +75,22 @@ public abstract class AbstractEmailService implements EmailService{
 		mmh.setText(htmlFromTemplatePedido(obj), true);
 		return mimeMessage;
 	
+	}
+	
+	@Override
+	public void sendNewPasswordEmail(Usuario usuario, String newPass) {
+		SimpleMailMessage sm = prepareNewPasswordEmail(usuario, newPass);
+		sendEmail(sm);
+	}
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Usuario usuario, String newPass) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(usuario.getEmail());
+		sm.setFrom(sender);
+		sm.setSubject("Solicitação de nova senha");
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText("Nova senha: " + newPass);
+		return sm;
 	}
 	
 		
