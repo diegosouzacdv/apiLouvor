@@ -80,10 +80,12 @@ public class UsuarioService {
 		}
 		return obj;
 	}
-	
-	
 
 	public Usuario update(Usuario obj) {
+		Usuario aux = repo.findOne(obj.getId());
+		if(aux != null) {
+			obj.setSenha(aux.getSenha());
+		}
 		this.isExistePorId(obj);
 		find(obj.getId());
 		return repo.save(obj);

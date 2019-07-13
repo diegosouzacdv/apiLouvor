@@ -80,7 +80,7 @@ public class UsuarioResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/pessoais/{id}")
 	public ResponseEntity<Usuario> update(@RequestBody Usuario obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
