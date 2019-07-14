@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pv.louvor.model.Usuario;
-import com.pv.louvor.model.dto.UsuarioAtualizarDadosPessoaisDTO;
+import com.pv.louvor.model.dto.UsuarioSemFuncoesDTO;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
@@ -15,7 +15,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	@Transactional(readOnly = true)
 	Usuario findByEmail(String email);
 
-	UsuarioAtualizarDadosPessoaisDTO save(UsuarioAtualizarDadosPessoaisDTO obj);
+	UsuarioSemFuncoesDTO save(UsuarioSemFuncoesDTO obj);
 
 	Usuario findById(Integer id);
 	

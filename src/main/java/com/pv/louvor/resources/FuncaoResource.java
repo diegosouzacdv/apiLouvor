@@ -33,6 +33,7 @@ public class FuncaoResource  {
 		List<Funcao> obj = service.buscarTodos();
 		return ResponseEntity.ok().body(obj);
  	}
+
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Funcao> find(@PathVariable Integer id) {
