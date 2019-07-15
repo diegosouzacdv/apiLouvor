@@ -1,5 +1,10 @@
 package com.pv.louvor.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -59,7 +64,12 @@ public class RepertorioService {
 	}
 
 	@Transactional
-	public Repertorio insert(Repertorio obj) {
+	public Repertorio insert(Repertorio obj) throws ParseException {
+		
+		String data = obj.getData();
+		data = this.data(data);
+		obj.setData(obj.getData() + " " + data );
+
 		UserSS user = UserService.authenticated();
 		if(user != null && user.hasRole(Perfil.ADMIN)) {
 			Usuario usuario = usuarioRepository.findByEmail(user.getUsername());
@@ -96,5 +106,26 @@ public class RepertorioService {
 	public Page<Repertorio> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public String data(String data ) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = sdf.parse(data);
+        GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(date);
+        String nome = ""; 
+        int diaDaSemana = gc.get(GregorianCalendar.DAY_OF_WEEK);
+        switch(diaDaSemana){ 
+        case Calendar.SUNDAY: nome = "Domingo"; break; 
+        case Calendar.MONDAY: nome = "Segunda-Feira"; break; 
+        case Calendar.TUESDAY: nome = "Terça-Feira"; break; 
+        case Calendar.WEDNESDAY: nome = "Quarta-Feira"; break; 
+        case Calendar.THURSDAY: nome = "Quinta-Feira"; break; 
+        case Calendar.FRIDAY: nome = "Sexta-Feira"; break; 
+        case Calendar.SATURDAY: nome = "Sábado"; break; 
+        } 
+        System.err.println(nome);
+        return nome;
+        
 	}
 }

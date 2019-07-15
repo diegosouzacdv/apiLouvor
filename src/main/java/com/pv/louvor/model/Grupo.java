@@ -37,7 +37,7 @@ private static final long serialVersionUID = 1L;
 	@OneToMany(mappedBy = "grupo")
 	private List<Musica> musicas;
 	
-	
+	@JsonIgnore
 	private boolean ativo;
 	
 	public Grupo() {

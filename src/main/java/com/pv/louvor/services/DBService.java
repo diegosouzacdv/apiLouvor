@@ -152,6 +152,7 @@ public class DBService {
 				//Repertorio
 				Repertorio r1 = new Repertorio();
 				r1.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				r1.setCriador(u1.getPessoa().getNome());
 				r1.setEquipeDoDia(eq1);
 				
 				repertorioRepository.save(r1);

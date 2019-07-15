@@ -69,6 +69,7 @@ public class Musica implements Serializable{
 	@Column(name="mus_notaTocada")
 	private String notaTocada;	
 	
+	@JsonIgnore
 	private boolean ativo;
 	
 	public Musica() {

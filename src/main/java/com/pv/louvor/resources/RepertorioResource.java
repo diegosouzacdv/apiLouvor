@@ -1,6 +1,7 @@
 package com.pv.louvor.resources;
 
 import java.net.URI;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,13 @@ public class RepertorioResource {
 		return ResponseEntity.ok().body(listDto);
 
  	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<Repertorio>> findAllComplet() {
+		List<Repertorio> list = service.buscarTodos();
+		return ResponseEntity.ok().body(list);
+
+ 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Repertorio> find(@PathVariable Integer id) {
@@ -57,7 +65,7 @@ public class RepertorioResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
-	public ResponseEntity<Repertorio> insert(@Valid @RequestBody Repertorio obj) {
+	public ResponseEntity<Repertorio> insert(@Valid @RequestBody Repertorio obj) throws ParseException {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
