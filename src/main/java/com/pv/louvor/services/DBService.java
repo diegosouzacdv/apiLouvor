@@ -144,14 +144,14 @@ public class DBService {
 				Equipe eq1 = new Equipe();
 				eq1.setBaterista(u1.getPessoa().getNome());
 				eq1.setGuitarrista(u2.getPessoa().getNome());
-				eq1.setMinistro(Arrays.asList(u1.getPessoa().getNome()));
+				eq1.setMinistro(Arrays.asList(u1.getPessoa().getNome(), u2.getPessoa().getNome()));
 				eq1.setTecladista(u2.getPessoa().getNome());
 				eq1.setViolonista(u2.getPessoa().getNome());
 				
 
 				//Repertorio
 				Repertorio r1 = new Repertorio();
-				r1.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				r1.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+ " " + "Segunda-Feira");
 				r1.setCriador(u1.getPessoa().getNome());
 				r1.setEquipeDoDia(eq1);
 				

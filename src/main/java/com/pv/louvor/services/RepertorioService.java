@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Repertorio;
