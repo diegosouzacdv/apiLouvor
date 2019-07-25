@@ -20,10 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.pv.louvor.model.Funcao;
+import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioDTO;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
+import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.services.UsuarioService;
 
 @RestController
@@ -32,6 +35,9 @@ public class UsuarioResource {
 	
 	@Autowired
 	private UsuarioService service;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping
@@ -80,10 +86,27 @@ public class UsuarioResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
+	
 	@PutMapping("/pessoais/{id}")
 	public ResponseEntity<Usuario> update(@RequestBody Usuario obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/perfil/{perfil}/{id}")
+	public ResponseEntity<Usuario> updatePerfil(@PathVariable int perfil, @PathVariable Integer id) {
+		Usuario usuario = usuarioRepository.findOne(id);
+		System.err.println("Usuario" + id);
+		System.err.println("Perfil" + perfil);
+		System.err.println(perfil == 1);
+		if (perfil == 1) {
+			System.err.println("entrou");
+			usuario.addPerfil(Perfil.ADMIN);
+		} else {
+
+		}
+		usuario = service.update(usuario);
 		return ResponseEntity.noContent().build();
 	}
 	

@@ -82,12 +82,16 @@ public class UsuarioService {
 	}
 
 	public Usuario update(Usuario obj) {
+		
 		Usuario aux = repo.findOne(obj.getId());
 		if(aux != null) {
 			obj.setSenha(aux.getSenha());
 		}
 		this.isExistePorId(obj);
 		find(obj.getId());
+		if(aux.getPerfis().size() > 1) {
+			obj.addPerfil(Perfil.ADMIN);
+		}
 		return repo.save(obj);
 	}
 	
@@ -107,6 +111,7 @@ public class UsuarioService {
 
 	@Transactional
 	public Usuario insert(Usuario obj) {
+		
 		this.isExistePorEmail(obj);
 		obj.setId(null);
 		obj.setAtivo(false);

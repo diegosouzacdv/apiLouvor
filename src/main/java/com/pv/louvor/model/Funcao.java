@@ -100,4 +100,5 @@ public class Funcao implements Serializable{
 			return false;
 		return true;
 	}
+
 }

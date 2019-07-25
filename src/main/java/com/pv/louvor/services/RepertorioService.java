@@ -124,8 +124,7 @@ public class RepertorioService {
         case Calendar.THURSDAY: nome = "Quinta-Feira"; break; 
         case Calendar.FRIDAY: nome = "Sexta-Feira"; break; 
         case Calendar.SATURDAY: nome = "Sábado"; break; 
-        } 
-        System.err.println(nome);
+        }
         return nome;
         
 	}
