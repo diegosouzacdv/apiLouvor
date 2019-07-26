@@ -107,6 +107,7 @@ CREATE TABLE `repertorio` (
   `rep_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `rep_data` varchar(255) NOT NULL,
   `equipe_do_dia_equ_id` int(11) DEFAULT NULL,
+  `rep_criador` varchar(255) NOT NULL,
   KEY `FK9n4c71yairyrx24o9kcp8b9h5` (`equipe_do_dia_equ_id`),
   CONSTRAINT `FK9n4c71yairyrx24o9kcp8b9h5` FOREIGN KEY (`equipe_do_dia_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

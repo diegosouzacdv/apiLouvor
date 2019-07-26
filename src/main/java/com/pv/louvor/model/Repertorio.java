@@ -40,7 +40,8 @@ public class Repertorio implements Serializable{
 	@OneToMany(mappedBy = "id.repertorio")
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
-	private String criador;
+	@Column(name="rep_criador")
+	private String criador; 
 	
 	public Repertorio() {
 		
