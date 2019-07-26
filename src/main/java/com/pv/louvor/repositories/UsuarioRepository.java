@@ -3,7 +3,6 @@ package com.pv.louvor.repositories;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +17,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
 	UsuarioSemFuncoesDTO save(UsuarioSemFuncoesDTO obj);
 
-	Usuario findById(Integer id);
-	
-	@Query("DELETE FROM Usuario u Join u.perfis where u = 2")
-	Usuario deletePerfil();
-	
+	Usuario findById(Integer id);	
 }
