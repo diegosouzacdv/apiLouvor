@@ -14,23 +14,23 @@ import com.pv.louvor.services.SmtpEmailService;
 @Profile("dev")
 public class DevConfig {
 	
-	@Autowired
-	private DBService dbService;
+//	@Autowired
+//	private DBService dbService;
 	
-	@Value("${spring.jpa.hibernate.ddl-auto}")
-	private String strategy;
+//	@Value("${spring.jpa.hibernate.ddl-auto}")
+//	private String strategy;
 	
-	@Bean
-	public boolean instantiateDatabase(){
-		
-		if(!"create".equals(strategy)) {
-			return false;
-		}
-		
-		dbService.instantiateTestDatabase();
-		
-		return true;
-	}
+//	@Bean
+//	public boolean instantiateDatabase(){
+//		
+//		if(!"create".equals(strategy)) {
+//			return false;
+//		}
+//		
+//		dbService.instantiateTestDatabase();
+//		
+//		return true;
+//	}
 	
 	@Bean
 	public EmailService emailService() {
