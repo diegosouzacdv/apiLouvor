@@ -75,4 +75,12 @@ private static final long serialVersionUID = 1L;
 	public void setTeclado(List<String> teclado) {
 		this.teclado = teclado;
 	}
+
+	@Override
+	public String toString() {
+		return "Tutorial [violao=" + violao + ", guitarra=" + guitarra + ", baixo=" + baixo + ", bateria=" + bateria
+				+ ", teclado=" + teclado + "]";
+	}
+	
+	
 }

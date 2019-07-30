@@ -81,4 +81,12 @@ private static final long serialVersionUID = 1L;
 	public void setGuiaVocal(String guiaVocal) {
 		this.guiaVocal = guiaVocal;
 	}
+
+	@Override
+	public String toString() {
+		return "Estudo [letra=" + letra + ", cifra=" + cifra + ", bpm=" + bpm + ", guiaInstrumental=" + guiaInstrumental
+				+ ", guiaVocal=" + guiaVocal + "]";
+	}
+	
+	
 }

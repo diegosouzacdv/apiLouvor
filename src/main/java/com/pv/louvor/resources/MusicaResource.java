@@ -38,7 +38,6 @@ public class MusicaResource {
 		List<Musica> list = service.buscarTodos();
 		List<MusicaDTO> listDto = list.stream().map(obj -> new MusicaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
-
  	}
 
 	@GetMapping("/{id}")
@@ -50,14 +49,13 @@ public class MusicaResource {
 	@GetMapping("/page")
 	public ResponseEntity<Page<MusicaDTO>> findPage(
 			@RequestParam(value="nome", defaultValue = "") String nome,
-			@RequestParam(value="categorias", defaultValue = "") String categorias,
 			@RequestParam(value="page", defaultValue = "0") Integer page,
 			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue = "ASC") String direction) {
+			@RequestParam(value="direction", defaultValue = "DESC") String direction) {
 		String nomeDecoded = URL.decodeParam(nome);
-		List<Integer> ids = URL.decodeIntList(categorias);
-		Page<Musica> list = service.findPage(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
+
+		Page<Musica> list = service.findPage(nomeDecoded, page, linesPerPage, orderBy, direction);
 		Page<MusicaDTO> listDTO = list.map(obj -> new MusicaDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
  	}
@@ -74,6 +72,7 @@ public class MusicaResource {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Musica> update(@RequestBody Musica obj, @PathVariable Integer id) {
+		System.err.println(obj);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

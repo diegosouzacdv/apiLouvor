@@ -19,9 +19,11 @@ public interface MusicaRepository extends JpaRepository<Musica, Integer>{
 	@Transactional(readOnly = true)
 	Musica findByNome(String nome);
 	
-//	@Transactional(readOnly = true)
-//	@Query("SELECT DISTINCT obj FROM Musica obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% AND cat IN :categorias")
-//	Page<Musica> search(@Param("nome") String nome,@Param("categorias") List<Categoria> categorias, Pageable pageRequest);
+	/*@Transactional(readOnly = true)
+	@Query("SELECT DISTINCT obj FROM Musica obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% AND cat IN :categorias")
+	Page<Musica> search(@Param("nome") String nome,@Param("categorias") List<Categoria> categorias, Pageable pageRequest);
 	@Transactional(readOnly = true)
-	Page<Musica> findDistinctByNomeIgnoreCaseContainingAndCategoriasIn(String nome,List<Categoria> categorias, Pageable pageRequest);
+	Page<Musica> findDistinctByNomeIgnoreCaseContainingAndCategoriasIn(String nome,Categoria categorias, Pageable pageRequest);*/
+	@Transactional(readOnly = true)
+	Page<Musica> findDistinctByNomeIgnoreCaseContaining(String nome,Pageable pageRequest);
 }

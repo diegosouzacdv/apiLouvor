@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioDTO;
@@ -43,6 +42,14 @@ public class UsuarioResource {
 	@GetMapping
 	public ResponseEntity<List<UsuarioDTO>> findAll() {
 		List<Usuario> list = service.buscarTodos();
+		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+ 	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@GetMapping("/novosusuarios")
+	public ResponseEntity<List<UsuarioDTO>> novosUsuarios() {
+		List<Usuario> list = service.novosUsuarios();
 		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}
@@ -89,8 +96,14 @@ public class UsuarioResource {
 	
 	@PutMapping("/pessoais/{id}")
 	public ResponseEntity<Usuario> update(@RequestBody Usuario obj, @PathVariable Integer id) {
-		obj.setId(id);
+		obj.setId(id);   
 		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	} 
+	
+	@PutMapping("/ativar/{id}/{igreja}")
+	public ResponseEntity<Usuario> ativarUsuario(@PathVariable Integer id, @PathVariable String igreja) {
+		service.ativarUsuario(id, igreja);
 		return ResponseEntity.noContent().build();
 	}
 	

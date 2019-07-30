@@ -208,7 +208,17 @@ public class Musica implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Musica [id=" + id + ", nome=" + nome + ", grupo=" + grupo + ", categorias=" + categorias
+				+ ", musicasRepertorio=" + musicasRepertorio + ", estudo=" + estudo + ", tutorial=" + tutorial
+				+ ", dataInserida=" + dataInserida + ", notaOriginal=" + notaOriginal + ", notaTocada=" + notaTocada
+				+ ", ativo=" + ativo + "]";
 	}	
+	
 }
 	
 	

@@ -1,3 +1,4 @@
+
 CREATE TABLE `categoria` (
   `cat_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `cat_nome` varchar(80) NOT NULL
@@ -48,8 +49,8 @@ CREATE TABLE `musica` (
   `est_guia_vocal` varchar(255) DEFAULT NULL,
   `est_letra` varchar(255) DEFAULT NULL,
   `mus_nome` varchar(80) NOT NULL,
-  `mus_nota_original` int(11) DEFAULT NULL,
-  `mus_nota_tocada` int(11) DEFAULT NULL,
+  `mus_nota_original` varchar(255) DEFAULT NULL,
+  `mus_nota_tocada` varchar(255) DEFAULT NULL,
   `cat_id` int(11) DEFAULT NULL,
   `gru_id` int(11) DEFAULT NULL,
   KEY `FK956ym5bcapiy59bdx9xx9fg52` (`cat_id`),
@@ -57,7 +58,7 @@ CREATE TABLE `musica` (
   CONSTRAINT `FK1sqiptrejlh6vmqwrf7ifplt` FOREIGN KEY (`gru_id`) REFERENCES `grupo` (`gru_id`),
   CONSTRAINT `FK956ym5bcapiy59bdx9xx9fg52` FOREIGN KEY (`cat_id`) REFERENCES `categoria` (`cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `musica` VALUES (1,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom',2,2,1,1),(2,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom',2,2,1,1);
+INSERT INTO `musica` VALUES (1,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D','D',1,1),(2,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D','D',1,1);
 
 CREATE TABLE `tut_baixo` (
   `musica_mus_id` int(11) NOT NULL,

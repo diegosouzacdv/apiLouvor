@@ -16,11 +16,11 @@ public enum NotasMusicais {
 	Gbemol(444, "Gb (Sol Bemol)"),
 	G(5, "G (Sol Maior)"),
 	GbaixoD(55, "G/D (Sol Maior com Ré no baixo)"),
-	Abemol(555, "Lá Bemol"),
+	Abemol(555, "Ab (Lá Bemol)"),
 	A(6, "A (Lá Maior)"),
 	AbaixoE(66, "A/E (Lá Maior com Mi no baixo)"),
 	Bbemol(666, "Bb (Si Bemol)"),
-	B(7, "B (Si Maior"),
+	B(7, "B (Si Maior)"),
 	Bbaixofsustenido(77, "B/E (Si Maior com Fá Sustenido no baixo)"),
 	Cbemol(777, "Cb (Dó Bemol)");
 	

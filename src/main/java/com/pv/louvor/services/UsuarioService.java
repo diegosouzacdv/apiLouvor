@@ -20,10 +20,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
+import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.security.UserSS;
 import com.pv.louvor.services.exceptions.AuthorizationException;
@@ -32,25 +34,28 @@ import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UsuarioService {
-	
+
 	@Autowired
 	private UsuarioRepository repo;
+
+	@Autowired
+	private IgrejaRepository igrejaRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder pe;
-	
+
 	@Autowired
 	private HttpServletRequest request;
-	
+
 	@Autowired
 	private S3Services s3Service;
-	
+
 	@Autowired
 	private ImageService imageService;
-	
+
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
-	
+
 	@Value("${img.profile.size}")
 	private Integer size;
 
@@ -58,43 +63,59 @@ public class UsuarioService {
 		List<Usuario> obj = repo.findAll();
 		return obj;
 	}
-	
+
+	public List<Usuario> novosUsuarios() {
+		List<Usuario> obj = repo.findByAtivo(false);
+		return obj;
+	}
+
 	public List<UsuarioEmailDTO> buscarTodosEmails() {
 		List<Usuario> list = repo.findAll();
-		List<UsuarioEmailDTO> listDto = list.stream().map(obj -> new UsuarioEmailDTO(obj.getEmail())).collect(Collectors.toList());
+		List<UsuarioEmailDTO> listDto = list.stream().map(obj -> new UsuarioEmailDTO(obj.getEmail()))
+				.collect(Collectors.toList());
 		return listDto;
 	}
 
 	public Usuario find(Integer id) {
-		
+
 		UserSS user = UserService.authenticated();
-		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
-			
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+
 			throw new AuthorizationException("Acesso Negado");
 		}
-		
+
 		Usuario obj = repo.findOne(id);
 		if (obj == null) {
-			throw new ObjectNotFoundException("Usuário não encontrado! Id: " + id + 
-					", Tipo: " + Usuario.class.getName());
+			throw new ObjectNotFoundException(
+					"Usuário não encontrado! Id: " + id + ", Tipo: " + Usuario.class.getName());
 		}
 		return obj;
 	}
 
 	public Usuario update(Usuario obj) {
-		
+
 		Usuario aux = repo.findOne(obj.getId());
-		if(aux != null) {
+		if (aux != null) {
 			obj.setSenha(aux.getSenha());
 		}
 		this.isExistePorId(obj);
 		find(obj.getId());
-		if(aux.getPerfis().size() > 1) {
+		if (aux.getPerfis().size() > 1) {
 			obj.addPerfil(Perfil.ADMIN);
 		}
 		return repo.save(obj);
 	}
-	
+
+	public void ativarUsuario(Integer id, String igreja) {
+		Igreja objIgreja = igrejaRepository.findByNome(igreja);
+		Usuario obj = repo.findOne(id);
+		if(obj != null) {
+			obj.setAtivo(true);	
+			obj.setIgreja(objIgreja);
+		}
+		repo.save(obj); 
+	}
+
 	public void delete(Integer id) {
 		find(id);
 		try {
@@ -104,14 +125,15 @@ public class UsuarioService {
 		}
 	}
 
-	public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
-		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
+	public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
+	
 
 	@Transactional
 	public Usuario insert(Usuario obj) {
-		
+
 		this.isExistePorEmail(obj);
 		obj.setId(null);
 		obj.setAtivo(false);
@@ -119,33 +141,35 @@ public class UsuarioService {
 	}
 
 	public Usuario fromDTO(UsuarioNewDTO objDTO) {
-		Usuario user = new Usuario(null, objDTO.getNome(), objDTO.getTelefone(), objDTO.getEmail(), pe.encode(objDTO.getSenha()));
+		Usuario user = new Usuario(null, objDTO.getNome(), objDTO.getTelefone(), objDTO.getEmail(),
+				pe.encode(objDTO.getSenha()));
 		return user;
 	}
-	
+
 	public Usuario isExistePorEmail(Usuario obj) {
 		Usuario obj1 = repo.findByEmail(obj.getEmail());
-			if(obj1 != null && obj1.getEmail().equals(obj.getEmail())) {
-				throw new ObjectFoundException("Usuário Já existe com esse e-mail: " + obj.getEmail());
-			}		
-			return obj;
+		if (obj1 != null && obj1.getEmail().equals(obj.getEmail())) {
+			throw new ObjectFoundException("Usuário Já existe com esse e-mail: " + obj.getEmail());
 		}
-		
-		public Usuario isExistePorId(Usuario obj) {
-			@SuppressWarnings("unchecked")
-			Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-			Integer uriID = Integer.parseInt(map.get("id"));
-			
-			Usuario aux = repo.findByEmail(obj.getEmail());
-			if(aux != null && !aux.getId().equals(uriID)) {
-				throw new ObjectFoundException("Usuário Já existe com esse e-mail: " + obj.getEmail());
-			}
-			return obj;
+		return obj;
+	}
+
+	public Usuario isExistePorId(Usuario obj) {
+		@SuppressWarnings("unchecked")
+		Map<String, String> map = (Map<String, String>) request
+				.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Integer uriID = Integer.parseInt(map.get("id"));
+
+		Usuario aux = repo.findByEmail(obj.getEmail());
+		if (aux != null && !aux.getId().equals(uriID)) {
+			throw new ObjectFoundException("Usuário Já existe com esse e-mail: " + obj.getEmail());
 		}
-	
+		return obj;
+	}
+
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
 		UserSS user = UserService.authenticated();
-		if(user == null) {
+		if (user == null) {
 			throw new AuthorizationException("Acesso Negado");
 		}
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
@@ -154,16 +178,16 @@ public class UsuarioService {
 		String fileName = prefix + user.getId() + ".jpg";
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
-	
+
 	public Usuario findByEmail(String email) {
 		UserSS user = UserService.authenticated();
-		if(user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
 			throw new AuthorizationException("Acesso negado");
 		}
 		Usuario obj = repo.findByEmail(email);
-		if(obj == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + user.getId()
-					+ ", Tipo: " + Usuario.class.getName());
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado! Id: " + user.getId() + ", Tipo: " + Usuario.class.getName());
 		}
 		return obj;
 	}
