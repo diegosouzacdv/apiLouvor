@@ -119,7 +119,7 @@ public class UsuarioResource {
 			System.err.println("entrou");
 			usuario.addPerfil(Perfil.ADMIN);
 		} else {
-
+			usuarioRepository.apagarPerfil(id);
 		}
 		usuario = service.update(usuario);
 		return ResponseEntity.noContent().build();
