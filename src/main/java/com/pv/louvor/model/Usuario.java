@@ -145,6 +145,11 @@ public class Usuario implements Serializable{
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCod());
 	}
+	
+	public void deletePerfil(Perfil perfil) {
+		perfis.clear();
+	}
+	
 
 	public void setPerfis(Set<Integer> perfis) {
 		this.perfis = perfis;

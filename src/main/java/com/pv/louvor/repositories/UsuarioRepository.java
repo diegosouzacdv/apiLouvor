@@ -5,6 +5,7 @@ package com.pv.louvor.repositories;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +20,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	Usuario findByEmail(String email);
 
 	UsuarioSemFuncoesDTO save(UsuarioSemFuncoesDTO obj);
-	
-	@Query("UPDATE Usuario u set u.perfis = NULL where u.id = ?1")
-	Usuario apagarPerfil(int id);
 
 	Usuario findById(Integer id);
 	

@@ -119,11 +119,13 @@ public class UsuarioResource {
 			System.err.println("entrou");
 			usuario.addPerfil(Perfil.ADMIN);
 		} else {
-			usuarioRepository.apagarPerfil(id);
+			usuario.deletePerfil(Perfil.ADMIN);
+			usuario.addPerfil(Perfil.USUARIO);
 		}
 		usuario = service.update(usuario);
 		return ResponseEntity.noContent().build();
 	}
+	
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{id}")

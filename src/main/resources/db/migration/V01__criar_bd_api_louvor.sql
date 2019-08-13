@@ -58,7 +58,7 @@ CREATE TABLE `musica` (
   CONSTRAINT `FK1sqiptrejlh6vmqwrf7ifplt` FOREIGN KEY (`gru_id`) REFERENCES `grupo` (`gru_id`),
   CONSTRAINT `FK956ym5bcapiy59bdx9xx9fg52` FOREIGN KEY (`cat_id`) REFERENCES `categoria` (`cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `musica` VALUES (1,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D','D',1,1),(2,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D','D',1,1);
+INSERT INTO `musica` VALUES (1,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D (Ré Maior)','D (Ré Maior)',1,1),(2,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D (Ré Maior)','D (Ré Maior)',1,1);
 
 CREATE TABLE `tut_baixo` (
   `musica_mus_id` int(11) NOT NULL,
