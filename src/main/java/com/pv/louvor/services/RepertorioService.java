@@ -51,7 +51,8 @@ public class RepertorioService {
 	private UsuarioRepository usuarioRepository;
 	
 	public List<Repertorio> buscarTodos() {
-		List<Repertorio> obj = repo.findAll();
+		boolean ativo = true;
+		List<Repertorio> obj = repo.findDistinctByAtivoIs(ativo);
 		return obj;
 	}
 

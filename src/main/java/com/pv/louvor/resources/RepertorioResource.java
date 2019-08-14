@@ -24,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.dto.RepertorioDTO;
+import com.pv.louvor.resources.utils.URL;
 import com.pv.louvor.services.RepertorioService;
 
 @RestController
@@ -55,7 +56,8 @@ public class RepertorioResource {
  	}
 	
 	@GetMapping("/page")
-	public ResponseEntity<Page<Repertorio>> findPage(@RequestParam(value="page", defaultValue = "0") Integer page, 
+	public ResponseEntity<Page<Repertorio>> findPage(
+			@RequestParam(value="page", defaultValue = "0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue = "data") String orderBy, 
 			@RequestParam(value="direction", defaultValue = "DESC") String direction) {

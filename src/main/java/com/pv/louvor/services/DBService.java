@@ -154,18 +154,30 @@ public class DBService {
 				r1.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+ " " + "Segunda-Feira");
 				r1.setCriador(u1.getPessoa().getNome());
 				r1.setEquipeDoDia(eq1);
+				r1.setAtivo(true);
 				
-				repertorioRepository.save(r1);
+				Repertorio r2 = new Repertorio();
+				r2.setData(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+ " " + "Segunda-Feira");
+				r2.setCriador(u1.getPessoa().getNome());
+				r2.setEquipeDoDia(eq1);
+				r2.setAtivo(true);
+				
+				repertorioRepository.save(Arrays.asList(r1,r2));
 
 				//MusicaRepertorio
 				MusicaRepertorio ms1 = new MusicaRepertorio(r1, m1);
 				MusicaRepertorio ms2 = new MusicaRepertorio(r1, m2);
 				
+				MusicaRepertorio ms3 = new MusicaRepertorio(r2, m1);
+				MusicaRepertorio ms4 = new MusicaRepertorio(r2, m2);
+				
 				r1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2));
+				r2.getMusicasRepertorio().addAll(Arrays.asList(ms3,ms4));
 				m1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2));
+				m2.getMusicasRepertorio().addAll(Arrays.asList(ms3,ms4));
 				
 
-				musicaRepertorioRepository.save(Arrays.asList(ms1,ms2));
+				musicaRepertorioRepository.save(Arrays.asList(ms1,ms2,ms3,ms4));
 				}
 
 		

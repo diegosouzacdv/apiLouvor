@@ -43,6 +43,9 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_criador")
 	private String criador; 
 	
+	@Column(name="rep_ativo")
+	private boolean ativo;
+	
 	public Repertorio() {
 		
 	}
@@ -84,13 +87,20 @@ public class Repertorio implements Serializable{
 		this.musicasRepertorio = musicasRepertorio;
 	}
 	
-	
 	public String getCriador() {
 		return criador;
 	}
 
 	public void setCriador(String criador) {
 		this.criador = criador;
+	}
+	
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	public double getTotalMusicas() {

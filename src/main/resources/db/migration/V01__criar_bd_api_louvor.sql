@@ -109,10 +109,11 @@ CREATE TABLE `repertorio` (
   `rep_data` varchar(255) NOT NULL,
   `equipe_do_dia_equ_id` int(11) DEFAULT NULL,
   `rep_criador` varchar(255) NOT NULL,
+  `rep_ativo` boolean NOT NULL,
   KEY `FK9n4c71yairyrx24o9kcp8b9h5` (`equipe_do_dia_equ_id`),
   CONSTRAINT `FK9n4c71yairyrx24o9kcp8b9h5` FOREIGN KEY (`equipe_do_dia_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `repertorio` VALUES (1,'04/07/2019',1,'diego'),(2,'04/07/2019',2,'diego');
+INSERT INTO `repertorio` VALUES (1,'04/07/2019',1,'diego', true),(2,'04/07/2019',2,'diego', true);
 
 CREATE TABLE `musica_repertorio` (
   `rep_id` int(11) NOT NULL,
