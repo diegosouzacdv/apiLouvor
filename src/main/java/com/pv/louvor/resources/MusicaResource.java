@@ -79,6 +79,13 @@ public class MusicaResource {
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PutMapping("/desativar/{id}")
+	public ResponseEntity<Musica> disabledMusica(@RequestBody Musica obj, @PathVariable Integer id) {
+		service.desabilitar(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);

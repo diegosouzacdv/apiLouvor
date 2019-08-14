@@ -25,5 +25,5 @@ public interface MusicaRepository extends JpaRepository<Musica, Integer>{
 	@Transactional(readOnly = true)
 	Page<Musica> findDistinctByNomeIgnoreCaseContainingAndCategoriasIn(String nome,Categoria categorias, Pageable pageRequest);*/
 	@Transactional(readOnly = true)
-	Page<Musica> findDistinctByNomeIgnoreCaseContaining(String nome,Pageable pageRequest);
+	Page<Musica> findDistinctByNomeIgnoreCaseContainingAndAtivoIs(String nome, boolean ativo, Pageable pageRequest);
 }

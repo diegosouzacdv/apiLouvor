@@ -56,7 +56,14 @@ public class MusicaService {
 	public Musica update(Musica obj) {
 		//find(obj.getId());
 		//isExist(obj);
-		
+		return repo.save(obj);
+	}
+	
+	
+	public Musica desabilitar(Integer id) {
+		Musica obj = find(id);
+		obj.setAtivo(false);
+		System.err.println(">>>>>>>>>>>>" +obj.getDataInserida());
 		return repo.save(obj);
 	}
 	
@@ -80,6 +87,7 @@ public class MusicaService {
 
 	public Page<Musica> findPage(String nome, Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findDistinctByNomeIgnoreCaseContaining(nome, pageRequest);
+		boolean ativo = true;
+		return repo.findDistinctByNomeIgnoreCaseContainingAndAtivoIs(nome, ativo, pageRequest);
 	}
 }
