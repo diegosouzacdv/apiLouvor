@@ -2,19 +2,17 @@ package com.pv.louvor.repositories;
 
 
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pv.louvor.model.Categoria;
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.repositories.musica.MusicaRepositoryQuery;
 
 @Repository
-public interface MusicaRepository extends JpaRepository<Musica, Integer>{
+public interface MusicaRepository extends JpaRepository<Musica, Integer>, MusicaRepositoryQuery{
 
 	@Transactional(readOnly = true)
 	Musica findByNome(String nome);

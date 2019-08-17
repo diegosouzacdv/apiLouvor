@@ -54,8 +54,7 @@ public class MusicaService {
 	}
 
 	public Musica update(Musica obj) {
-		//find(obj.getId());
-		//isExist(obj);
+		obj.setAtivo(true);
 		return repo.save(obj);
 	}
 	

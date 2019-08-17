@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -71,6 +72,7 @@ public class Musica implements Serializable{
 	
 	@JsonIgnore
 	private boolean ativo;
+
 	
 	public Musica() {
 		
@@ -184,6 +186,7 @@ public class Musica implements Serializable{
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+
 
 	@Override
 	public int hashCode() {

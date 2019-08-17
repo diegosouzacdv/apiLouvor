@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.dto.MusicaDTO;
+import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.resources.utils.URL;
 import com.pv.louvor.services.MusicaService;
 
@@ -32,6 +33,9 @@ public class MusicaResource {
 	
 	@Autowired
 	private MusicaService service;
+	
+	@Autowired
+	private MusicaRepository repo;
 	
 	@GetMapping
 	public ResponseEntity<List<MusicaDTO>> findAll() {
@@ -47,17 +51,9 @@ public class MusicaResource {
  	}
 	
 	@GetMapping("/page")
-	public ResponseEntity<Page<MusicaDTO>> findPage(
-			@RequestParam(value="nome", defaultValue = "") String nome,
-			@RequestParam(value="page", defaultValue = "0") Integer page,
-			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue = "DESC") String direction) {
-		String nomeDecoded = URL.decodeParam(nome);
-
-		Page<Musica> list = service.findPage(nomeDecoded, page, linesPerPage, orderBy, direction);
-		Page<MusicaDTO> listDTO = list.map(obj -> new MusicaDTO(obj));
-		return ResponseEntity.ok().body(listDTO);
+	public ResponseEntity<List<Musica>> findPage(MusicaDTO musicaDto) {
+		List<Musica> musicas = repo.filtrar(musicaDto);
+		return ResponseEntity.ok().body(musicas);
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
@@ -72,7 +68,6 @@ public class MusicaResource {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Musica> update(@RequestBody Musica obj, @PathVariable Integer id) {
-		System.err.println(obj);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
