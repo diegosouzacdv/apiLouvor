@@ -48,7 +48,7 @@ public class MusicaService {
 	public Musica insert(Musica obj) {
 		//obj.setId(null);
 		obj.setAtivo(true);
-		obj.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		obj.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 		isExist(obj);
 		return repo.save(obj);
 	}

@@ -13,6 +13,8 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.util.StringUtils;
 
+import com.pv.louvor.model.Categoria_;
+import com.pv.louvor.model.Grupo_;
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.Musica_;
 import com.pv.louvor.model.dto.MusicaDTO;
@@ -43,12 +45,25 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 		
 		if(!StringUtils.isEmpty(musicaDto.getGrupo())) {
 			predicates.add(builder.like(
-				builder.lower(root.get("nomeGrupo")),"%" + musicaDto.getGrupo().toLowerCase() + "%"));
+				builder.lower(root.get(Musica_.grupo).get(Grupo_.nome)),"%" + musicaDto.getGrupo().toLowerCase() + "%"));
 		}
 		
 		if(musicaDto.getCategoria() != null) {
 			predicates.add(builder.like(
-					builder.lower(root.get("categoria.nome")),"%" + musicaDto.getGrupo().toLowerCase() + "%"));
+					builder.lower(root.get(Musica_.categorias).get(Categoria_.nome)),"%" + musicaDto.getGrupo().toLowerCase() + "%"));
+		}
+		
+		if(!musicaDto.isAtivo()) {
+			predicates.add(builder.equal(root.get(Musica_.ativo), false));
+		}
+		
+		if(musicaDto.isAtivo()) {
+			predicates.add(builder.equal(root.get(Musica_.ativo), true));
+		}
+		
+		if(!StringUtils.isEmpty(musicaDto.getData())) {
+			predicates.add(builder.like(
+				builder.lower(root.get(Musica_.dataInserida)),"%" + musicaDto.getData().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}

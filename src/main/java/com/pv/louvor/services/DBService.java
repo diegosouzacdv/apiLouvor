@@ -117,15 +117,15 @@ public class DBService {
 				//Musica
 				Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 				m1.setEstudo(e1);
-				m1.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+				m1.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 				m1.setGrupo(g1);
 				m1.setCategorias(c1);
 				m1.setTutorial(t1);	
-				Musica m2 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
+				Musica m2 = new Musica(null, "TESTE", NotasMusicais.D, NotasMusicais.D, false);
 				m2.setEstudo(e1);
-				m2.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-				m2.setGrupo(g1);
-				m2.setCategorias(c1);
+				m2.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+				m2.setGrupo(g2);
+				m2.setCategorias(c2);
 				m2.setTutorial(t2);	
 				musicaRepository.save(Arrays.asList(m1,m2));
 				

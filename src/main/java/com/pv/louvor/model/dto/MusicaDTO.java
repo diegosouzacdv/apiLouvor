@@ -13,6 +13,8 @@ public class MusicaDTO implements Serializable{
 	private String nome;
 	private String grupo;
 	private String categoria;
+	private boolean ativo;
+	private String data;
 	
 	
 	public MusicaDTO() {
@@ -25,6 +27,8 @@ public class MusicaDTO implements Serializable{
 		nome = obj.getNome();
 		grupo = obj.getGrupo().getNome();
 		categoria = obj.getCategorias().getNome();
+		ativo = obj.isAtivo();
+		data = obj.getDataInserida();
 	}
 
 
@@ -64,6 +68,24 @@ public class MusicaDTO implements Serializable{
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	
-	
+
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+
+	public String getData() {
+		return data;
+	}
+
+
+	public void setData(String data) {
+		this.data = data;
+	}
 }
