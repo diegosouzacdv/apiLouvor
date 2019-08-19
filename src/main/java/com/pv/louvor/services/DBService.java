@@ -70,7 +70,10 @@ public class DBService {
 				//Categorias
 				Categoria c1 = new Categoria(null, "Rápida");
 				Categoria c2 = new Categoria(null, "Média-Rápida");
-				categoriaRepository.save(Arrays.asList(c1, c2));
+				Categoria c3 = new Categoria(null, "Média");
+				Categoria c4 = new Categoria(null, "Média-Lenta");
+				Categoria c5 = new Categoria(null, "Lenta");
+				categoriaRepository.save(Arrays.asList(c1, c2, c3, c4, c5));
 				
 				//Funções
 				Funcao f1 = new Funcao(null, "Ministro");
@@ -90,7 +93,9 @@ public class DBService {
 				g1.setAtivo(true);
 				Grupo g2 = new Grupo(null, "HillSong");
 				g2.setAtivo(true);
-				grupoRepository.save(Arrays.asList(g1, g2));
+				Grupo g3 = new Grupo(null, "Elevation Worship");
+				g3.setAtivo(true);
+				grupoRepository.save(Arrays.asList(g1, g2, g3));
 				
 				//Tutorial
 				Tutorial t1 = new Tutorial();
@@ -101,16 +106,31 @@ public class DBService {
 				t1.setViolao(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
 				
 				Tutorial t2 = new Tutorial();
-				t2.setBaixo(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
-				t2.setBateria(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
-				t2.setGuitarra(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
-				t2.setTeclado(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
-				t2.setViolao(Arrays.asList("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms"));
+				t2.setBaixo(Arrays.asList("https://www.youtube.com/watch?v=KhAnkqL7tAY"));
+				t2.setBateria(Arrays.asList("https://www.youtube.com/watch?v=LGHb2XBSiKU"));
+				t2.setGuitarra(Arrays.asList("https://www.youtube.com/watch?v=fGCZdgTD4fA","https://www.youtube.com/watch?v=P97IMlDUnXE"));
+				t2.setTeclado(Arrays.asList("https://www.youtube.com/watch?v=k0WzVgbJo-Y"));
+				t2.setViolao(Arrays.asList("https://www.youtube.com/watch?v=JGF90fRs6AU"));
+				
+				Tutorial t3 = new Tutorial();
+				t3.setBaixo(Arrays.asList("https://www.youtube.com/watch?v=EtoC2eQzK2k"));
+				t3.setBateria(Arrays.asList("https://www.youtube.com/watch?v=ceEdgSkA4K4"));
+				t3.setGuitarra(Arrays.asList("https://www.youtube.com/watch?v=66nCNiTKHw0"));
+				t3.setTeclado(Arrays.asList("https://www.youtube.com/watch?v=zfod4Ptz2YM"));
+				t3.setViolao(Arrays.asList("https://www.youtube.com/watch?v=s7bHhQGsfRs"));
 				
 				//Estudo
-				Estudo e1 = new Estudo("https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", "https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", 
+				Estudo e1 = new Estudo("https://drive.google.com/open?id=0BzCIxMGAHmIkQU9idERUenN3QXM", "https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms", 
 						120, "https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW", 
-						"https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW");	
+						"https://drive.google.com/open?id=1Ht2BfGhoO62aMOH_6Bz_GWmGbjdrVBsb");
+				
+				Estudo e2 = new Estudo("https://drive.google.com/open?id=1EsSBBZLVmo1-Fd1EDZBuQ0iajYkvriii", "https://drive.google.com/open?id=1EsSBBZLVmo1-Fd1EDZBuQ0iajYkvriii", 
+						120, "https://drive.google.com/open?id=1chy87_IqHqv8nQ7832RLHkCVAhhR2NxM", 
+						"https://drive.google.com/open?id=1ScG9VK3Qkjl1LcxEzc5CmUf3toWvETfp");
+				
+				Estudo e3 = new Estudo("https://drive.google.com/open?id=1djHEE1Ckj_Cr4euBdnIEjV2oVG4DLMZK", "https://drive.google.com/open?id=1wcoKs532Txm_WGHemwpOmjDWtO6PfCA_", 
+						120, "https://drive.google.com/open?id=1qvcoslLe_duqf2i8EZRgkKKjsPofP4xZ", 
+						"https://drive.google.com/open?id=1IqDwsBCRjOcwuK2lIXBXuow4LjI7uCcm");	
 				
 				//NotasMusicais
 				
@@ -121,13 +141,21 @@ public class DBService {
 				m1.setGrupo(g1);
 				m1.setCategorias(c1);
 				m1.setTutorial(t1);	
-				Musica m2 = new Musica(null, "TESTE", NotasMusicais.D, NotasMusicais.D, false);
-				m2.setEstudo(e1);
-				m2.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+				
+				Musica m2 = new Musica(null, "Broken Vessels", NotasMusicais.G, NotasMusicais.E, true);
+				m2.setEstudo(e2);
+				m2.setDataInserida("2018");
 				m2.setGrupo(g2);
-				m2.setCategorias(c2);
-				m2.setTutorial(t2);	
-				musicaRepository.save(Arrays.asList(m1,m2));
+				m2.setCategorias(c5);
+				m2.setTutorial(t2);
+				
+				Musica m3 = new Musica(null, "Here Again", NotasMusicais.D, NotasMusicais.D, true);
+				m3.setEstudo(e3);
+				m3.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+				m3.setGrupo(g3);
+				m3.setCategorias(c4);
+				m3.setTutorial(t3);	
+				musicaRepository.save(Arrays.asList(m1,m2,m3));
 				
 				
 				//Usuario
@@ -167,17 +195,19 @@ public class DBService {
 				//MusicaRepertorio
 				MusicaRepertorio ms1 = new MusicaRepertorio(r1, m1);
 				MusicaRepertorio ms2 = new MusicaRepertorio(r1, m2);
+				MusicaRepertorio ms3 = new MusicaRepertorio(r1, m3);
 				
-				MusicaRepertorio ms3 = new MusicaRepertorio(r2, m1);
-				MusicaRepertorio ms4 = new MusicaRepertorio(r2, m2);
+				MusicaRepertorio ms4 = new MusicaRepertorio(r2, m1);
+				MusicaRepertorio ms5 = new MusicaRepertorio(r2, m2);
+				MusicaRepertorio ms6 = new MusicaRepertorio(r2, m3);
 				
-				r1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2));
-				r2.getMusicasRepertorio().addAll(Arrays.asList(ms3,ms4));
-				m1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2));
-				m2.getMusicasRepertorio().addAll(Arrays.asList(ms3,ms4));
+				r1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2,ms3));
+				r2.getMusicasRepertorio().addAll(Arrays.asList(ms4,ms5,ms6));
+				m1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2,ms3));
+				m2.getMusicasRepertorio().addAll(Arrays.asList(ms4,ms5,ms6));
 				
 
-				musicaRepertorioRepository.save(Arrays.asList(ms1,ms2,ms3,ms4));
+				musicaRepertorioRepository.save(Arrays.asList(ms1,ms2,ms3,ms4,ms5,ms6));
 				}
 
 		

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.dto.Filtro;
 import com.pv.louvor.model.dto.MusicaDTO;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.resources.utils.URL;
@@ -51,9 +53,27 @@ public class MusicaResource {
  	}
 	
 	@GetMapping("/page")
-	public ResponseEntity<List<Musica>> findPage(MusicaDTO musicaDto) {
-		List<Musica> musicas = repo.filtrar(musicaDto);
+	public ResponseEntity<Page<Musica>> findPage(MusicaDTO musicaDto, Pageable pageable) {
+		Page<Musica> musicas = repo.filtrar(musicaDto, pageable);
 		return ResponseEntity.ok().body(musicas);
+ 	}
+	
+	@GetMapping("/anos")
+	public ResponseEntity<List<Filtro>> getAnos() {
+		List<Filtro> anos = repo.anosMusica();
+		return ResponseEntity.ok().body(anos);
+ 	}
+	
+	@GetMapping("/grupos")
+	public ResponseEntity<List<Filtro>> getGrupos() {
+		List<Filtro> grupos = repo.gruposMusica();
+		return ResponseEntity.ok().body(grupos);
+ 	}
+	
+	@GetMapping("/categorias")
+	public ResponseEntity<List<Filtro>> getCategorias() {
+		List<Filtro> categorias = repo.categoriasMusica();
+		return ResponseEntity.ok().body(categorias);
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
