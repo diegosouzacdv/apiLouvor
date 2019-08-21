@@ -3,7 +3,7 @@ CREATE TABLE `categoria` (
   `cat_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `cat_nome` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `categoria` VALUES (1,'Rádipa'),(2,'Média-Rápida'),(3,'Média'),(4,'Média-Lenta'),(5,'Lenta');
+INSERT INTO `categoria` VALUES (1,'Rápida'),(2,'Média-Rápida'),(3,'Média'),(4,'Média-Lenta'),(5,'Lenta');
 
 
 CREATE TABLE `equipe` (
@@ -28,8 +28,9 @@ CREATE TABLE `grupo` (
   `ativo` boolean NOT NULL,
   `gru_nome` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `grupo` VALUES (1, true,'Avivah'),(2,true,'HillSong');
-
+INSERT INTO `grupo` VALUES (1, true,'Avivah'),
+						   (2,true,'HillSong'),
+						   (3,true,'Elevation Worship');
 
 CREATE TABLE `igreja` (
   `igr_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -58,7 +59,11 @@ CREATE TABLE `musica` (
   CONSTRAINT `FK1sqiptrejlh6vmqwrf7ifplt` FOREIGN KEY (`gru_id`) REFERENCES `grupo` (`gru_id`),
   CONSTRAINT `FK956ym5bcapiy59bdx9xx9fg52` FOREIGN KEY (`cat_id`) REFERENCES `categoria` (`cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `musica` VALUES (1,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D (Ré Maior)','D (Ré Maior)',1,1),(2,true,'04/07/2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D (Ré Maior)','D (Ré Maior)',1,1);
+INSERT INTO `musica`
+VALUES 
+(1,true,'2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D (Ré Maior)','D (Ré Maior)',1,1),
+(2,true,'2018',141,'https://drive.google.com/open?id=1EsSBBZLVmo1-Fd1EDZBuQ0iajYkvriii','https://drive.google.com/open?id=1chy87_IqHqv8nQ7832RLHkCVAhhR2NxM','https://drive.google.com/open?id=1ScG9VK3Qkjl1LcxEzc5CmUf3toWvETfp','https://drive.google.com/open?id=1EsSBBZLVmo1-Fd1EDZBuQ0iajYkvriii','Broken Vessels','G (Sol Maior)','E (Mi Maior)',4,2),
+(3,true,'2019',136,'https://drive.google.com/open?id=1wcoKs532Txm_WGHemwpOmjDWtO6PfCA_','https://drive.google.com/open?id=1qvcoslLe_duqf2i8EZRgkKKjsPofP4xZ','https://drive.google.com/open?id=1IqDwsBCRjOcwuK2lIXBXuow4LjI7uCcm','https://drive.google.com/open?id=1djHEE1Ckj_Cr4euBdnIEjV2oVG4DLMZK','Here Again','D (Ré Maior)','D (Ré Maior)',4,3);
 
 CREATE TABLE `tut_baixo` (
   `musica_mus_id` int(11) NOT NULL,
@@ -66,7 +71,9 @@ CREATE TABLE `tut_baixo` (
   KEY `FKia9bl52hb87k3svflort9recb` (`musica_mus_id`),
   CONSTRAINT `FKia9bl52hb87k3svflort9recb` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_baixo` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),(2,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms');
+INSERT INTO `tut_baixo` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
+							   (2,'https://www.youtube.com/watch?v=KhAnkqL7tAY'),
+                               (3,'https://www.youtube.com/watch?v=EtoC2eQzK2k');
 
 
 CREATE TABLE `tut_bateria` (
@@ -75,7 +82,9 @@ CREATE TABLE `tut_bateria` (
   KEY `FK7b2fk60lf388phnsx2i7h57oq` (`musica_mus_id`),
   CONSTRAINT `FK7b2fk60lf388phnsx2i7h57oq` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_bateria` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),(2,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms');
+INSERT INTO `tut_bateria` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
+								 (2,'https://www.youtube.com/watch?v=LGHb2XBSiKU'),
+                                 (3, 'https://www.youtube.com/watch?v=ceEdgSkA4K4');
 
 
 CREATE TABLE `tut_guitarra` (
@@ -84,7 +93,9 @@ CREATE TABLE `tut_guitarra` (
   KEY `FKjp2b2yelj5n4wvluudqi6sse7` (`musica_mus_id`),
   CONSTRAINT `FKjp2b2yelj5n4wvluudqi6sse7` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_guitarra` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),(2,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms');
+INSERT INTO `tut_guitarra` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
+								  (2,'https://www.youtube.com/watch?v=fGCZdgTD4fA', 'https://www.youtube.com/watch?v=P97IMlDUnXE'),
+								  (3, 'https://www.youtube.com/watch?v=66nCNiTKHw0');
 
 
 CREATE TABLE `tut_teclado` (
@@ -93,7 +104,10 @@ CREATE TABLE `tut_teclado` (
   KEY `FKeeb36kd86ghiw4x75dj4nxq64` (`musica_mus_id`),
   CONSTRAINT `FKeeb36kd86ghiw4x75dj4nxq64` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_teclado` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),(2,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms');
+INSERT INTO `tut_teclado` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
+								 (2,'https://www.youtube.com/watch?v=k0WzVgbJo-Y'),
+                                 (3, 'https://www.youtube.com/watch?v=zfod4Ptz2YM');
+                                 
 
 
 CREATE TABLE `tut_violao` (
@@ -102,7 +116,9 @@ CREATE TABLE `tut_violao` (
   KEY `FKses0c1om02v27fvphw4ux6pny` (`musica_mus_id`),
   CONSTRAINT `FKses0c1om02v27fvphw4ux6pny` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_violao` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),(2,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms');
+INSERT INTO `tut_violao` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),	
+								(2,'https://www.youtube.com/watch?v=JGF90fRs6AU'),
+								(3, 'https://www.youtube.com/watch?v=s7bHhQGsfRs');
 
 CREATE TABLE `repertorio` (
   `rep_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -113,7 +129,8 @@ CREATE TABLE `repertorio` (
   KEY `FK9n4c71yairyrx24o9kcp8b9h5` (`equipe_do_dia_equ_id`),
   CONSTRAINT `FK9n4c71yairyrx24o9kcp8b9h5` FOREIGN KEY (`equipe_do_dia_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `repertorio` VALUES (1,'04/07/2019',1,'diego', true),(2,'04/07/2019',2,'diego', true);
+INSERT INTO `repertorio` VALUES (1,'04/07/2019',1,'diego', true),
+								(2,'04/07/2019',2,'diego', true);
 
 CREATE TABLE `musica_repertorio` (
   `rep_id` int(11) NOT NULL,
@@ -137,7 +154,8 @@ CREATE TABLE `usuario` (
   KEY `FK16nvvtypfda1lsmn3p9tytlr8` (`igr_id`),
   CONSTRAINT `FK16nvvtypfda1lsmn3p9tytlr8` FOREIGN KEY (`igr_id`) REFERENCES `igreja` (`igr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `usuario` VALUES (1,false,'diegoguitaibanez@gmail.com','Diego','(61)98576-9860','$10$MkL1JER2EU.378pEHqVSwOjLoaTO7biJBFv4jz7onqDAh1qVVvANu',1),(2,true,'admin@gmail.com','Admin','(xx)xxxxx-xxxx','$2a$10$/Hg.wo8KtJPI55Lgh/oqhetgCnx8CqW64LqqtyB5yluYkszm.rZAy',1);
+INSERT INTO `usuario` VALUES (1,false,'diegoguitaibanez@gmail.com','Diego','(61)98576-9860','$10$MkL1JER2EU.378pEHqVSwOjLoaTO7biJBFv4jz7onqDAh1qVVvANu',1),
+							 (2,true,'admin@gmail.com','Admin','(xx)xxxxx-xxxx','$2a$10$/Hg.wo8KtJPI55Lgh/oqhetgCnx8CqW64LqqtyB5yluYkszm.rZAy',1);
 
 CREATE TABLE `perfis` (
   `usuario_usu_id` int(11) NOT NULL,
