@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Grupo;
+import com.pv.louvor.model.Musica;
 import com.pv.louvor.services.GrupoService;
 
 @RestController
@@ -69,6 +70,13 @@ public class GrupoResource {
 	public ResponseEntity<Grupo> update(@RequestBody Grupo obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PutMapping("/desativar/{id}")
+	public ResponseEntity<Grupo> disabledGrupo(@RequestBody Grupo obj, @PathVariable Integer id) {
+		service.desabilitar(id);
 		return ResponseEntity.noContent().build();
 	}
 	

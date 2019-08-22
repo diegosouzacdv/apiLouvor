@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Grupo;
+import com.pv.louvor.model.Musica;
 import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
@@ -40,23 +41,36 @@ public class GrupoService {
 	public Grupo insert(Grupo obj) {
 		obj.setId(null);
 		obj.setAtivo(true);
-		isExist(obj);
+		obj = isExist(obj);
 		return repo.save(obj);
 	}
 
 	public Grupo update(Grupo obj) {
 		find(obj.getId());
 		isExist(obj);
+		obj.setAtivo(true);
 		return repo.save(obj);
 	}
 	
 	public Grupo isExist(Grupo obj) {
 	Grupo obj1 = repo.findByNome(obj.getNome());
-		if(obj1 != null && obj1.getNome().equals(obj.getNome())) {
+		if((obj1 != null && obj1.isAtivo()) && obj1.getNome().equals(obj.getNome())) {
 			throw new ObjectFoundException("Objeto Já existe com Id: " + obj.getId() + 
 					", Tipo: " + Grupo.class.getName());
-		}		
-		return obj;
+		}
+		if((obj1 != null && !obj1.isAtivo()) && obj1.getNome().equals(obj.getNome())) {
+			obj1.setAtivo(true);
+			return obj1;
+		}else {
+			
+			return obj;
+		}
+	}
+	
+	public Grupo desabilitar(Integer id) {
+		Grupo obj = find(id);
+		obj.setAtivo(false);
+		return repo.save(obj);
 	}
 	
 	public void delete(Integer id) {
