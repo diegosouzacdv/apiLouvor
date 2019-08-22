@@ -42,6 +42,7 @@ public class GrupoService {
 		obj.setId(null);
 		obj.setAtivo(true);
 		obj = isExist(obj);
+		obj.setAtivo(true);
 		return repo.save(obj);
 	}
 
@@ -55,7 +56,7 @@ public class GrupoService {
 	public Grupo isExist(Grupo obj) {
 	Grupo obj1 = repo.findByNome(obj.getNome());
 		if((obj1 != null && obj1.isAtivo()) && obj1.getNome().equals(obj.getNome())) {
-			throw new ObjectFoundException("Objeto Já existe com Id: " + obj.getId() + 
+			throw new ObjectFoundException("Objeto Já existe com Id: " + obj1.getId() + 
 					", Tipo: " + Grupo.class.getName());
 		}
 		if((obj1 != null && !obj1.isAtivo()) && obj1.getNome().equals(obj.getNome())) {

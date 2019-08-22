@@ -43,10 +43,9 @@ public class MusicaService {
 
 	@Transactional
 	public Musica insert(Musica obj) {
-		//obj.setId(null);
-		obj.setAtivo(true);
 		obj.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
-		isExist(obj);
+		obj = isExist(obj);
+		obj.setAtivo(true);
 		return repo.save(obj);
 	}
 
@@ -64,13 +63,24 @@ public class MusicaService {
 	}
 	
 	public Musica isExist(Musica obj) {
-	Musica obj1 = repo.findByNome(obj.getNome());
-		if(obj1 != null && obj1.getNome().equals(obj.getNome())) {
-			throw new ObjectFoundException("Objeto Já existe com Id: " + obj.getId() + 
+	Musica obj1 = repo.findByNomeIgnoreCase(obj.getNome());
+		if((obj1 != null && obj1.isAtivo()) && 
+				obj1.getNome().toLowerCase().equals(obj.getNome().toLowerCase()) && 
+				obj1.getGrupo().getId().equals(obj.getGrupo().getId()) &&
+				obj1.getDataInserida().toLowerCase().equals(obj.getDataInserida())) {
+			throw new ObjectFoundException("Objeto Já existe com Id: " + obj1.getId() + 
 					", Tipo: " + Musica.class.getName());
-		}		
-		return obj;
+		}
+		if((obj1 != null && !obj1.isAtivo()) && 
+				obj1.getNome().toLowerCase().equals(obj.getNome().toLowerCase()) && 
+				obj1.getGrupo().getId().equals(obj.getGrupo().getId()) &&
+				obj1.getDataInserida().toLowerCase().equals(obj.getDataInserida())) {
+			return obj1;
+		} else {
+			return obj;
+		}
 	}
+	
 	
 	public void delete(Integer id) {
 		find(id);

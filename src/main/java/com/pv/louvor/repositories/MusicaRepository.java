@@ -15,7 +15,7 @@ import com.pv.louvor.repositories.musica.MusicaRepositoryQuery;
 public interface MusicaRepository extends JpaRepository<Musica, Integer>, MusicaRepositoryQuery{
 
 	@Transactional(readOnly = true)
-	Musica findByNome(String nome);
+	Musica findByNomeIgnoreCase(String nome);
 	
 	/*@Transactional(readOnly = true)
 	@Query("SELECT DISTINCT obj FROM Musica obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% AND cat IN :categorias")
