@@ -26,9 +26,6 @@ public class MusicaService {
 	
 	@Autowired
 	private MusicaRepository repo;
-	
-	@Autowired
-	private CategoriaRepository categoriaRepository;
 
 	public List<Musica> buscarTodos() {
 		List<Musica> obj = repo.findAll();

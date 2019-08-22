@@ -68,8 +68,8 @@ public class GrupoService {
 		}
 	}
 	
-	public Page<Grupo> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Grupo> findPage(String nome, Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findAll(pageRequest);
+		return repo.findDistinctByNomeIgnoreCaseContainingAndAtivoIs(nome, true, pageRequest);
 	}
 }
