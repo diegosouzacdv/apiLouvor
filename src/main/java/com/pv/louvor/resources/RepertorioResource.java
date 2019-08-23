@@ -2,6 +2,7 @@ package com.pv.louvor.resources;
 
 import java.net.URI;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,7 +46,14 @@ public class RepertorioResource {
 	@GetMapping("/all")
 	public ResponseEntity<List<Repertorio>> findAllComplet() {
 		List<Repertorio> list = service.buscarTodos();
-		return ResponseEntity.ok().body(list);
+		List<Repertorio> retorno = new ArrayList<>();
+		for(Repertorio repertorio: list) {			
+			repertorio = service.desativarRepertorio(repertorio);
+			if(repertorio.isAtivo()) {
+				retorno.add(repertorio);
+			}
+		}
+		return ResponseEntity.ok().body(retorno);
 
  	}
 
@@ -57,11 +65,13 @@ public class RepertorioResource {
 	
 	@GetMapping("/page")
 	public ResponseEntity<Page<Repertorio>> findPage(
+			@RequestParam(value="data", defaultValue = "") String data,
 			@RequestParam(value="page", defaultValue = "0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue = "data") String orderBy, 
 			@RequestParam(value="direction", defaultValue = "DESC") String direction) {
-		Page<Repertorio> obj = service.findPage(page, linesPerPage, orderBy, direction);
+		String dataDecoded = URL.decodeParam(data);
+		Page<Repertorio> obj = service.findPage(dataDecoded, page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(obj);
  	}
 	

@@ -12,6 +12,7 @@ public abstract class Repertorio_ {
 	public static volatile SingularAttribute<Repertorio, Equipe> equipeDoDia;
 	public static volatile SingularAttribute<Repertorio, Boolean> ativo;
 	public static volatile SingularAttribute<Repertorio, String> data;
+	public static volatile SingularAttribute<Repertorio, String> dataSemana;
 	public static volatile SetAttribute<Repertorio, MusicaRepertorio> musicasRepertorio;
 	public static volatile SingularAttribute<Repertorio, String> criador;
 	public static volatile SingularAttribute<Repertorio, Integer> id;

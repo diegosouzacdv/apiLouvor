@@ -1,6 +1,7 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.pv.louvor.model.dto.UsuarioDTO;
 
@@ -33,6 +36,9 @@ public class Repertorio implements Serializable{
 	@NotEmpty()
 	@Column(name="rep_data")
 	private String data;
+	
+	@Column(name="rep_dataSemana")
+	private String dataSemana;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Equipe equipeDoDia;
@@ -108,6 +114,13 @@ public class Repertorio implements Serializable{
 		return Integer.valueOf(quant);
 	}
 	
+	public String getDataSemana() {
+		return dataSemana;
+	}
+
+	public void setDataSemana(String dataSemana) {
+		this.dataSemana = dataSemana;
+	}
 
 	@Override
 	public int hashCode() {

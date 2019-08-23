@@ -2,6 +2,9 @@ package com.pv.louvor.services;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -16,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Repertorio;
@@ -27,7 +29,6 @@ import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.security.UserSS;
-import com.pv.louvor.services.exceptions.AuthorizationException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -55,6 +56,22 @@ public class RepertorioService {
 		List<Repertorio> obj = repo.findDistinctByAtivoIs(ativo);
 		return obj;
 	}
+	
+	public Repertorio desativarRepertorio(Repertorio repertorio) {
+		Repertorio obj = repo.findOne(repertorio.getId());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		if(obj != null) {
+			LocalDate hoje = LocalDate.now();
+			String data = repertorio.getData();
+			LocalDate dataRepertorio = LocalDate.parse(data,formatter);
+			long diferencaEmDias = ChronoUnit.DAYS.between(hoje, dataRepertorio);
+			if(diferencaEmDias <= -1) {
+				obj.setAtivo(false);
+				repo.save(obj);
+			}
+		}
+		return obj;
+	}
 
 	public Repertorio find(Integer id) {
 		Repertorio obj = repo.findOne(id);
@@ -67,10 +84,9 @@ public class RepertorioService {
 
 	@Transactional
 	public Repertorio insert(Repertorio obj) throws ParseException {
-		
 		String data = obj.getData();
 		data = this.data(data);
-		obj.setData(obj.getData() + " " + data );
+		obj.setDataSemana(data);
 
 		UserSS user = UserService.authenticated();
 		if(user != null && user.hasRole(Perfil.ADMIN)) {
@@ -105,9 +121,9 @@ public class RepertorioService {
 		}
 	}
 
-	public Page<Repertorio> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Repertorio> findPage(String data, Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findAll(pageRequest);
+		return repo.findDistinctByDataIgnoreCaseContainingAndAtivoIs(data, true, pageRequest);
 	}
 	
 	public String data(String data ) throws ParseException {
