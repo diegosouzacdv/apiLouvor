@@ -2,7 +2,6 @@ package com.pv.louvor.resources;
 
 import java.net.URI;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,14 +45,7 @@ public class RepertorioResource {
 	@GetMapping("/all")
 	public ResponseEntity<List<Repertorio>> findAllComplet() {
 		List<Repertorio> list = service.buscarTodos();
-		List<Repertorio> retorno = new ArrayList<>();
-		for(Repertorio repertorio: list) {			
-			repertorio = service.desativarRepertorio(repertorio);
-			if(repertorio.isAtivo()) {
-				retorno.add(repertorio);
-			}
-		}
-		return ResponseEntity.ok().body(retorno);
+		return ResponseEntity.ok().body(list);
 
  	}
 

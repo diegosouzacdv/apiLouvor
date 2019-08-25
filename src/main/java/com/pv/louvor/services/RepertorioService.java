@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -17,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.MusicaRepertorio;
@@ -52,24 +54,38 @@ public class RepertorioService {
 	private UsuarioRepository usuarioRepository;
 	
 	public List<Repertorio> buscarTodos() {
-		boolean ativo = true;
-		List<Repertorio> obj = repo.findDistinctByAtivoIs(ativo);
+		List<Repertorio> obj =  getAllRepertoriosAtivos();
 		return obj;
 	}
 	
-	public Repertorio desativarRepertorio(Repertorio repertorio) {
-		Repertorio obj = repo.findOne(repertorio.getId());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		if(obj != null) {
-			LocalDate hoje = LocalDate.now();
-			String data = repertorio.getData();
-			LocalDate dataRepertorio = LocalDate.parse(data,formatter);
-			long diferencaEmDias = ChronoUnit.DAYS.between(hoje, dataRepertorio);
-			if(diferencaEmDias <= -1) {
-				obj.setAtivo(false);
-				repo.save(obj);
+	@Scheduled(cron = "0 10 0 * * *")
+	public void desativarRepertorio() {
+		System.err.println("Executando");
+		List<Repertorio> allRepertorio = getAllRepertoriosAtivos();
+		List<Repertorio> retorno = new ArrayList<>();
+		
+		for(Repertorio repertorio: allRepertorio) {
+			Repertorio obj = repo.findOne(repertorio.getId());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			if(obj != null) {
+				LocalDate hoje = LocalDate.now();
+				String data = repertorio.getData();
+				LocalDate dataRepertorio = LocalDate.parse(data,formatter);
+				long diferencaEmDias = ChronoUnit.DAYS.between(hoje, dataRepertorio);
+				if(diferencaEmDias <= -1) {
+					obj.setAtivo(false);
+					repo.save(obj);
+				}
+			}
+			if(repertorio.isAtivo()) {
+				retorno.add(repertorio);
 			}
 		}
+	}
+	
+	public List<Repertorio> getAllRepertoriosAtivos() {
+		boolean ativo = true;
+		List<Repertorio> obj = repo.findDistinctByAtivoIs(ativo);
 		return obj;
 	}
 
