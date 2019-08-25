@@ -21,11 +21,13 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
+import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
@@ -33,6 +35,10 @@ import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.security.UserSS;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
+/**
+ * @author Diego
+ *
+ */
 @Service
 public class RepertorioService {
 	
@@ -53,15 +59,27 @@ public class RepertorioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private FuncaoRepository funcaoRepository;
+	
+	
+	/**
+	 * Busca todos os Repertórios Ativos.
+	 * @return
+	 */
 	public List<Repertorio> buscarTodos() {
-		List<Repertorio> obj =  getAllRepertoriosAtivos();
+		boolean ativo = true;
+		List<Repertorio> obj = repo.findDistinctByAtivoIs(ativo);
 		return obj;
 	}
 	
+	/**
+	 * Método que desativa o repertório um dia após a data usando Scheduled rodando dos os dias as 00:10:00;
+	 */
 	@Scheduled(cron = "0 10 0 * * *")
 	public void desativarRepertorio() {
 		System.err.println("Executando");
-		List<Repertorio> allRepertorio = getAllRepertoriosAtivos();
+		List<Repertorio> allRepertorio = buscarTodos();
 		List<Repertorio> retorno = new ArrayList<>();
 		
 		for(Repertorio repertorio: allRepertorio) {
@@ -82,13 +100,12 @@ public class RepertorioService {
 			}
 		}
 	}
-	
-	public List<Repertorio> getAllRepertoriosAtivos() {
-		boolean ativo = true;
-		List<Repertorio> obj = repo.findDistinctByAtivoIs(ativo);
-		return obj;
-	}
 
+	/**
+	 * Método que busca repertório pelo ID, retornando erro caso não for encontrado.
+	 * @param id
+	 * @return
+	 */
 	public Repertorio find(Integer id) {
 		Repertorio obj = repo.findOne(id);
 		if (obj == null) {
@@ -98,6 +115,12 @@ public class RepertorioService {
 		return obj;
 	}
 
+	/**
+	 * O metodo faz um insert de uma repertorio novo
+	 * @param obj
+	 * @return
+	 * @throws ParseException
+	 */
 	@Transactional
 	public Repertorio insert(Repertorio obj) throws ParseException {
 		String data = obj.getData();
@@ -123,11 +146,20 @@ public class RepertorioService {
 		return obj;
 	}
 
+	/**
+	 * Metodo atualiza um repertorio
+	 * @param obj
+	 * @return
+	 */
 	public Repertorio update(Repertorio obj) {
 		find(obj.getId());
 		return repo.save(obj);
 	}
 	
+	/**
+	 * Metodo deleta os repertorios por id
+	 * @param id
+	 */
 	public void delete(Integer id) {
 		find(id);
 		try {
@@ -137,11 +169,26 @@ public class RepertorioService {
 		}
 	}
 
+	/**
+	 * metodo faz a paginação dos repertorios que estão ativos
+	 * @param data
+	 * @param page
+	 * @param linesPerPage
+	 * @param orderBy
+	 * @param direction
+	 * @return
+	 */
 	public Page<Repertorio> findPage(String data, Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
 		return repo.findDistinctByDataIgnoreCaseContainingAndAtivoIs(data, true, pageRequest);
 	}
 	
+	/**
+	 * metodo retorna o dia da semana conforme o dia do mes passado
+	 * @param data
+	 * @return
+	 * @throws ParseException
+	 */
 	public String data(String data ) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date date = sdf.parse(data);
@@ -160,5 +207,17 @@ public class RepertorioService {
         }
         return nome;
         
+	}
+	
+	/**
+	 * metodo recebe todos os usuarios naquela determinada funcao
+	 * @param id
+	 * @return
+	 */
+	public List<Usuario> getFuncao(Integer id) {
+		int parseInt = Integer.valueOf(id);
+		Funcao funcao = funcaoRepository.findOne(parseInt);
+		List<Usuario> listDto = repo.funcoes(funcao);
+		return listDto;
 	}
 }

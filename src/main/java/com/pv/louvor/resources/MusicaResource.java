@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,7 +25,6 @@ import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.dto.Filtro;
 import com.pv.louvor.model.dto.MusicaDTO;
 import com.pv.louvor.repositories.MusicaRepository;
-import com.pv.louvor.resources.utils.URL;
 import com.pv.louvor.services.MusicaService;
 
 @RestController

@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pv.louvor.model.Repertorio;
+import com.pv.louvor.repositories.repertorio.RepertorioRepositoryQuery;
 
 @Repository
-public interface RepertorioRepository extends JpaRepository<Repertorio, Integer>{
+public interface RepertorioRepository extends JpaRepository<Repertorio, Integer>, RepertorioRepositoryQuery{
 	List<Repertorio> findDistinctByAtivoIs(boolean ativo);
 	
 	@Transactional(readOnly = true)

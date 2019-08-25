@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Repertorio;
+import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.RepertorioDTO;
+import com.pv.louvor.model.dto.UsuarioFuncoesDTO;
 import com.pv.louvor.resources.utils.URL;
 import com.pv.louvor.services.RepertorioService;
 
@@ -40,6 +42,13 @@ public class RepertorioResource {
 		List<RepertorioDTO> listDto = list.stream().map(obj -> new RepertorioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 
+ 	}
+	
+	@GetMapping("/funcoes/{id}")
+	public ResponseEntity<List<UsuarioFuncoesDTO>> funcoes(@PathVariable Integer id) {
+		List<Usuario> listUsuario = service.getFuncao(id);
+		List<UsuarioFuncoesDTO> listDto = listUsuario.stream().map(obj -> new UsuarioFuncoesDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
  	}
 	
 	@GetMapping("/all")
