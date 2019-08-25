@@ -79,7 +79,10 @@ public class DBService {
 				Funcao f1 = new Funcao(null, "Ministro");
 				Funcao f2 = new Funcao(null, "Violonista");
 				Funcao f3 = new Funcao(null, "Guitarrista");
-				fucaoRepository.save(Arrays.asList(f1, f2,f3));
+				Funcao f4 = new Funcao(null, "Baterista");
+				Funcao f5 = new Funcao(null, "Tecladista");
+				Funcao f6 = new Funcao(null, "Baixista");
+				fucaoRepository.save(Arrays.asList(f1, f2,f3,f4,f5,f6));
 						
 				//Igrejas
 				Igreja i1 = new Igreja(null, "Águas Claras");
@@ -162,7 +165,7 @@ public class DBService {
 				Usuario u1 = new Usuario( null, "Diego", "(xx)xxxxx-xxxx", "diegoguitaibanez@gmail.com", pe.encode("godemais"));
 				Usuario u2 = new Usuario( null, "Admin", "(61)98576-9860", "admin@gmail.com", pe.encode("admin"));
 				u2.addPerfil(Perfil.ADMIN);
-				u1.setFuncao(Arrays.asList(f3));
+				u1.setFuncao(Arrays.asList(f3,f1));
 				u2.setFuncao(Arrays.asList(f1,f2,f3));
 				u1.setIgreja(i1);
 				u2.setIgreja(i1);
