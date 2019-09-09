@@ -112,6 +112,7 @@ public class RepertorioService {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
 					", Tipo: " + Repertorio.class.getName());
 		}
+		System.err.println(obj);
 		return obj;
 	}
 
@@ -123,8 +124,9 @@ public class RepertorioService {
 	 */
 	@Transactional
 	public Repertorio insert(Repertorio obj) throws ParseException {
+		obj.setAtivo(true);
 		String data = obj.getData();
-		data = this.data(data);
+		data = data(data);
 		obj.setDataSemana(data);
 
 		UserSS user = UserService.authenticated();
@@ -136,25 +138,31 @@ public class RepertorioService {
 		obj =  repo.save(obj);
 		
 		for (MusicaRepertorio mr : obj.getMusicasRepertorio()) {
+			System.err.println(obj.getMusicasRepertorio());
 			mr.setMusica(musicaRepository.findOne(mr.getMusica().getId()));
 			mr.setRepertorio(obj);
 		}
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
+		
 		for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
 		emailService.sendOrderConfirmationHtmlEmail(obj, email.getEmail());
 		}
+		
 		return obj;
 	}
 
 	/**
-	 * Metodo atualiza um repertorio
+	 * Metodo desativa um repertorio
 	 * @param obj
 	 * @return
 	 */
 	public Repertorio update(Repertorio obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		obj = repo.findOne(obj.getId());
+		obj.setAtivo(false);
+		repo.save(obj);
+		return obj;
 	}
+	
 	
 	/**
 	 * Metodo deleta os repertorios por id

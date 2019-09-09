@@ -93,6 +93,7 @@ public class RepertorioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {

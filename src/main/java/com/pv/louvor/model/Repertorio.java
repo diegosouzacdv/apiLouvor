@@ -60,6 +60,12 @@ public class Repertorio implements Serializable{
 		super();
 		this.id = id;
 	}
+	
+	public void deleteMusicas() {
+		System.err.println("entity" + musicasRepertorio);
+		musicasRepertorio.clear();
+		System.err.println("apagando" + musicasRepertorio);
+	}
 
 	public Integer getId() {
 		return id;
