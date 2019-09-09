@@ -165,19 +165,20 @@ public class DBService {
 				Usuario u1 = new Usuario( null, "Diego", "(xx)xxxxx-xxxx", "diegoguitaibanez@gmail.com", pe.encode("godemais"));
 				Usuario u2 = new Usuario( null, "Admin", "(61)98576-9860", "admin@gmail.com", pe.encode("admin"));
 				u2.addPerfil(Perfil.ADMIN);
-				u1.setFuncao(Arrays.asList(f3,f1));
-				u2.setFuncao(Arrays.asList(f1,f2,f3));
+				u1.setFuncao(Arrays.asList(f3,f1,f4,f5));
+				u2.setFuncao(Arrays.asList(f1,f2,f3,f6));
 				u1.setIgreja(i1);
 				u2.setIgreja(i1);
 				usuarioRepository.save(Arrays.asList(u1, u2));
 				
 				//Equipe
 				Equipe eq1 = new Equipe();
-				eq1.setBaterista(u1.getPessoa().getNome());
-				eq1.setGuitarrista(u2.getPessoa().getNome());
+				eq1.setBaterista(Arrays.asList(u1.getPessoa().getNome()));
+				eq1.setGuitarrista(Arrays.asList(u2.getPessoa().getNome()));
 				eq1.setMinistro(Arrays.asList(u1.getPessoa().getNome(), u2.getPessoa().getNome()));
-				eq1.setTecladista(u2.getPessoa().getNome());
-				eq1.setViolonista(u2.getPessoa().getNome());
+				eq1.setTecladista(Arrays.asList(u2.getPessoa().getNome()));
+				eq1.setViolonista(Arrays.asList(u2.getPessoa().getNome()));
+				eq1.setBaixista(Arrays.asList(u2.getPessoa().getNome()));
 				
 
 				//Repertorio

@@ -29,14 +29,16 @@ public class Equipe implements Serializable{
 	
 	@ElementCollection
 	private List<String> ministro;
-	
-	private String violonista;
-	
-	private String guitarrista;
-	
-	private String baterista;
-	
-	private String tecladista;
+	@ElementCollection
+	private List<String> violonista;
+	@ElementCollection
+	private List<String> guitarrista;
+	@ElementCollection
+	private List<String> baterista;
+	@ElementCollection
+	private List<String> tecladista;
+	@ElementCollection
+	private List<String> baixista;
 	
 	public Equipe() {
 		
@@ -58,37 +60,45 @@ public class Equipe implements Serializable{
 		this.ministro = ministro;
 	}
 
-	public String getViolonista() {
+	public List<String> getViolonista() {
 		return violonista;
 	}
 
-	public void setViolonista(String violonista) {
+	public void setViolonista(List<String> violonista) {
 		this.violonista = violonista;
 	}
 
-	public String getGuitarrista() {
+	public List<String> getGuitarrista() {
 		return guitarrista;
 	}
 
-	public void setGuitarrista(String guitarrista) {
+	public void setGuitarrista(List<String> guitarrista) {
 		this.guitarrista = guitarrista;
 	}
 
-	public String getBaterista() {
+	public List<String> getBaterista() {
 		return baterista;
 	}
 
-	public void setBaterista(String baterista) {
+	public void setBaterista(List<String> baterista) {
 		this.baterista = baterista;
 	}
 
-	public String getTecladista() {
+	public List<String> getTecladista() {
 		return tecladista;
 	}
 
-	public void setTecladista(String tecladista) {
+	public void setTecladista(List<String> tecladista) {
 		this.tecladista = tecladista;
 	}
 
+	public List<String> getBaixista() {
+		return baixista;
+	}
+
+	public void setBaixista(List<String> baixista) {
+		this.baixista = baixista;
+	}
+	
 	
 }

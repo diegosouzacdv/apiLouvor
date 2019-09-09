@@ -9,12 +9,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Equipe.class)
 public abstract class Equipe_ {
 
-	public static volatile SingularAttribute<Equipe, String> baterista;
-	public static volatile SingularAttribute<Equipe, String> tecladista;
+	public static volatile ListAttribute<Equipe, String> baterista;
+	public static volatile ListAttribute<Equipe, String> tecladista;
 	public static volatile ListAttribute<Equipe, String> ministro;
-	public static volatile SingularAttribute<Equipe, String> guitarrista;
+	public static volatile ListAttribute<Equipe, String> guitarrista;
 	public static volatile SingularAttribute<Equipe, Integer> id;
-	public static volatile SingularAttribute<Equipe, String> violonista;
+	public static volatile ListAttribute<Equipe, String> baixista;
+	public static volatile ListAttribute<Equipe, String> violonista;
 
 }
 
