@@ -174,13 +174,6 @@ CREATE TABLE `equipe_baterista` (
   CONSTRAINT `FKFI1UDMLR3H374A2NKPRMBDQD5` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `equipe_baterista` (
-  `equipe_equ_id` int(11) NOT NULL,
-  `baterista` varchar(255) DEFAULT NULL,
-  KEY `FKFI1UDMLR3H374A2NKPRMBDQD5` (`equipe_equ_id`),
-  CONSTRAINT `FKFI1UDMLR3H374A2NKPRMBDQD5` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 CREATE TABLE `equipe_guitarrista` (
   `equipe_equ_id` int(11) NOT NULL,
   `guitarrista` varchar(255) DEFAULT NULL,
