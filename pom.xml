@@ -131,6 +131,9 @@
 				 <configuration>
         <source>${maven.compiler.source}</source>
         <target>${maven.compiler.target}</target>
+        <compilerArguments>
+            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+        </compilerArguments>
         <proc>none</proc> <!-- disable annotation processing to avoid duplicating maven-processor-plugin output -->
     </configuration>
 			</plugin>
