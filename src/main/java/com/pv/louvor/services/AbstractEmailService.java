@@ -70,7 +70,7 @@ public abstract class AbstractEmailService implements EmailService{
 		mmh.setCc(email);
 		mmh.setReplyTo(email);
 		mmh.setFrom(sender);
-		mmh.setSubject("Novo Repertório! Para o dia: " + obj.getData());
+		mmh.setSubject("Novo Repertório! Para o dia: " + obj.getData() + " - " + obj.getDataSemana());
 		mmh.setSentDate(new Date(System.currentTimeMillis()));
 		mmh.setText(htmlFromTemplatePedido(obj), true);
 		return mimeMessage;
