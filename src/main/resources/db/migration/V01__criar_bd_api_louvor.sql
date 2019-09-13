@@ -105,7 +105,7 @@ CREATE TABLE `tut_violao` (
 CREATE TABLE `repertorio` (
   `rep_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `rep_data` varchar(255) NOT NULL,
-  `rep_dataSemana` varchar(255) NOT NULL,
+  `rep_data_semana` varchar(255) NOT NULL,
   `equipe_do_dia_equ_id` int(11) DEFAULT NULL,
   `rep_criador` varchar(255) NOT NULL,
   `rep_ativo` boolean NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE `usuario` (
   KEY `FK16nvvtypfda1lsmn3p9tytlr8` (`igr_id`),
   CONSTRAINT `FK16nvvtypfda1lsmn3p9tytlr8` FOREIGN KEY (`igr_id`) REFERENCES `igreja` (`igr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `usuario` VALUES (1,true,'diegoguitaibanez@gmail.com','Diego','(61)98576-9860','$10$MkL1JER2EU.378pEHqVSwOjLoaTO7biJBFv4jz7onqDAh1qVVvANu',1);
+INSERT INTO `usuario` VALUES (1,true,'admin@gmail.com','Admin','(xx)xxxxx-xxxx','$2a$10$/Hg.wo8KtJPI55Lgh/oqhetgCnx8CqW64LqqtyB5yluYkszm.rZAy',1);
 
 CREATE TABLE `perfis` (
   `usuario_usu_id` int(11) NOT NULL,
