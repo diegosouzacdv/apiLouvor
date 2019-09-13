@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/login/**"
 	};
 	
+	
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/usuarios",
 			"/auth/forgot/**"

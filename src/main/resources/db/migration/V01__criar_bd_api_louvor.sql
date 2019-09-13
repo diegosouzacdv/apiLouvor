@@ -13,7 +13,6 @@ CREATE TABLE `equipe` (
   `tecladista` varchar(255) DEFAULT NULL,
   `violonista` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `equipe` VALUES (1,'Diego','Admin','Admin','Admin'),(2,'Diego','Admin','Admin','Admin'),(3,'Diego','Admin','Admin','Admin');
 
 
 CREATE TABLE `funcao` (
@@ -71,9 +70,6 @@ CREATE TABLE `tut_baixo` (
   KEY `FKia9bl52hb87k3svflort9recb` (`musica_mus_id`),
   CONSTRAINT `FKia9bl52hb87k3svflort9recb` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_baixo` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
-							   (2,'https://www.youtube.com/watch?v=KhAnkqL7tAY'),
-                               (3,'https://www.youtube.com/watch?v=EtoC2eQzK2k');
 
 
 CREATE TABLE `tut_bateria` (
@@ -82,9 +78,6 @@ CREATE TABLE `tut_bateria` (
   KEY `FK7b2fk60lf388phnsx2i7h57oq` (`musica_mus_id`),
   CONSTRAINT `FK7b2fk60lf388phnsx2i7h57oq` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_bateria` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
-								 (2,'https://www.youtube.com/watch?v=LGHb2XBSiKU'),
-                                 (3, 'https://www.youtube.com/watch?v=ceEdgSkA4K4');
 
 
 CREATE TABLE `tut_guitarra` (
@@ -93,9 +86,6 @@ CREATE TABLE `tut_guitarra` (
   KEY `FKjp2b2yelj5n4wvluudqi6sse7` (`musica_mus_id`),
   CONSTRAINT `FKjp2b2yelj5n4wvluudqi6sse7` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_guitarra` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
-								  (2,'https://www.youtube.com/watch?v=fGCZdgTD4fA', 'https://www.youtube.com/watch?v=P97IMlDUnXE'),
-								  (3, 'https://www.youtube.com/watch?v=66nCNiTKHw0');
 
 
 CREATE TABLE `tut_teclado` (
@@ -103,12 +93,7 @@ CREATE TABLE `tut_teclado` (
   `teclado` varchar(255) DEFAULT NULL,
   KEY `FKeeb36kd86ghiw4x75dj4nxq64` (`musica_mus_id`),
   CONSTRAINT `FKeeb36kd86ghiw4x75dj4nxq64` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_teclado` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),
-								 (2,'https://www.youtube.com/watch?v=k0WzVgbJo-Y'),
-                                 (3, 'https://www.youtube.com/watch?v=zfod4Ptz2YM');
-                                 
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;                                 
 
 CREATE TABLE `tut_violao` (
   `musica_mus_id` int(11) NOT NULL,
@@ -116,21 +101,17 @@ CREATE TABLE `tut_violao` (
   KEY `FKses0c1om02v27fvphw4ux6pny` (`musica_mus_id`),
   CONSTRAINT `FKses0c1om02v27fvphw4ux6pny` FOREIGN KEY (`musica_mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `tut_violao` VALUES (1,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms'),	
-								(2,'https://www.youtube.com/watch?v=JGF90fRs6AU'),
-								(3, 'https://www.youtube.com/watch?v=s7bHhQGsfRs');
 
 CREATE TABLE `repertorio` (
   `rep_id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `rep_data` varchar(255) NOT NULL,
+  `rep_dataSemana` varchar(255) NOT NULL,
   `equipe_do_dia_equ_id` int(11) DEFAULT NULL,
   `rep_criador` varchar(255) NOT NULL,
   `rep_ativo` boolean NOT NULL,
   KEY `FK9n4c71yairyrx24o9kcp8b9h5` (`equipe_do_dia_equ_id`),
   CONSTRAINT `FK9n4c71yairyrx24o9kcp8b9h5` FOREIGN KEY (`equipe_do_dia_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `repertorio` VALUES (1,'04/07/2019',1,'diego', true),
-								(2,'04/07/2019',2,'diego', true);
 
 CREATE TABLE `musica_repertorio` (
   `rep_id` int(11) NOT NULL,
@@ -140,8 +121,6 @@ CREATE TABLE `musica_repertorio` (
   CONSTRAINT `FKibm4vcd8plabbl4dfmeggwjc0` FOREIGN KEY (`rep_id`) REFERENCES `repertorio` (`rep_id`),
   CONSTRAINT `FKqky2xkdephmkwkjbvjtbk06uv` FOREIGN KEY (`mus_id`) REFERENCES `musica` (`mus_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `musica_repertorio` VALUES (1,1),(1,2),(2,1),(2,2);
-
 
 CREATE TABLE `usuario` (
   `usu_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -154,8 +133,7 @@ CREATE TABLE `usuario` (
   KEY `FK16nvvtypfda1lsmn3p9tytlr8` (`igr_id`),
   CONSTRAINT `FK16nvvtypfda1lsmn3p9tytlr8` FOREIGN KEY (`igr_id`) REFERENCES `igreja` (`igr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `usuario` VALUES (1,false,'diegoguitaibanez@gmail.com','Diego','(61)98576-9860','$10$MkL1JER2EU.378pEHqVSwOjLoaTO7biJBFv4jz7onqDAh1qVVvANu',1),
-							 (2,true,'admin@gmail.com','Admin','(xx)xxxxx-xxxx','$2a$10$/Hg.wo8KtJPI55Lgh/oqhetgCnx8CqW64LqqtyB5yluYkszm.rZAy',1);
+INSERT INTO `usuario` VALUES (1,true,'diegoguitaibanez@gmail.com','Diego','(61)98576-9860','$10$MkL1JER2EU.378pEHqVSwOjLoaTO7biJBFv4jz7onqDAh1qVVvANu',1);
 
 CREATE TABLE `perfis` (
   `usuario_usu_id` int(11) NOT NULL,
@@ -163,7 +141,7 @@ CREATE TABLE `perfis` (
   KEY `FKace66pc6qmk5qd1e2j2fmdmvg` (`usuario_usu_id`),
   CONSTRAINT `FKace66pc6qmk5qd1e2j2fmdmvg` FOREIGN KEY (`usuario_usu_id`) REFERENCES `usuario` (`usu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `perfis` VALUES (1,1),(2,2),(2,1);
+INSERT INTO `perfis` VALUES (1,1),(1,2);
 
 
 CREATE TABLE `usuario_funcao` (
@@ -174,7 +152,6 @@ CREATE TABLE `usuario_funcao` (
   CONSTRAINT `FKrw4lrjee1qrv23qxh31yhcnb1` FOREIGN KEY (`fun_id`) REFERENCES `funcao` (`fun_id`),
   CONSTRAINT `FKs072yiad0larkabeb41b79src` FOREIGN KEY (`usu_id`) REFERENCES `usuario` (`usu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `usuario_funcao` VALUES (1,3),(2,1),(2,2),(2,3);
 
 CREATE TABLE `equipe_ministro` (
   `equipe_equ_id` int(11) NOT NULL,
@@ -182,6 +159,48 @@ CREATE TABLE `equipe_ministro` (
   KEY `FKsymlri2w2bjh7h0mw0h5wqx2l` (`equipe_equ_id`),
   CONSTRAINT `FKsymlri2w2bjh7h0mw0h5wqx2l` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `equipe_ministro` VALUES (1,'Diego'),(2,'Admin');
+
+CREATE TABLE `equipe_baixista` (
+  `equipe_equ_id` int(11) NOT NULL,
+  `baixista` varchar(255) DEFAULT NULL,
+  KEY `FK9X9AFQ2EE96W5VHVUJT7LSV5Y` (`equipe_equ_id`),
+  CONSTRAINT `FK9X9AFQ2EE96W5VHVUJT7LSV5Y` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `equipe_baterista` (
+  `equipe_equ_id` int(11) NOT NULL,
+  `baterista` varchar(255) DEFAULT NULL,
+  KEY `FKFI1UDMLR3H374A2NKPRMBDQD5` (`equipe_equ_id`),
+  CONSTRAINT `FKFI1UDMLR3H374A2NKPRMBDQD5` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `equipe_baterista` (
+  `equipe_equ_id` int(11) NOT NULL,
+  `baterista` varchar(255) DEFAULT NULL,
+  KEY `FKFI1UDMLR3H374A2NKPRMBDQD5` (`equipe_equ_id`),
+  CONSTRAINT `FKFI1UDMLR3H374A2NKPRMBDQD5` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `equipe_guitarrista` (
+  `equipe_equ_id` int(11) NOT NULL,
+  `guitarrista` varchar(255) DEFAULT NULL,
+  KEY `FKF5PCJXJAHPK260WQCEMJ1DLFE` (`equipe_equ_id`),
+  CONSTRAINT `FKF5PCJXJAHPK260WQCEMJ1DLFE` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `equipe_tecladista` (
+  `equipe_equ_id` int(11) NOT NULL,
+  `tecladista` varchar(255) DEFAULT NULL,
+  KEY `FKKGXNQFMKHCMFDNWUUS9HNTJJU` (`equipe_equ_id`),
+  CONSTRAINT `FKKGXNQFMKHCMFDNWUUS9HNTJJU` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `equipe_violinista` (
+  `equipe_equ_id` int(11) NOT NULL,
+  `violinista` varchar(255) DEFAULT NULL,
+  KEY `FKCDLRIYHYQ4WU4TJSDG2TTIP0F` (`equipe_equ_id`),
+  CONSTRAINT `FKCDLRIYHYQ4WU4TJSDG2TTIP0F` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 
