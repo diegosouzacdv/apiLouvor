@@ -145,7 +145,7 @@ public class RepertorioService {
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
 		
 		for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
-		emailService.sendOrderConfirmationHtmlEmail(obj, email.getEmail());
+		//emailService.sendOrderConfirmationHtmlEmail(obj, email.getEmail());
 		}
 		
 		return obj;
