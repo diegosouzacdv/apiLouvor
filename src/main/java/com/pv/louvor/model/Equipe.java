@@ -24,9 +24,6 @@ public class Equipe implements Serializable{
 	@Column(name = "equ_id")
 	@JsonIgnore
 	private Integer id;
-	
-	
-	
 	@ElementCollection
 	private List<String> ministro;
 	@ElementCollection
