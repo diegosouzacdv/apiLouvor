@@ -188,9 +188,9 @@ CREATE TABLE `equipe_tecladista` (
   CONSTRAINT `FKKGXNQFMKHCMFDNWUUS9HNTJJU` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `equipe_violinista` (
+CREATE TABLE `equipe_violonista` (
   `equipe_equ_id` int(11) NOT NULL,
-  `violinista` varchar(255) DEFAULT NULL,
+  `violonista` varchar(255) DEFAULT NULL,
   KEY `FKCDLRIYHYQ4WU4TJSDG2TTIP0F` (`equipe_equ_id`),
   CONSTRAINT `FKCDLRIYHYQ4WU4TJSDG2TTIP0F` FOREIGN KEY (`equipe_equ_id`) REFERENCES `equipe` (`equ_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
