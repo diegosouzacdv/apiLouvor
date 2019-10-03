@@ -169,6 +169,8 @@ public class DBService {
 				u2.setFuncao(Arrays.asList(f1,f2,f3,f6));
 				u1.setIgreja(i1);
 				u2.setIgreja(i1);
+				u1.setDisponivel(false);
+				u2.setDisponivel(true);
 				usuarioRepository.save(Arrays.asList(u1, u2));
 				
 				//Equipe

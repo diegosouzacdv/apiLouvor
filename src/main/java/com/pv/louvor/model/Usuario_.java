@@ -16,6 +16,7 @@ public abstract class Usuario_ {
 	public static volatile SingularAttribute<Usuario, Boolean> ativo;
 	public static volatile SingularAttribute<Usuario, Pessoa> pessoa;
 	public static volatile SingularAttribute<Usuario, Igreja> igreja;
+	public static volatile SingularAttribute<Usuario, Boolean> disponivel;
 	public static volatile SingularAttribute<Usuario, Integer> id;
 	public static volatile SingularAttribute<Usuario, String> email;
 

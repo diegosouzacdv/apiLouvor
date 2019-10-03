@@ -115,6 +115,20 @@ public class UsuarioService {
 		}
 		repo.save(obj); 
 	}
+	
+	public void disponivelRepertorio(Integer id) {
+		Usuario obj = repo.findOne(id);
+		if(obj.isDisponivel()) {
+			obj.setDisponivel(false);
+		System.err.println("Não disponivel ");
+		} else {
+			obj.setDisponivel(true);
+		System.err.println("disponivel para o repertorio");
+		}
+		repo.save(obj); 
+	}
+	
+	
 
 	public void delete(Integer id) {
 		find(id);

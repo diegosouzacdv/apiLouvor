@@ -15,7 +15,10 @@ import javax.persistence.criteria.Root;
 
 import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Funcao_;
+import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.Musica_;
 import com.pv.louvor.model.Usuario;
+import com.pv.louvor.model.Usuario_;
 
 public class RepertorioRepositoryImpl implements RepertorioRepositoryQuery{
 
@@ -35,16 +38,18 @@ public class RepertorioRepositoryImpl implements RepertorioRepositoryQuery{
 		
 		Join<Usuario, Funcao> join = root.join("funcao", JoinType.INNER);
 		//criar restrições
-		Predicate[] predicates = criarRestricoes(join, builder, funcao);
+		Predicate[] predicates = criarRestricoes(join, builder, funcao, root);
 		criteria.where(predicates);
 		TypedQuery<Usuario> query = manager.createQuery(criteria);
 		
 		return query.getResultList();
 	}
 
-	private Predicate[] criarRestricoes(Join<Usuario, Funcao> join, CriteriaBuilder builder, Funcao funcao) {
+	private Predicate[] criarRestricoes(Join<Usuario, Funcao> join, CriteriaBuilder builder, Funcao funcao, Root<Usuario> root ) {
 		List<Predicate> predicates = new ArrayList<>();
 		predicates.add(builder.equal(join.get(Funcao_.id), funcao.getId()));
+		predicates.add(builder.equal(root.get(Usuario_.disponivel), true));
+		
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}	
 }

@@ -68,6 +68,8 @@ public class Usuario implements Serializable{
 	
 	private boolean ativo = true;
 	
+	private boolean disponivel = false;
+	
 	public Usuario() {
 		addPerfil(Perfil.USUARIO);
 	}
@@ -138,6 +140,14 @@ public class Usuario implements Serializable{
 		this.ativo = ativo;
 	}
 	
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
+	}
+
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(x -> Perfil.ToEnum(x)).collect(Collectors.toSet());
 	}

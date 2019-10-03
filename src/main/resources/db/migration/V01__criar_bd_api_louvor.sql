@@ -125,6 +125,7 @@ CREATE TABLE `musica_repertorio` (
 CREATE TABLE `usuario` (
   `usu_id` int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `ativo` boolean NOT NULL,
+  `disponivel` boolean NOT NULL,
   `email` varchar(255) NOT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `telefone` varchar(255) DEFAULT NULL,
@@ -133,7 +134,7 @@ CREATE TABLE `usuario` (
   KEY `FK16nvvtypfda1lsmn3p9tytlr8` (`igr_id`),
   CONSTRAINT `FK16nvvtypfda1lsmn3p9tytlr8` FOREIGN KEY (`igr_id`) REFERENCES `igreja` (`igr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `usuario` VALUES (1,true,'admin@gmail.com','Admin','(xx)xxxxx-xxxx','$2a$10$/Hg.wo8KtJPI55Lgh/oqhetgCnx8CqW64LqqtyB5yluYkszm.rZAy',1);
+INSERT INTO `usuario` VALUES (1,true,true,'admin@gmail.com','Admin','(xx)xxxxx-xxxx','$2a$10$/Hg.wo8KtJPI55Lgh/oqhetgCnx8CqW64LqqtyB5yluYkszm.rZAy',1);
 
 CREATE TABLE `perfis` (
   `usuario_usu_id` int(11) NOT NULL,

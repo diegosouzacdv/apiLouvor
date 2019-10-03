@@ -109,6 +109,12 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@PutMapping("/disponivel/{id}")
+	public ResponseEntity<Usuario> disponivelRepertorio(@PathVariable Integer id) {
+		service.disponivelRepertorio(id);
+		return ResponseEntity.noContent().build();
+	}
+	
 	@PutMapping("/perfil/{perfil}/{id}")
 	public ResponseEntity<Usuario> updatePerfil(@PathVariable int perfil, @PathVariable Integer id) {
 		Usuario usuario = usuarioRepository.findOne(id);
