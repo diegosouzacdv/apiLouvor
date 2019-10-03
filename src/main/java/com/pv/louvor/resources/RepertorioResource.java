@@ -51,6 +51,7 @@ public class RepertorioResource {
 		return ResponseEntity.ok().body(listDto);
  	}
 	
+	
 	@GetMapping("/all")
 	public ResponseEntity<List<Repertorio>> findAllComplet() {
 		List<Repertorio> list = service.buscarTodos();

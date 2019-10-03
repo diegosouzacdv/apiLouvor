@@ -78,7 +78,7 @@ public class RepertorioService {
 	 */
 	@Scheduled(cron = "0 10 0 * * *")
 	public void desativarRepertorio() {
-		System.err.println("Executando");
+		verificarSegunda();
 		List<Repertorio> allRepertorio = buscarTodos();
 		List<Repertorio> retorno = new ArrayList<>();
 		
@@ -99,6 +99,8 @@ public class RepertorioService {
 				retorno.add(repertorio);
 			}
 		}
+		
+		
 	}
 
 	/**
@@ -215,6 +217,25 @@ public class RepertorioService {
         }
         return nome;
         
+	}
+	
+	public void verificarSegunda() {
+		LocalDate hoje = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String segunda = hoje.format(formatter);
+		try {
+			segunda = data(segunda);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		if(segunda.equals("Segunda-Feira")) {
+			List<Usuario> users = usuarioRepository.findAll();
+			for (Usuario usuario : users) {
+				usuario.setDisponivel(false);
+				usuarioRepository.save(usuario);
+			}
+		}
+		System.err.println(segunda);
 	}
 	
 	/**
