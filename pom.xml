@@ -12,6 +12,7 @@
 	<groupId>com.diegosouza.api</groupId>
 	<artifactId>ApiLouvor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>ApiLouvor</name>
 	<description>Api Rest Vendas</description>
 
@@ -21,6 +22,19 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-tomcat</artifactId>
+		    <version>2.1.9.RELEASE</version>
+		    <scope>provided</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-war-plugin</artifactId>
+			<version>3.2.3</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -69,9 +83,9 @@
 		</dependency>
 
 		<dependency>
-		  <groupId>com.google.firebase</groupId>
-		  <artifactId>firebase-admin</artifactId>
-		  <version>6.8.1</version>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.8.1</version>
 		</dependency>
 
 		<dependency>
@@ -121,7 +135,7 @@
 			<version>1.3.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 
 	</dependencies>
 
@@ -130,14 +144,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				 <configuration>
-        <source>${maven.compiler.source}</source>
-        <target>${maven.compiler.target}</target>
-        <compilerArguments>
-            <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-        </compilerArguments>
-        <proc>none</proc> <!-- disable annotation processing to avoid duplicating maven-processor-plugin output -->
-    </configuration>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
+					<compilerArguments>
+						<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+					</compilerArguments>
+					<proc>none</proc> <!-- disable annotation processing to avoid duplicating maven-processor-plugin 
+						output -->
+				</configuration>
 			</plugin>
 		</plugins>
 

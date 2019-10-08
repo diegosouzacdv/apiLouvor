@@ -2,12 +2,12 @@ package com.pv.louvor;
 
 import java.text.ParseException;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class ApiLouvorApplication implements CommandLineRunner{
+public class ApiLouvorApplication extends SpringBootServletInitializer {
 	
 
 	public static void main(String[] args) throws ParseException {
@@ -29,12 +29,6 @@ public class ApiLouvorApplication implements CommandLineRunner{
         } 
         System.out.println(nome);*/
 		
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-	
-}
-	
+	}	
 	
 }
