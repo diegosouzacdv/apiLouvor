@@ -190,7 +190,8 @@ public class UsuarioService {
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
 		String fileName = prefix + user.getId() + ".jpg";
-		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+		//return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+		return null;
 	}
 
 	public Usuario findByEmail(String email) {
