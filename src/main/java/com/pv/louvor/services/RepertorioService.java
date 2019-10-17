@@ -131,6 +131,7 @@ public class RepertorioService {
 		data = data(data);
 		obj.setDataSemana(data);
 
+		
 		UserSS user = UserService.authenticated();
 		if(user != null && user.hasRole(Perfil.ADMIN)) {
 			Usuario usuario = usuarioRepository.findByEmail(user.getUsername());
@@ -147,7 +148,8 @@ public class RepertorioService {
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
 		
 		for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
-		//emailService.sendOrderConfirmationHtmlEmail(obj, email.getEmail());
+			System.err.println(email);
+		emailService.sendOrderConfirmationHtmlEmail(obj, email.getEmail());
 		}
 		
 		return obj;
@@ -160,7 +162,6 @@ public class RepertorioService {
 	 */
 	public Repertorio update(Repertorio obj) {
 		obj = repo.findOne(obj.getId());
-		obj.setAtivo(false);
 		repo.save(obj);
 		return obj;
 	}
@@ -235,7 +236,6 @@ public class RepertorioService {
 				usuarioRepository.save(usuario);
 			}
 		}
-		System.err.println(segunda);
 	}
 	
 	/**

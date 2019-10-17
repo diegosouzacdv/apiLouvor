@@ -91,7 +91,9 @@ public class RepertorioResource {
 	public ResponseEntity<Repertorio> update(@RequestBody Repertorio obj, @PathVariable Integer id) {
 		obj.setId(id);
 		obj = service.update(obj);
-		return ResponseEntity.noContent().build();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(obj);
 	}
 	
 	

@@ -36,6 +36,7 @@ public class AuthResource {
 	
 	@PostMapping("/forgot")
 	public ResponseEntity<Void> forgot(@RequestBody UsuarioEmailDTO objDto) {
+		System.err.println(objDto.getEmail());
 		service.sendNewPassword(objDto.getEmail());
 	return ResponseEntity.noContent().build();
 	}

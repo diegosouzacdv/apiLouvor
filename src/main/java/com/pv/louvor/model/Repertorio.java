@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -43,6 +44,7 @@ public class Repertorio implements Serializable{
 	@OneToOne(cascade = CascadeType.ALL)
 	private Equipe equipeDoDia;
 
+	@NotNull
 	@OneToMany(mappedBy = "id.repertorio")
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
