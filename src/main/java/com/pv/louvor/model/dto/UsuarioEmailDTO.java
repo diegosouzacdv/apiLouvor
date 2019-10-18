@@ -3,13 +3,15 @@ package com.pv.louvor.model.dto;
 
 import java.io.Serializable;
 
-import com.pv.louvor.model.Usuario;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class UsuarioEmailDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	
+	@NotEmpty(message="Preenchimento Obrigatório")
+	@Email(message="Email Inválido")
 	private String email;
 	
 	

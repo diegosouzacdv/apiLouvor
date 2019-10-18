@@ -1,6 +1,7 @@
 package com.pv.louvor.resources;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +36,7 @@ public class AuthResource {
 	}
 	
 	@PostMapping("/forgot")
-	public ResponseEntity<Void> forgot(@RequestBody UsuarioEmailDTO objDto) {
-		System.err.println(objDto.getEmail());
+	public ResponseEntity<Void> forgot(@Valid @RequestBody UsuarioEmailDTO objDto) {
 		service.sendNewPassword(objDto.getEmail());
 	return ResponseEntity.noContent().build();
 	}
