@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Usuario;
-import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioRecuperarSenha;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
