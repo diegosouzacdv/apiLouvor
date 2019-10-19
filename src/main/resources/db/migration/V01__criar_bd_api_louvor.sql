@@ -36,7 +36,7 @@ CREATE TABLE `igreja` (
   `ativo` boolean NOT NULL,
   `igr_nome` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `igreja` VALUES (1,true,'Águas Claras'),(2,true,'Samambaia');
+INSERT INTO `igreja` VALUES (1,true,'Águas Claras');
 
 
 CREATE TABLE `musica` (
@@ -58,11 +58,6 @@ CREATE TABLE `musica` (
   CONSTRAINT `FK1sqiptrejlh6vmqwrf7ifplt` FOREIGN KEY (`gru_id`) REFERENCES `grupo` (`gru_id`),
   CONSTRAINT `FK956ym5bcapiy59bdx9xx9fg52` FOREIGN KEY (`cat_id`) REFERENCES `categoria` (`cat_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `musica`
-VALUES 
-(1,true,'2019',120,'https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=1bsaEgF12BDMrEcwWtqm8-viERnghPEqW','https://drive.google.com/open?id=0BzCIxMGAHmIkNHVMQlBLa0loRms','O Senhor é Bom','D (Ré Maior)','D (Ré Maior)',1,1),
-(2,true,'2018',141,'https://drive.google.com/open?id=1EsSBBZLVmo1-Fd1EDZBuQ0iajYkvriii','https://drive.google.com/open?id=1chy87_IqHqv8nQ7832RLHkCVAhhR2NxM','https://drive.google.com/open?id=1ScG9VK3Qkjl1LcxEzc5CmUf3toWvETfp','https://drive.google.com/open?id=1EsSBBZLVmo1-Fd1EDZBuQ0iajYkvriii','Broken Vessels','G (Sol Maior)','E (Mi Maior)',4,2),
-(3,true,'2019',136,'https://drive.google.com/open?id=1wcoKs532Txm_WGHemwpOmjDWtO6PfCA_','https://drive.google.com/open?id=1qvcoslLe_duqf2i8EZRgkKKjsPofP4xZ','https://drive.google.com/open?id=1IqDwsBCRjOcwuK2lIXBXuow4LjI7uCcm','https://drive.google.com/open?id=1djHEE1Ckj_Cr4euBdnIEjV2oVG4DLMZK','Here Again','D (Ré Maior)','D (Ré Maior)',4,3);
 
 CREATE TABLE `tut_baixo` (
   `musica_mus_id` int(11) NOT NULL,
@@ -134,7 +129,6 @@ CREATE TABLE `usuario` (
   KEY `FK16nvvtypfda1lsmn3p9tytlr8` (`igr_id`),
   CONSTRAINT `FK16nvvtypfda1lsmn3p9tytlr8` FOREIGN KEY (`igr_id`) REFERENCES `igreja` (`igr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `usuario` VALUES (1,true,true,'admin@gmail.com','Admin','(xx)xxxxx-xxxx','$2a$10$/Hg.wo8KtJPI55Lgh/oqhetgCnx8CqW64LqqtyB5yluYkszm.rZAy',1);
 
 CREATE TABLE `perfis` (
   `usuario_usu_id` int(11) NOT NULL,

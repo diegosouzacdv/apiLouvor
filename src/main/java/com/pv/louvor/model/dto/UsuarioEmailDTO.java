@@ -15,14 +15,12 @@ public class UsuarioEmailDTO implements Serializable{
 	
 	public UsuarioEmailDTO() {
 		
-	}
-	
+	}	
 	
 	public UsuarioEmailDTO(String email) {
 		super();
 		this.email = email;
 	}
-
 
 	public String getEmail() {
 		return email;

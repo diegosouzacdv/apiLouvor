@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Usuario;
+import com.pv.louvor.model.dto.UsuarioEmailDTO;
+import com.pv.louvor.model.dto.UsuarioRecuperarSenha;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -25,17 +27,16 @@ public class AuthService {
 	private Random rand = new Random();
 	
 	
-	public void sendNewPassword(String email) {
-		Usuario usuario = usuarioRepository.findByEmail(email);
+	public void sendNewPassword(UsuarioRecuperarSenha objDto) {
+		Usuario usuario = usuarioRepository.findByEmail(objDto.getEmail());
 		if( usuario == null) {
 			throw new ObjectNotFoundException("E-mail não encontrado!");
 		}
-		
-		String newPass = newPassword();
-		usuario.setSenha(pe.encode(newPass));
+		usuario.setSenha(null);
+		usuario.setSenha(pe.encode(objDto.getConfirmacaoSenha()));
 		
 		usuarioRepository.save(usuario);
-		emailService.sendNewPasswordEmail(usuario, newPass);
+		//emailService.sendNewPasswordEmail(usuario, newPass);
 	}
 
 	private String newPassword() {

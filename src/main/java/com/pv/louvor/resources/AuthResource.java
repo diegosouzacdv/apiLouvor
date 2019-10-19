@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
+import com.pv.louvor.model.dto.UsuarioRecuperarSenha;
 import com.pv.louvor.security.JWTUtil;
 import com.pv.louvor.security.UserSS;
 import com.pv.louvor.services.AuthService;
@@ -35,9 +36,8 @@ public class AuthResource {
 	}
 	
 	@PostMapping("/forgot")
-	public ResponseEntity<Void> forgot(@RequestBody UsuarioEmailDTO objDto) {
-		System.err.println(objDto.getEmail());
-		service.sendNewPassword(objDto.getEmail());
+	public ResponseEntity<Void> forgot(@RequestBody UsuarioRecuperarSenha objDto) {
+		service.sendNewPassword(objDto);
 	return ResponseEntity.noContent().build();
 	}
 }
