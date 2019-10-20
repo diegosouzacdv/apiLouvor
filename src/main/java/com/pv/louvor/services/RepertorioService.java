@@ -162,6 +162,7 @@ public class RepertorioService {
 	 */
 	public Repertorio update(Repertorio obj) {
 		obj = repo.findOne(obj.getId());
+		obj.setAtivo(false);
 		repo.save(obj);
 		return obj;
 	}
@@ -191,7 +192,7 @@ public class RepertorioService {
 	 */
 	public Page<Repertorio> findPage(String data, Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findDistinctByDataIgnoreCaseContainingAndAtivoIs(data, true, pageRequest);
+		return repo.findDistinctByDataIgnoreCaseContaining(data, pageRequest);
 	}
 	
 	/**

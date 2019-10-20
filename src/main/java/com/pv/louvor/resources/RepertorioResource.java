@@ -70,7 +70,7 @@ public class RepertorioResource {
 			@RequestParam(value="data", defaultValue = "") String data,
 			@RequestParam(value="page", defaultValue = "0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue = "data") String orderBy, 
+			@RequestParam(value="orderBy", defaultValue = "id") String orderBy, 
 			@RequestParam(value="direction", defaultValue = "DESC") String direction) {
 		String dataDecoded = URL.decodeParam(data);
 		Page<Repertorio> obj = service.findPage(dataDecoded, page, linesPerPage, orderBy, direction);

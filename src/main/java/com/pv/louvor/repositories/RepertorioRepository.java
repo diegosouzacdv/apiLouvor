@@ -16,5 +16,5 @@ public interface RepertorioRepository extends JpaRepository<Repertorio, Integer>
 	List<Repertorio> findDistinctByAtivoIs(boolean ativo);
 	
 	@Transactional(readOnly = true)
-	Page<Repertorio> findDistinctByDataIgnoreCaseContainingAndAtivoIs(String data, boolean ativo, Pageable pageRequest);
+	Page<Repertorio> findDistinctByDataIgnoreCaseContaining(String data, Pageable pageRequest);
 }
