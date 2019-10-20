@@ -136,8 +136,6 @@ CREATE TABLE `perfis` (
   KEY `FKace66pc6qmk5qd1e2j2fmdmvg` (`usuario_usu_id`),
   CONSTRAINT `FKace66pc6qmk5qd1e2j2fmdmvg` FOREIGN KEY (`usuario_usu_id`) REFERENCES `usuario` (`usu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-INSERT INTO `perfis` VALUES (1,1),(1,2);
-
 
 CREATE TABLE `usuario_funcao` (
   `usu_id` int(11) NOT NULL,

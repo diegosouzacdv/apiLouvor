@@ -147,10 +147,12 @@ public class UsuarioService {
 
 	@Transactional
 	public Usuario insert(Usuario obj) {
-
+		Igreja igreja = igrejaRepository.findOne(1);
 		this.isExistePorEmail(obj);
 		obj.setId(null);
 		obj.setAtivo(false);
+		obj.setIgreja(igreja);
+		
 		return repo.save(obj);
 	}
 
