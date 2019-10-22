@@ -48,6 +48,7 @@ CREATE TABLE `musica` (
   `est_guia_instrumental` varchar(255) DEFAULT NULL,
   `est_guia_vocal` varchar(255) DEFAULT NULL,
   `est_letra` varchar(255) DEFAULT NULL,
+  `est_sample` varchar(255),
   `mus_nome` varchar(80) NOT NULL,
   `mus_nota_original` varchar(255) DEFAULT NULL,
   `mus_nota_tocada` varchar(255) DEFAULT NULL,

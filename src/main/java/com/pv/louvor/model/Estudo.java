@@ -26,6 +26,9 @@ private static final long serialVersionUID = 1L;
 	@Column(name="est_guia_vocal")
 	private String guiaVocal;
 	
+	@Column(name="est_sample")
+	private String sample;
+	
 	public Estudo() {
 		
 	}
@@ -56,6 +59,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setCifra(String cifra) {
 		this.cifra = cifra;
+	}
+
+	public String getSample() {
+		return sample;
+	}
+
+	public void setSample(String sample) {
+		this.sample = sample;
 	}
 
 	public Integer getBpm() {

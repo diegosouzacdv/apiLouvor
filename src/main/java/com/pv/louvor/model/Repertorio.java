@@ -54,6 +54,7 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_ativo")
 	private boolean ativo;
 	
+	
 	public Repertorio() {
 		
 	}
@@ -76,6 +77,7 @@ public class Repertorio implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public String getData() {
 		return data;
