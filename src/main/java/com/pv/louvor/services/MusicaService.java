@@ -1,7 +1,5 @@
 package com.pv.louvor.services;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,13 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.pv.louvor.model.Categoria;
 import com.pv.louvor.model.Musica;
-import com.pv.louvor.repositories.CategoriaRepository;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
@@ -35,7 +30,7 @@ public class MusicaService {
 	public Musica find(Integer id) {
 		Musica obj = repo.findOne(id);
 		if (obj == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
+			throw new ObjectNotFoundException("Música não encontrada! Id: " + id + 
 					", Tipo: " + Musica.class.getName());
 		}
 		return obj;
@@ -43,7 +38,6 @@ public class MusicaService {
 
 	@Transactional
 	public Musica insert(Musica obj) {
-		obj.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 		obj = isExist(obj);
 		obj.setAtivo(true);
 		return repo.save(obj);
@@ -58,7 +52,6 @@ public class MusicaService {
 	public Musica desabilitar(Integer id) {
 		Musica obj = find(id);
 		obj.setAtivo(false);
-		System.err.println(">>>>>>>>>>>>" +obj.getDataInserida());
 		return repo.save(obj);
 	}
 	
