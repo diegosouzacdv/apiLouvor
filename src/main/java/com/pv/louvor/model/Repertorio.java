@@ -1,7 +1,6 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,18 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.pv.louvor.model.dto.UsuarioDTO;
-
-import javassist.expr.Instanceof;
 
 @Entity
 public class Repertorio implements Serializable{
@@ -41,11 +33,11 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_data_semana")
 	private String dataSemana;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private Equipe equipeDoDia;
 
 	@NotNull
-	@OneToMany(mappedBy = "id.repertorio")
+	@OneToMany(mappedBy = "id.repertorio", cascade = CascadeType.REMOVE)
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
 	@Column(name="rep_criador")
@@ -65,9 +57,7 @@ public class Repertorio implements Serializable{
 	}
 	
 	public void deleteMusicas() {
-		System.err.println("entity" + musicasRepertorio);
 		musicasRepertorio.clear();
-		System.err.println("apagando" + musicasRepertorio);
 	}
 
 	public Integer getId() {

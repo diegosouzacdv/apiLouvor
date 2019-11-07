@@ -114,7 +114,6 @@ public class RepertorioService {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
 					", Tipo: " + Repertorio.class.getName());
 		}
-		System.err.println(obj);
 		return obj;
 	}
 
@@ -173,7 +172,8 @@ public class RepertorioService {
 	 * @param id
 	 */
 	public void delete(Integer id) {
-		find(id);
+		Repertorio obj = find(id);
+		obj.setEquipeDoDia(null);
 		try {
 			repo.delete(id);
 		} catch (DataIntegrityViolationException e) {
