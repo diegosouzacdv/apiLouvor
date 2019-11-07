@@ -118,11 +118,7 @@ public class UsuarioResource {
 	@PutMapping("/perfil/{perfil}/{id}")
 	public ResponseEntity<Usuario> updatePerfil(@PathVariable int perfil, @PathVariable Integer id) {
 		Usuario usuario = usuarioRepository.findOne(id);
-		System.err.println("Usuario" + id);
-		System.err.println("Perfil" + perfil);
-		System.err.println(perfil == 1);
 		if (perfil == 1) {
-			System.err.println("entrou");
 			usuario.addPerfil(Perfil.ADMIN);
 		} else {
 			usuario.deletePerfil(Perfil.ADMIN);

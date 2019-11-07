@@ -37,8 +37,8 @@ public class RepertorioResource {
 	private RepertorioService service;
 	
 	@GetMapping
-	public ResponseEntity<List<RepertorioDTO>> findAll() {
-		List<Repertorio> list = service.buscarTodos();
+	public ResponseEntity<List<RepertorioDTO>> findAll(@PathVariable Integer id) {
+		List<Repertorio> list = service.buscarTodos(id);
 		List<RepertorioDTO> listDto = list.stream().map(obj -> new RepertorioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 
@@ -52,9 +52,9 @@ public class RepertorioResource {
  	}
 	
 	
-	@GetMapping("/all")
-	public ResponseEntity<List<Repertorio>> findAllComplet() {
-		List<Repertorio> list = service.buscarTodos();
+	@GetMapping("/all/{id}")
+	public ResponseEntity<List<Repertorio>> findAllComplet(@PathVariable Integer id) {
+		List<Repertorio> list = service.buscarTodos(id);
 		return ResponseEntity.ok().body(list);
 
  	}

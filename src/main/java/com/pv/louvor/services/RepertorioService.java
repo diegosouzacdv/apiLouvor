@@ -22,12 +22,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Funcao;
+import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.repositories.FuncaoRepository;
+import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
 import com.pv.louvor.repositories.MusicaRepository;
 import com.pv.louvor.repositories.RepertorioRepository;
@@ -60,6 +62,9 @@ public class RepertorioService {
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
+	private IgrejaRepository igrejaRepository;
+	
+	@Autowired
 	private FuncaoRepository funcaoRepository;
 	
 	
@@ -67,9 +72,10 @@ public class RepertorioService {
 	 * Busca todos os Repertórios Ativos.
 	 * @return
 	 */
-	public List<Repertorio> buscarTodos() {
+	public List<Repertorio> buscarTodos(Integer id) {
+		Igreja igreja = igrejaRepository.findOne(id);
 		boolean ativo = true;
-		List<Repertorio> obj = repo.findDistinctByAtivoIs(ativo);
+		List<Repertorio> obj = repo.findDistinctByAtivoIsAndIgrejaId(ativo, igreja.getId());
 		return obj;
 	}
 	
@@ -79,7 +85,7 @@ public class RepertorioService {
 	@Scheduled(cron = "0 10 0 * * *")
 	public void desativarRepertorio() {
 		verificarSegunda();
-		List<Repertorio> allRepertorio = buscarTodos();
+		List<Repertorio> allRepertorio = repo.findDistinctByAtivoIs(true);
 		List<Repertorio> retorno = new ArrayList<>();
 		
 		for(Repertorio repertorio: allRepertorio) {

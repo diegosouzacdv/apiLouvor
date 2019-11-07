@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Perfil;
 
 public class UserSS implements UserDetails{
@@ -15,17 +16,19 @@ public class UserSS implements UserDetails{
 	private Integer id;
 	private String email;
 	private String senha;
+	private Igreja igreja;
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	public UserSS() {
 		
 	}
 	
-	public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
+	public UserSS(Integer id, String email, String senha, Set<Perfil> perfis, Igreja igreja) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.senha = senha;
+		this.igreja = igreja;
 		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
 	}
 

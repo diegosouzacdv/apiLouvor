@@ -188,14 +188,14 @@ public class DBService {
 				r1.setData("25/08/2019");
 				r1.setDataSemana("Domingo");
 				r1.setCriador(u1.getPessoa().getNome());
-				r1.setEquipeDoDia(eq1);
+				//r1.setEquipeDoDia(eq1);
 				r1.setAtivo(true);
 				
 				Repertorio r2 = new Repertorio();
 				r2.setData("21/08/2019");
 				r2.setDataSemana("Quarta-Feira");
 				r2.setCriador(u1.getPessoa().getNome());
-				r2.setEquipeDoDia(eq1);
+				//r2.setEquipeDoDia(eq1);
 				r2.setAtivo(true);
 				
 				repertorioRepository.save(Arrays.asList(r1,r2));

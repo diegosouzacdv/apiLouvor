@@ -13,6 +13,8 @@ import com.pv.louvor.repositories.repertorio.RepertorioRepositoryQuery;
 
 @Repository
 public interface RepertorioRepository extends JpaRepository<Repertorio, Integer>, RepertorioRepositoryQuery{
+	List<Repertorio> findDistinctByAtivoIsAndIgrejaId(boolean ativo, Integer igreja);
+	
 	List<Repertorio> findDistinctByAtivoIs(boolean ativo);
 	
 	@Transactional(readOnly = true)
