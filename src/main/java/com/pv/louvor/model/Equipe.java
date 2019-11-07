@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -36,6 +38,10 @@ public class Equipe implements Serializable{
 	private List<String> tecladista;
 	@ElementCollection
 	private List<String> baixista;
+	
+	@ManyToOne
+	@JoinColumn(name = "equ_igreja")
+	private Igreja igreja;
 	
 	public Equipe() {
 		
@@ -96,6 +102,12 @@ public class Equipe implements Serializable{
 	public void setBaixista(List<String> baixista) {
 		this.baixista = baixista;
 	}
-	
-	
+
+	public Igreja getIgreja() {
+		return igreja;
+	}
+
+	public void setIgreja(Igreja igreja) {
+		this.igreja = igreja;
+	}	
 }

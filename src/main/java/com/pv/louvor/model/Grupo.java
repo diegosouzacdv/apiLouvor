@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Length;
@@ -36,6 +38,10 @@ private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	@OneToMany(mappedBy = "grupo")
 	private List<Musica> musicas;
+	
+	@ManyToOne
+	@JoinColumn(name = "gru_igreja")
+	private Igreja igreja;
 	
 	@JsonIgnore
 	private boolean ativo;
@@ -80,6 +86,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	public Igreja getIgreja() {
+		return igreja;
+	}
+
+	public void setIgreja(Igreja igreja) {
+		this.igreja = igreja;
 	}
 
 	@Override

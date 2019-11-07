@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -46,6 +48,9 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_ativo")
 	private boolean ativo;
 	
+	@ManyToOne
+	@JoinColumn(name = "rep_igreja")
+	private Igreja igreja;
 	
 	public Repertorio() {
 		
@@ -120,6 +125,14 @@ public class Repertorio implements Serializable{
 
 	public void setDataSemana(String dataSemana) {
 		this.dataSemana = dataSemana;
+	}
+
+	public Igreja getIgreja() {
+		return igreja;
+	}
+
+	public void setIgreja(Igreja igreja) {
+		this.igreja = igreja;
 	}
 
 	@Override

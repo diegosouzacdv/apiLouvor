@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -35,6 +37,10 @@ public class Funcao implements Serializable{
 	@JsonIgnore
 	@ManyToMany(mappedBy = "funcao")
 	private List<Usuario> usuario;
+	
+	@ManyToOne
+	@JoinColumn(name = "fun_igreja")
+	private Igreja igreja;
 	
 	public Funcao() {
 		

@@ -68,6 +68,10 @@ public class Musica implements Serializable{
 	
 	@JsonIgnore
 	private boolean ativo;
+	
+	@ManyToOne
+	@JoinColumn(name = "mus_igreja")
+	private Igreja igreja;
 
 	
 	public Musica() {
@@ -181,6 +185,14 @@ public class Musica implements Serializable{
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	public Igreja getIgreja() {
+		return igreja;
+	}
+
+	public void setIgreja(Igreja igreja) {
+		this.igreja = igreja;
 	}
 
 

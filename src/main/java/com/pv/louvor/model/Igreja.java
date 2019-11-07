@@ -1,16 +1,19 @@
 package com.pv.louvor.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -29,6 +32,30 @@ public class Igreja implements Serializable{
 	@Column(name="igr_nome")
 	private String nome;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "igreja")
+	private List<Equipe> equipe;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "igreja")
+	private List<Funcao> funcao;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "igreja")
+	private List<Grupo> grupo;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "igreja")
+	private List<Repertorio> repertorio;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "igreja")
+	private List<Musica> musica;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "igreja")
+	private List<Usuario> usuario;
+
 	private boolean ativo;
 	
 	public Igreja() {
@@ -63,6 +90,54 @@ public class Igreja implements Serializable{
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public List<Equipe> getEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(List<Equipe> equipe) {
+		this.equipe = equipe;
+	}
+
+	public List<Funcao> getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(List<Funcao> funcao) {
+		this.funcao = funcao;
+	}
+
+	public List<Grupo> getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(List<Grupo> grupo) {
+		this.grupo = grupo;
+	}
+
+	public List<Repertorio> getRepertorio() {
+		return repertorio;
+	}
+
+	public void setRepertorio(List<Repertorio> repertorio) {
+		this.repertorio = repertorio;
+	}
+
+	public List<Musica> getMusica() {
+		return musica;
+	}
+
+	public void setMusica(List<Musica> musica) {
+		this.musica = musica;
+	}
+
+	public List<Usuario> getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(List<Usuario> usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
