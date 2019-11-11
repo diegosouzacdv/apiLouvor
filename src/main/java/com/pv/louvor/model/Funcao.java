@@ -38,10 +38,6 @@ public class Funcao implements Serializable{
 	@ManyToMany(mappedBy = "funcao")
 	private List<Usuario> usuario;
 	
-	@ManyToOne
-	@JoinColumn(name = "fun_igreja")
-	private Igreja igreja;
-	
 	public Funcao() {
 		
 	}

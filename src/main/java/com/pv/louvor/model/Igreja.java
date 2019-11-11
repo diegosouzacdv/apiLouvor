@@ -38,10 +38,6 @@ public class Igreja implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "igreja")
-	private List<Funcao> funcao;
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "igreja")
 	private List<Grupo> grupo;
 	
 	@JsonIgnore
@@ -98,14 +94,6 @@ public class Igreja implements Serializable{
 
 	public void setEquipe(List<Equipe> equipe) {
 		this.equipe = equipe;
-	}
-
-	public List<Funcao> getFuncao() {
-		return funcao;
-	}
-
-	public void setFuncao(List<Funcao> funcao) {
-		this.funcao = funcao;
 	}
 
 	public List<Grupo> getGrupo() {

@@ -92,11 +92,11 @@ public class DBService {
 				igrejaRepository.save(Arrays.asList(i1, i2));
 				
 				//Grupo
-				Grupo g1 = new Grupo(null, "Avivah");
+				Grupo g1 = new Grupo(null, "Avivah", i1);
 				g1.setAtivo(true);
-				Grupo g2 = new Grupo(null, "HillSong");
+				Grupo g2 = new Grupo(null, "HillSong", i1);
 				g2.setAtivo(true);
-				Grupo g3 = new Grupo(null, "Elevation Worship");
+				Grupo g3 = new Grupo(null, "Elevation Worship", i1);
 				g3.setAtivo(true);
 				grupoRepository.save(Arrays.asList(g1, g2, g3));
 				
