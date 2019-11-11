@@ -38,6 +38,10 @@ public class Funcao implements Serializable{
 	@ManyToMany(mappedBy = "funcao")
 	private List<Usuario> usuario;
 	
+	@ManyToOne
+	@JoinColumn(name = "fun_igreja")
+	private Igreja igreja;
+	
 	public Funcao() {
 		
 	}
@@ -70,6 +74,14 @@ public class Funcao implements Serializable{
 
 	public void setUsuario(List<Usuario> usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Igreja getIgreja() {
+		return igreja;
+	}
+
+	public void setIgreja(Igreja igreja) {
+		this.igreja = igreja;
 	}
 
 	@Override

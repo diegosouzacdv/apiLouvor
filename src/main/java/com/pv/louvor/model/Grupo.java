@@ -39,7 +39,6 @@ private static final long serialVersionUID = 1L;
 	@OneToMany(mappedBy = "grupo")
 	private List<Musica> musicas;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "gru_igreja")
 	private Igreja igreja;
@@ -51,11 +50,10 @@ private static final long serialVersionUID = 1L;
 		
 	}
 
-	public Grupo(Integer id, String nome, Igreja igreja) {
+	public Grupo(Integer id, String nome) {
 		super();
-		this.id = id;
-		this.nome = nome;
-		this.igreja = igreja;
+		this.setId(id);
+		this.setNome(nome);
 	}
 
 	public Integer getId() {
