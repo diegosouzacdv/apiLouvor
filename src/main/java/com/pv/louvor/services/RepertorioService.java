@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -75,8 +76,13 @@ public class RepertorioService {
 	public List<Repertorio> buscarTodos(Integer id) {
 		Igreja igreja = igrejaRepository.findOne(id);
 		boolean ativo = true;
-		List<Repertorio> obj = repo.findDistinctByAtivoIsAndIgrejaId(ativo, igreja.getId());
-		return obj;
+		if(igreja != null) {
+			List<Repertorio> obj = repo.findDistinctByAtivoIsAndIgrejaId(ativo, igreja.getId());
+			return obj;
+		} else {			
+			throw new ObjectNotFoundException("Igreja não existe! Id: " + id + 
+					", Tipo: " + Igreja.class.getName());
+		}
 	}
 	
 	/**
@@ -117,7 +123,7 @@ public class RepertorioService {
 	public Repertorio find(Integer id) {
 		Repertorio obj = repo.findOne(id);
 		if (obj == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id + 
+			throw new ObjectNotFoundException("Repertório não encontrado! Id: " + id + 
 					", Tipo: " + Repertorio.class.getName());
 		}
 		return obj;

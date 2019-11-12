@@ -47,13 +47,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/musicas/**",
 			"/categorias/**",
-			"/login/**"
+			"/login/**",
+			"/igrejas/**"
 	};
 	
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/usuarios",
 			"/auth/forgot"
+	};
+	
+	private static final String[] PUBLIC_MATCHERS_PUT = {
+			"/usuarios/**"
 	};
 	
 	@Override
@@ -67,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+			.antMatchers(HttpMethod.PUT, PUBLIC_MATCHERS_PUT).permitAll()
 			.antMatchers(PUBLIC_MATCHERS).permitAll()
 			.anyRequest().authenticated();
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));

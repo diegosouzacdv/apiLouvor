@@ -2,31 +2,42 @@ package com.pv.louvor.model.dto;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.pv.louvor.model.Usuario;
 
 public class UsuarioNewDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@NotEmpty(message="Nome é obrigatório")
+	private int id;
+	
 	private String nome;
-	@NotEmpty(message="Telefone é obrigatório")
+
 	private String telefone;
-	@NotEmpty(message="E-mail é obrigatório")
+	
 	private String email;
-	@NotEmpty(message="Senha é obrigatório")
+	
 	private String senha;
+	
+	private int igreja;
+	
 	
 	public UsuarioNewDTO() {
 	}
 	
 	public UsuarioNewDTO(Usuario obj) {
+		id= obj.getId();
 		nome = obj.getPessoa().getNome();
 		telefone = obj.getPessoa().getTelefone();
 		email = obj.getEmail();
 		senha = obj.getSenha();
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -61,10 +72,19 @@ public class UsuarioNewDTO implements Serializable{
 		this.senha = senha;
 	}
 
-	
-	
-	
-	
-	
+	public int getIgreja() {
+		return igreja;
+	}
 
+	public void setIgreja(int igreja) {
+		this.igreja = igreja;
+	}
+	
+	@Override
+	public String toString() {
+		return "UsuarioNewDTO [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", email=" + email + ", senha="
+				+ senha + ", igreja=" + igreja + "]";
+	}
+	
+	
 }

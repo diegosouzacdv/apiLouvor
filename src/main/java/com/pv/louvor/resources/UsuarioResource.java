@@ -95,6 +95,15 @@ public class UsuarioResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
+	@PutMapping
+	public ResponseEntity<Usuario> updateCadastro(@Valid @RequestBody UsuarioNewDTO objDTO) {
+		System.err.println(objDTO);
+		Usuario obj = service.updateRetornUser(objDTO);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).body(obj);
+	}
+	
 	
 	@PutMapping("/pessoais/{id}")
 	public ResponseEntity<Usuario> update(@Valid @RequestBody Usuario obj, @PathVariable Integer id) {

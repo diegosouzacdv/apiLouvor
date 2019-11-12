@@ -138,21 +138,21 @@ public class DBService {
 				//NotasMusicais
 				
 				//Musica
-				Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
+				Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true, true);
 				m1.setEstudo(e1);
 				m1.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 				m1.setGrupo(g1);
 				m1.setCategorias(c1);
 				m1.setTutorial(t1);	
 				
-				Musica m2 = new Musica(null, "Broken Vessels", NotasMusicais.G, NotasMusicais.E, true);
+				Musica m2 = new Musica(null, "Broken Vessels", NotasMusicais.G, NotasMusicais.E, true, true);
 				m2.setEstudo(e2);
 				m2.setDataInserida("2018");
 				m2.setGrupo(g2);
 				m2.setCategorias(c5);
 				m2.setTutorial(t2);
 				
-				Musica m3 = new Musica(null, "Here Again", NotasMusicais.D, NotasMusicais.D, true);
+				Musica m3 = new Musica(null, "Here Again", NotasMusicais.D, NotasMusicais.D, true, true);
 				m3.setEstudo(e3);
 				m3.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 				m3.setGrupo(g3);
@@ -190,6 +190,7 @@ public class DBService {
 				r1.setCriador(u1.getPessoa().getNome());
 				//r1.setEquipeDoDia(eq1);
 				r1.setAtivo(true);
+				r1.setIgreja(i1);
 				
 				Repertorio r2 = new Repertorio();
 				r2.setData("21/08/2019");
@@ -197,6 +198,8 @@ public class DBService {
 				r2.setCriador(u1.getPessoa().getNome());
 				//r2.setEquipeDoDia(eq1);
 				r2.setAtivo(true);
+				r2.setIgreja(i2);
+				
 				
 				repertorioRepository.save(Arrays.asList(r1,r2));
 

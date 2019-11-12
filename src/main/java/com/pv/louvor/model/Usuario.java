@@ -41,7 +41,6 @@ public class Usuario implements Serializable{
 	private Integer id;	
 	
 	@Embedded
-	@Valid
 	private Pessoa pessoa = new Pessoa();
 	
 	@ManyToMany
@@ -62,8 +61,8 @@ public class Usuario implements Serializable{
 	@NotEmpty(message="E-mail é obrigatório")
 	private String email;
 	
-	
 	@JsonIgnore
+	@NotEmpty(message="Senha é obrigatório")
 	private String senha;
 	
 	private boolean ativo = true;
@@ -81,6 +80,17 @@ public class Usuario implements Serializable{
 		this.pessoa.setTelefone(telefone);
 		this.email = email;
 		this.senha = senha;
+		addPerfil(Perfil.USUARIO);
+	}
+
+	public Usuario(Integer id, String nome, String telefone, String email, String senha, Igreja igreja) {
+		super();
+		this.id = id;
+		this.pessoa.setNome(nome);
+		this.pessoa.setTelefone(telefone);
+		this.email = email;
+		this.senha = senha;
+		this.igreja = igreja;
 		addPerfil(Perfil.USUARIO);
 	}
 
@@ -190,6 +200,10 @@ public class Usuario implements Serializable{
 		return true;
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", pessoa=" + pessoa + ", funcao=" + funcao + ", perfis=" + perfis + ", igreja="
+				+ igreja + ", email=" + email + ", senha=" + senha + ", ativo=" + ativo + ", disponivel=" + disponivel
+				+ "]";
+	}
 }

@@ -36,7 +36,6 @@ public class IgrejaResource {
 		return ResponseEntity.ok().body(obj);
 
  	}
-
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Igreja> find(@PathVariable Integer id) {

@@ -48,9 +48,6 @@ public class UsuarioService {
 	private HttpServletRequest request;
 
 	@Autowired
-	private S3Services s3Service;
-
-	@Autowired
 	private ImageService imageService;
 
 	@Value("${img.prefix.client.profile}")
@@ -147,13 +144,33 @@ public class UsuarioService {
 
 	@Transactional
 	public Usuario insert(Usuario obj) {
-		Igreja igreja = igrejaRepository.findOne(1);
 		this.isExistePorEmail(obj);
 		obj.setId(null);
 		obj.setAtivo(false);
-		obj.setIgreja(igreja);
 		
 		return repo.save(obj);
+	}
+	
+	@Transactional
+	public Usuario updateRetornUser(UsuarioNewDTO objNew) {
+		System.err.println(objNew);
+		Igreja igreja = igrejaRepository.findOne(objNew.getIgreja());
+		System.err.println(igreja);
+		Usuario obj = repo.findById(objNew.getId());
+		if(obj == null) {
+			throw new ObjectNotFoundException("Usuário não encontrado com id: " + objNew.getId());
+		} else {
+			obj.setIgreja(igreja);
+			System.err.println(obj);
+			obj = this.updateDto(objNew, obj);
+			obj.setAtivo(false);
+			return repo.save(obj);
+		}
+	}
+	
+	public Usuario updateDto(UsuarioNewDTO objDTO, Usuario user) {
+		Usuario obj = new Usuario(user.getId(), objDTO.getNome(), objDTO.getTelefone(), user.getEmail(), user.getSenha(), user.getIgreja());
+		return obj;
 	}
 
 	public Usuario fromDTO(UsuarioNewDTO objDTO) {
