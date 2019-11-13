@@ -24,5 +24,4 @@ public class ProdConfig {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		 return mailSender;
 	}
-
 }

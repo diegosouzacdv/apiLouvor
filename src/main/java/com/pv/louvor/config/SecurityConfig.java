@@ -48,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/musicas/**",
 			"/categorias/**",
 			"/login/**",
-			"/igrejas/**"
+			"/igrejas/**",
+			"/fotos/**"
 	};
 	
 	

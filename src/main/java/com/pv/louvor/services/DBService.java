@@ -138,21 +138,21 @@ public class DBService {
 				//NotasMusicais
 				
 				//Musica
-				Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true, true);
+				Musica m1 = new Musica(null, "O Senhor é Bom", NotasMusicais.D, NotasMusicais.D, true);
 				m1.setEstudo(e1);
 				m1.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 				m1.setGrupo(g1);
 				m1.setCategorias(c1);
 				m1.setTutorial(t1);	
 				
-				Musica m2 = new Musica(null, "Broken Vessels", NotasMusicais.G, NotasMusicais.E, true, true);
+				Musica m2 = new Musica(null, "Broken Vessels", NotasMusicais.G, NotasMusicais.E, true);
 				m2.setEstudo(e2);
 				m2.setDataInserida("2018");
 				m2.setGrupo(g2);
 				m2.setCategorias(c5);
 				m2.setTutorial(t2);
 				
-				Musica m3 = new Musica(null, "Here Again", NotasMusicais.D, NotasMusicais.D, true, true);
+				Musica m3 = new Musica(null, "Here Again", NotasMusicais.D, NotasMusicais.D, true);
 				m3.setEstudo(e3);
 				m3.setDataInserida(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 				m3.setGrupo(g3);

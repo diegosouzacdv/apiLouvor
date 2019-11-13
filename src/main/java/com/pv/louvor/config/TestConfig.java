@@ -10,6 +10,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import com.pv.louvor.services.DBService;
 import com.pv.louvor.services.EmailService;
 import com.pv.louvor.services.MockEmailService;
+import com.pv.louvor.storage.FotoStorage;
+import com.pv.louvor.storage.local.FotoStorageLocal;
 
 @Configuration
 @Profile("test")
@@ -37,5 +39,6 @@ public class TestConfig {
 		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
 		 return mailSender;
 	}
+
 
 }

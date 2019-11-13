@@ -50,6 +50,8 @@ public class UserSS implements UserDetails{
 	public String getUsername() {
 		return email;
 	}
+	
+	
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -79,4 +81,9 @@ public class UserSS implements UserDetails{
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 
+	@Override
+	public String toString() {
+		return "UserSS [id=" + id + ", email=" + email + ", senha=" + senha + ", igreja=" + igreja + ", authorities="
+				+ authorities + "]";
+	}
 }

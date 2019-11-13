@@ -146,7 +146,7 @@ public class UsuarioResource {
 	}
 	
 	@PostMapping("/picture")
-	public ResponseEntity<Usuario> uploadProfilePicture(@RequestParam(name="file") MultipartFile multipartFile) {
+	public ResponseEntity<Usuario> uploadProfilePicture(@RequestParam MultipartFile multipartFile) {
 		URI uri = service.uploadProfilePicture(multipartFile);
 		return ResponseEntity.created(uri).build();
 	}

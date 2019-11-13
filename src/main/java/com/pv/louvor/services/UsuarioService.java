@@ -225,4 +225,17 @@ public class UsuarioService {
 		}
 		return obj;
 	}
+
+	public void salvarNoBanco(String nomeFoto, String contentType) {
+		System.err.println("entrando aqui");
+		UserSS user = UserService.authenticated();
+		if(user != null) {			
+			Usuario obj = repo.findOne(user.getId());
+			if(obj != null) {
+				obj.setFoto(nomeFoto);
+				obj.setContentType(contentType);
+				repo.save(obj);
+			}
+		}
+	}
 }

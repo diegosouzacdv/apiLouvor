@@ -69,6 +69,12 @@ public class Usuario implements Serializable{
 	
 	private boolean disponivel = false;
 	
+	@Column(name = "usu_foto")
+	private String foto;
+	
+	@Column(name = "usu_content_type")
+	private String contentType;
+	
 	public Usuario() {
 		addPerfil(Perfil.USUARIO);
 	}
@@ -173,6 +179,22 @@ public class Usuario implements Serializable{
 
 	public void setPerfis(Set<Integer> perfis) {
 		this.perfis = perfis;
+	}
+	
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	@Override

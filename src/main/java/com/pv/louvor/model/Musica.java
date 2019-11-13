@@ -72,9 +72,8 @@ public class Musica implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "mus_igreja")
 	private Igreja igreja;
-
 	
-	public Musica() {
+	public Musica () {
 		
 	}
 
