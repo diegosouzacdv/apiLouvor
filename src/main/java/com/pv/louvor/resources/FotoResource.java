@@ -22,7 +22,7 @@ public class FotoResource {
 	private FotoStorage fotoStorage;
 			
 	@PostMapping
-	public DeferredResult<FotoDTO> upload(@RequestParam MultipartFile foto) {	
+	public DeferredResult<FotoDTO> upload(@RequestParam("file") MultipartFile foto) {	
 		
 		DeferredResult<FotoDTO> resultado = new DeferredResult<>();
 		
