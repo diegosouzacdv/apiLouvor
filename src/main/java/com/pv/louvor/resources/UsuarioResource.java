@@ -41,9 +41,9 @@ public class UsuarioResource {
 	private UsuarioRepository usuarioRepository;
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping
-	public ResponseEntity<List<UsuarioDTO>> findAll() {
-		List<Usuario> list = service.buscarTodos();
+	@GetMapping("/all/{igreja}")
+	public ResponseEntity<List<UsuarioDTO>> findAll(@PathVariable Integer igreja) {
+		List<Usuario> list = service.buscarTodos(igreja);
 		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}
@@ -57,9 +57,9 @@ public class UsuarioResource {
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/allemail")
-	public ResponseEntity<List<UsuarioEmailDTO>> findAllEmail() {
-		List<Usuario> list = service.buscarTodos();
+	@GetMapping("/allemail/{igreja}")
+	public ResponseEntity<List<UsuarioEmailDTO>> findAllEmail(@PathVariable Integer igreja) {
+		List<Usuario> list = service.buscarTodos(igreja);
 		List<UsuarioEmailDTO> listDto = list.stream().map(obj -> new UsuarioEmailDTO(obj.getEmail())).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}

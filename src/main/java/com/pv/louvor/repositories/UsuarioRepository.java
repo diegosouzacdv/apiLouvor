@@ -22,4 +22,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	Usuario findById(Integer id);
 
 	List<Usuario> findByAtivoAndIgrejaId(boolean ativo, Integer id);
+
 }

@@ -56,13 +56,14 @@ public class UsuarioService {
 	@Value("${img.profile.size}")
 	private Integer size;
 
-	public List<Usuario> buscarTodos() {
-		List<Usuario> obj = repo.findAll();
+	public List<Usuario> buscarTodos(Integer id) {
+		Igreja igreja = getIgreja(id);
+		List<Usuario> obj = repo.findByAtivoAndIgrejaId(true, igreja.getId());
 		return obj;
 	}
 
 	public List<Usuario> novosUsuarios(Integer id) {
-		Igreja igreja = igrejaRepository.findOne(id);
+		Igreja igreja = getIgreja(id);
 		if(igreja != null) {
 		List<Usuario> obj = repo.findByAtivoAndIgrejaId(false, igreja.getId());
 		return obj;
@@ -145,6 +146,10 @@ public class UsuarioService {
 	public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Igreja getIgreja(Integer id) {
+		return igrejaRepository.findOne(id);
 	}
 	
 

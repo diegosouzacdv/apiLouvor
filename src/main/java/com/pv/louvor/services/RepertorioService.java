@@ -74,7 +74,7 @@ public class RepertorioService {
 	 * @return
 	 */
 	public List<Repertorio> buscarTodos(Integer id) {
-		Igreja igreja = igrejaRepository.findOne(id);
+		Igreja igreja = getIgreja(id);
 		if(igreja != null) {
 			List<Repertorio> obj = repo.findDistinctByAtivoIsAndIgrejaId(true, igreja.getId());
 			return obj;
@@ -260,5 +260,9 @@ public class RepertorioService {
 		Funcao funcao = funcaoRepository.findOne(parseInt);
 		List<Usuario> listDto = repo.funcoes(funcao);
 		return listDto;
+	}
+	
+	public Igreja getIgreja(Integer id) {
+		return igrejaRepository.findOne(id);
 	}
 }
