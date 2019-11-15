@@ -1,7 +1,6 @@
 package com.pv.louvor.resources;
 
 import java.net.URI;
-import com.pv.louvor.resources.utils.URL;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Grupo;
-import com.pv.louvor.model.Musica;
+import com.pv.louvor.resources.utils.URL;
 import com.pv.louvor.services.GrupoService;
 
 @RestController
@@ -57,9 +56,9 @@ public class GrupoResource {
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@PostMapping
-	public ResponseEntity<Grupo> insert(@Valid @RequestBody Grupo obj) {
-		obj = service.insert(obj);
+	@PostMapping("/{igreja}")
+	public ResponseEntity<Grupo> insert(@Valid @RequestBody Grupo obj, @PathVariable Integer igreja) {
+		obj = service.insert(obj, igreja);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);

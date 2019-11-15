@@ -12,8 +12,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Grupo;
-import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.Igreja;
 import com.pv.louvor.repositories.GrupoRepository;
+import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -22,6 +23,9 @@ public class GrupoService {
 	
 	@Autowired
 	private GrupoRepository repo;
+	
+	@Autowired
+	private IgrejaRepository igrejaRepository;
 	
 	public List<Grupo> buscarTodos() {
 		List<Grupo> obj = repo.findAll();
@@ -38,7 +42,11 @@ public class GrupoService {
 	}
 
 	@Transactional
-	public Grupo insert(Grupo obj) {
+	public Grupo insert(Grupo obj, Integer id) {
+		Igreja igreja = getIgreja(id);
+		if(igreja != null) {			
+			obj.setIgreja(igreja);
+		}
 		obj.setId(null);
 		obj.setAtivo(true);
 		obj = isExist(obj);
@@ -86,5 +94,9 @@ public class GrupoService {
 	public Page<Grupo> findPage(String nome, Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
 		return repo.findDistinctByNomeIgnoreCaseContainingAndAtivoIs(nome, true, pageRequest);
+	}
+	
+	public Igreja getIgreja(Integer id) {
+		return igrejaRepository.findOne(id);
 	}
 }
