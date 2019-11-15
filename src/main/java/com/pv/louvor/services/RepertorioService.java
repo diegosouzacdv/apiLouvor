@@ -10,7 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -194,6 +193,7 @@ public class RepertorioService {
 
 	/**
 	 * metodo faz a paginação dos repertorios que estão ativos
+	 * @param igreja 
 	 * @param data
 	 * @param page
 	 * @param linesPerPage
@@ -201,9 +201,10 @@ public class RepertorioService {
 	 * @param direction
 	 * @return
 	 */
-	public Page<Repertorio> findPage(String data, Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Repertorio> findPage(Integer id, String data, Integer page, Integer linesPerPage, String orderBy, String direction){
+		Igreja igreja = getIgreja(id);
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findDistinctByDataIgnoreCaseContaining(data, pageRequest);
+		return repo.findDistinctByDataIgnoreCaseContainingAndIgrejaId(data, igreja.getId(), pageRequest);
 	}
 	
 	/**
