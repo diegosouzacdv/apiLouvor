@@ -70,14 +70,13 @@ public class RepertorioService {
 	
 	
 	/**
-	 * Busca todos os Repertórios Ativos.
+	 * Busca todos os Repertórios Ativos com o id da igreja.
 	 * @return
 	 */
 	public List<Repertorio> buscarTodos(Integer id) {
 		Igreja igreja = igrejaRepository.findOne(id);
-		boolean ativo = true;
 		if(igreja != null) {
-			List<Repertorio> obj = repo.findDistinctByAtivoIsAndIgrejaId(ativo, igreja.getId());
+			List<Repertorio> obj = repo.findDistinctByAtivoIsAndIgrejaId(true, igreja.getId());
 			return obj;
 		} else {			
 			throw new ObjectNotFoundException("Igreja não existe! Id: " + id + 

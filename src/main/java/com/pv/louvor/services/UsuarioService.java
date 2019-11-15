@@ -61,9 +61,15 @@ public class UsuarioService {
 		return obj;
 	}
 
-	public List<Usuario> novosUsuarios() {
-		List<Usuario> obj = repo.findByAtivo(false);
+	public List<Usuario> novosUsuarios(Integer id) {
+		Igreja igreja = igrejaRepository.findOne(id);
+		if(igreja != null) {
+		List<Usuario> obj = repo.findByAtivoAndIgrejaId(false, igreja.getId());
 		return obj;
+		} else {			
+			throw new ObjectNotFoundException("Igreja não existe! Id: " + id + 
+					", Tipo: " + Igreja.class.getName());
+		}
 	}
 
 	public List<UsuarioEmailDTO> buscarTodosEmails() {

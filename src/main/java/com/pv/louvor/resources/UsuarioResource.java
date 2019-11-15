@@ -49,9 +49,9 @@ public class UsuarioResource {
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/novosusuarios")
-	public ResponseEntity<List<UsuarioDTO>> novosUsuarios() {
-		List<Usuario> list = service.novosUsuarios();
+	@GetMapping("/novosusuarios/{igreja}")
+	public ResponseEntity<List<UsuarioDTO>> novosUsuarios(@PathVariable Integer igreja) {
+		List<Usuario> list = service.novosUsuarios(igreja);
 		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}
