@@ -91,9 +91,10 @@ public class GrupoService {
 		}
 	}
 	
-	public Page<Grupo> findPage(String nome, Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Grupo> findPage(Integer id, String nome, Integer page, Integer linesPerPage, String orderBy, String direction){
+		Igreja igreja = getIgreja(id);
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findDistinctByNomeIgnoreCaseContainingAndAtivoIs(nome, true, pageRequest);
+		return repo.findDistinctByNomeIgnoreCaseContainingAndAtivoAndIgrejaId(nome, true, igreja.getId(), pageRequest);
 	}
 	
 	public Igreja getIgreja(Integer id) {

@@ -15,6 +15,6 @@ public interface GrupoRepository  extends JpaRepository<Grupo, Integer>{
 	Grupo findByNome(String nome);
 	
 	@Transactional(readOnly = true)
-	Page<Grupo> findDistinctByNomeIgnoreCaseContainingAndAtivoIs(String nome, boolean ativo, Pageable pageRequest);
+	Page<Grupo> findDistinctByNomeIgnoreCaseContainingAndAtivoAndIgrejaId(String nome, boolean ativo, Integer integer, Pageable pageRequest);
 	
 }
