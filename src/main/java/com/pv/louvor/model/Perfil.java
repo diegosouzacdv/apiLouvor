@@ -3,7 +3,8 @@ package com.pv.louvor.model;
 public enum Perfil {
 	
 	ADMIN(1, "ROLE_ADMIN"),
-	USUARIO(2, "ROLE_USUARIO");
+	USUARIO(2, "ROLE_USUARIO"),
+	SEDE(3, "ROLE_SEDE");
 	
 	private Integer cod;
 	private String descricao;
