@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,12 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pv.louvor.model.Grupo;
-import com.pv.louvor.resources.utils.URL;
+import com.pv.louvor.model.dto.GrupoDTO;
 import com.pv.louvor.services.GrupoService;
 
 @RestController
@@ -44,16 +44,9 @@ public class GrupoResource {
 		return ResponseEntity.ok().body(obj);
  	}
 	
-	@GetMapping("/page")
-	public ResponseEntity<Page<Grupo>> findPage(
-			@RequestParam(value="igreja", defaultValue = "0") Integer igreja,
-			@RequestParam(value="page", defaultValue = "0") Integer page, 
-			@RequestParam(value="nome", defaultValue = "") String nome,
-			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue = "nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue = "ASC") String direction) {
-		String nomeDecoded = URL.decodeParam(nome);
-		Page<Grupo> obj = service.findPage(igreja, nomeDecoded, page, linesPerPage, orderBy, direction);
+	@GetMapping("/{igreja}/page")
+	public ResponseEntity<Page<Grupo>> findPage(@PathVariable Integer igreja, GrupoDTO grupoDto, Pageable pageable) {
+		Page<Grupo> obj = service.findPage(grupoDto, pageable, igreja);
 		return ResponseEntity.ok().body(obj);
  	}
 	

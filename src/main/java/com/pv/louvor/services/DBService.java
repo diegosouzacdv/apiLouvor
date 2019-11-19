@@ -89,14 +89,16 @@ public class DBService {
 				i1.setAtivo(true);
 				Igreja i2 = new Igreja(null, "Samambaia");
 				i2.setAtivo(true);
-				igrejaRepository.save(Arrays.asList(i1, i2));
+				Igreja i3 = new Igreja(null, "Sede");
+				i3.setAtivo(true);
+				igrejaRepository.save(Arrays.asList(i1, i2, i3));
 				
 				//Grupo
-				Grupo g1 = new Grupo(null, "Avivah");
+				Grupo g1 = new Grupo(null, "Avivah", true, i3, true);
 				g1.setAtivo(true);
-				Grupo g2 = new Grupo(null, "HillSong");
+				Grupo g2 = new Grupo(null, "HillSong", true, i3, true);
 				g2.setAtivo(true);
-				Grupo g3 = new Grupo(null, "Elevation Worship");
+				Grupo g3 = new Grupo(null, "Elevation Worship", true, i3, true);
 				g3.setAtivo(true);
 				grupoRepository.save(Arrays.asList(g1, g2, g3));
 				

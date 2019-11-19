@@ -7,14 +7,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pv.louvor.model.Grupo;
+import com.pv.louvor.repositories.grupo.GrupoRepositoryQuery;
 
 @Repository
-public interface GrupoRepository  extends JpaRepository<Grupo, Integer>{
+public interface GrupoRepository  extends JpaRepository<Grupo, Integer>, GrupoRepositoryQuery{
 
 	@Transactional(readOnly = true)
 	Grupo findByNome(String nome);
 	
 	@Transactional(readOnly = true)
-	Page<Grupo> findDistinctByNomeIgnoreCaseContainingAndAtivoAndIgrejaId(String nome, boolean ativo, Integer integer, Pageable pageRequest);
+	Page<Grupo> findDistinctByNomeIgnoreCaseContainingAndAtivoAndIgrejaIdAndIgrejaId(String nome, boolean ativo, Integer igreja, Integer sede, Pageable pageRequest);
 	
 }

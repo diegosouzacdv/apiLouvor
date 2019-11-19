@@ -7,12 +7,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Grupo;
 import com.pv.louvor.model.Igreja;
+import com.pv.louvor.model.dto.GrupoDTO;
 import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
@@ -46,6 +46,11 @@ public class GrupoService {
 		Igreja igreja = getIgreja(id);
 		if(igreja != null) {			
 			obj.setIgreja(igreja);
+		}
+		if (igreja.getNome().equals("Sede")) {
+			obj.setSede(true);
+		} else {
+			obj.setSede(false);
 		}
 		obj.setId(null);
 		obj.setAtivo(true);
@@ -91,13 +96,18 @@ public class GrupoService {
 		}
 	}
 	
-	public Page<Grupo> findPage(Integer id, String nome, Integer page, Integer linesPerPage, String orderBy, String direction){
+	public Page<Grupo> findPage(GrupoDTO grupoDto, Pageable pageable, Integer id){
 		Igreja igreja = getIgreja(id);
-		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
-		return repo.findDistinctByNomeIgnoreCaseContainingAndAtivoAndIgrejaId(nome, true, igreja.getId(), pageRequest);
+		Igreja sede = getSede();
+		Page<Grupo> obj = repo.filtrar(grupoDto, igreja, sede, pageable);
+		return obj;
 	}
 	
 	public Igreja getIgreja(Integer id) {
 		return igrejaRepository.findOne(id);
+	}
+	
+	public Igreja getSede() {
+		return igrejaRepository.findByNome("Sede");
 	}
 }

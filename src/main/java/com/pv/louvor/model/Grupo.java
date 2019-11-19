@@ -3,7 +3,6 @@ package com.pv.louvor.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,14 +45,21 @@ private static final long serialVersionUID = 1L;
 	@JsonIgnore
 	private boolean ativo;
 	
+	@Column(name="gru_sede")
+	private boolean sede;
+	
 	public Grupo() {
 		
 	}
 
-	public Grupo(Integer id, String nome) {
+	public Grupo(Integer id, String nome, boolean ativo, Igreja igreja, boolean sede) {
 		super();
 		this.setId(id);
 		this.setNome(nome);
+		this.setAtivo(ativo);
+		this.setIgreja(igreja);
+		this.setSede(sede);
+		
 	}
 
 	public Integer getId() {
@@ -94,6 +100,14 @@ private static final long serialVersionUID = 1L;
 
 	public void setIgreja(Igreja igreja) {
 		this.igreja = igreja;
+	}
+	
+	public boolean isSede() {
+		return sede;
+	}
+
+	public void setSede(boolean sede) {
+		this.sede = sede;
 	}
 
 	@Override
