@@ -59,8 +59,6 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 		}
 		
 		if(!StringUtils.isEmpty(musicaDto.getCategoria())) {
-			System.err.println(builder.lower(root.get(Musica_.categorias).get(Categoria_.nome)));
-			System.err.println("filtro: " + musicaDto.getCategoria());
 			predicates.add(builder.like(
 					builder.lower(root.get(Musica_.categorias).get(Categoria_.nome)),musicaDto.getCategoria().toLowerCase()));
 		}

@@ -31,12 +31,11 @@ public class GrupoRepositoryImpl implements GrupoRepositoryQuery{
 	@Override
 	public Page<Grupo> filtrar(GrupoDTO grupo, Igreja local, Igreja sede, Pageable pageable) {
 		
-		System.err.println(local);
-		System.err.println(sede);
 		
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Grupo> criteria = builder.createQuery(Grupo.class);
 		Root<Grupo> root = criteria.from(Grupo.class);
+		
 		
 		Order order = builder.desc(root.get(Grupo_.id));
 		criteria.orderBy(order);
@@ -59,10 +58,10 @@ public class GrupoRepositoryImpl implements GrupoRepositoryQuery{
 				builder.lower(root.get(Grupo_.nome)),"%" + grupo.getNome().toLowerCase() + "%"));
 		}
 		
-//		if(!StringUtils.isEmpty(local.getId())) {
-//			predicates.add(builder.like(
-//					builder.lower(root.get(Grupo_.nome)),local.getNome()));
-//		}
+		if(local != null) {
+			predicates.add(builder.or(builder.equal(root.get("igreja"),local), builder.equal(root.get("sede"), true)));
+		}
+	
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 	
