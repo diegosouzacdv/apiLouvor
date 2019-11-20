@@ -37,8 +37,8 @@ public class RepertorioResource {
 	private RepertorioService service;
 	
 	@GetMapping
-	public ResponseEntity<List<RepertorioDTO>> findAll(@PathVariable Integer id) {
-		List<Repertorio> list = service.buscarTodos(id);
+	public ResponseEntity<List<RepertorioDTO>> findAll() {
+		List<Repertorio> list = service.buscarTodos();
 		List<RepertorioDTO> listDto = list.stream().map(obj -> new RepertorioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 
@@ -52,9 +52,9 @@ public class RepertorioResource {
  	}
 	
 	
-	@GetMapping("/all/{id}")
-	public ResponseEntity<List<Repertorio>> findAllComplet(@PathVariable Integer id) {
-		List<Repertorio> list = service.buscarTodos(id);
+	@GetMapping("/all")
+	public ResponseEntity<List<Repertorio>> findAllComplet() {
+		List<Repertorio> list = service.buscarTodos();
 		return ResponseEntity.ok().body(list);
 
  	}
@@ -67,14 +67,13 @@ public class RepertorioResource {
 	
 	@GetMapping("/page")
 	public ResponseEntity<Page<Repertorio>> findPage(
-			@RequestParam(value="igreja", defaultValue = "0") Integer igreja,
 			@RequestParam(value="data", defaultValue = "") String data,
 			@RequestParam(value="page", defaultValue = "0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue = "10") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue = "id") String orderBy, 
 			@RequestParam(value="direction", defaultValue = "DESC") String direction) {
 		String dataDecoded = URL.decodeParam(data);
-		Page<Repertorio> obj = service.findPage(igreja, dataDecoded, page, linesPerPage, orderBy, direction);
+		Page<Repertorio> obj = service.findPage(dataDecoded, page, linesPerPage, orderBy, direction);
 		return ResponseEntity.ok().body(obj);
  	}
 	

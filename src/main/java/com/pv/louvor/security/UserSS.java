@@ -50,8 +50,39 @@ public class UserSS implements UserDetails{
 	public String getUsername() {
 		return email;
 	}
-	
-	
+		
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Igreja getIgreja() {
+		return igreja;
+	}
+
+	public void setIgreja(Igreja igreja) {
+		this.igreja = igreja;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {

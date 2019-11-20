@@ -56,19 +56,21 @@ public class UsuarioService {
 	@Value("${img.profile.size}")
 	private Integer size;
 
-	public List<Usuario> buscarTodos(Integer id) {
-		Igreja igreja = getIgreja(id);
+	public List<Usuario> buscarTodos() {
+		UserSS user = getUsuario();
+		Igreja igreja = getIgreja(user.getIgreja().getId());
 		List<Usuario> obj = repo.findByAtivoAndIgrejaId(true, igreja.getId());
 		return obj;
 	}
 
-	public List<Usuario> novosUsuarios(Integer id) {
-		Igreja igreja = getIgreja(id);
+	public List<Usuario> novosUsuarios() {
+		UserSS user = getUsuario();
+		Igreja igreja = getIgreja(user.getIgreja().getId());
 		if(igreja != null) {
 		List<Usuario> obj = repo.findByAtivoAndIgrejaId(false, igreja.getId());
 		return obj;
 		} else {			
-			throw new ObjectNotFoundException("Igreja não existe! Id: " + id + 
+			throw new ObjectNotFoundException("Igreja não existe! Id: " + user.getIgreja().getId() + 
 					", Tipo: " + Igreja.class.getName());
 		}
 	}
@@ -146,12 +148,7 @@ public class UsuarioService {
 	public Page<Usuario> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
-	}
-	
-	public Igreja getIgreja(Integer id) {
-		return igrejaRepository.findOne(id);
-	}
-	
+	}	
 
 	@Transactional
 	public Usuario insert(Usuario obj) {
@@ -258,5 +255,14 @@ public class UsuarioService {
 			usuario.addPerfil(Perfil.USUARIO);
 		}
 		return usuario;
+	}
+	
+	public Igreja getIgreja(Integer id) {
+		return igrejaRepository.findOne(id);
+	}
+	
+	public UserSS getUsuario( ) {
+		UserSS user = UserService.authenticated();
+		return user;
 	}
 }

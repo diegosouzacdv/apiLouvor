@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioDTO;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
@@ -41,25 +40,25 @@ public class UsuarioResource {
 	private UsuarioRepository usuarioRepository;
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/all/{igreja}")
-	public ResponseEntity<List<UsuarioDTO>> findAll(@PathVariable Integer igreja) {
-		List<Usuario> list = service.buscarTodos(igreja);
+	@GetMapping("/all")
+	public ResponseEntity<List<UsuarioDTO>> findAll() {
+		List<Usuario> list = service.buscarTodos();
 		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/novosusuarios/{igreja}")
-	public ResponseEntity<List<UsuarioDTO>> novosUsuarios(@PathVariable Integer igreja) {
-		List<Usuario> list = service.novosUsuarios(igreja);
+	@GetMapping("/novosusuarios")
+	public ResponseEntity<List<UsuarioDTO>> novosUsuarios() {
+		List<Usuario> list = service.novosUsuarios();
 		List<UsuarioDTO> listDto = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@GetMapping("/allemail/{igreja}")
-	public ResponseEntity<List<UsuarioEmailDTO>> findAllEmail(@PathVariable Integer igreja) {
-		List<Usuario> list = service.buscarTodos(igreja);
+	@GetMapping("/allemail")
+	public ResponseEntity<List<UsuarioEmailDTO>> findAllEmail() {
+		List<Usuario> list = service.buscarTodos();
 		List<UsuarioEmailDTO> listDto = list.stream().map(obj -> new UsuarioEmailDTO(obj.getEmail())).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
  	}

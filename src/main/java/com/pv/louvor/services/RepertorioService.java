@@ -72,13 +72,14 @@ public class RepertorioService {
 	 * Busca todos os Repertórios Ativos com o id da igreja.
 	 * @return
 	 */
-	public List<Repertorio> buscarTodos(Integer id) {
-		Igreja igreja = getIgreja(id);
+	public List<Repertorio> buscarTodos() {
+		UserSS user = getUsuario();
+		Igreja igreja = getIgreja(user.getIgreja().getId());
 		if(igreja != null) {
 			List<Repertorio> obj = repo.findDistinctByAtivoIsAndIgrejaId(true, igreja.getId());
 			return obj;
 		} else {			
-			throw new ObjectNotFoundException("Igreja não existe! Id: " + id + 
+			throw new ObjectNotFoundException("Igreja não existe! Id: " + user.getIgreja().getId() + 
 					", Tipo: " + Igreja.class.getName());
 		}
 	}
@@ -201,8 +202,9 @@ public class RepertorioService {
 	 * @param direction
 	 * @return
 	 */
-	public Page<Repertorio> findPage(Integer id, String data, Integer page, Integer linesPerPage, String orderBy, String direction){
-		Igreja igreja = getIgreja(id);
+	public Page<Repertorio> findPage(String data, Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = getUsuario();
+		Igreja igreja = getIgreja(user.getIgreja().getId());
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
 		return repo.findDistinctByDataIgnoreCaseContainingAndIgrejaId(data, igreja.getId(), pageRequest);
 	}
@@ -265,5 +267,10 @@ public class RepertorioService {
 	
 	public Igreja getIgreja(Integer id) {
 		return igrejaRepository.findOne(id);
+	}
+	
+	public UserSS getUsuario( ) {
+		UserSS user = UserService.authenticated();
+		return user;
 	}
 }
