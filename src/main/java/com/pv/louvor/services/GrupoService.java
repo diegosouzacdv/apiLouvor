@@ -47,15 +47,14 @@ public class GrupoService {
 		if(igreja != null) {			
 			obj.setIgreja(igreja);
 		}
-		if (igreja.getNome().equals("Sede")) {
+		if (igreja.getNome().equalsIgnoreCase("SEDE")) {
 			obj.setSede(true);
 		} else {
 			obj.setSede(false);
 		}
 		obj.setId(null);
 		obj.setAtivo(true);
-		obj = isExist(obj);
-		obj.setAtivo(true);
+		//obj = isExist(obj);
 		return repo.save(obj);
 	}
 

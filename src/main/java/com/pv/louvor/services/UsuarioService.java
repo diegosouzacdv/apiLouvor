@@ -164,20 +164,21 @@ public class UsuarioService {
 	
 	@Transactional
 	public Usuario updateRetornUser(UsuarioNewDTO objNew) {
-		System.err.println(objNew);
 		Igreja igreja = igrejaRepository.findOne(objNew.getIgreja());
-		System.err.println(igreja);
 		Usuario obj = repo.findById(objNew.getId());
-		if(obj == null) {
+		if(obj == null || igreja == null) {
 			throw new ObjectNotFoundException("Usuário não encontrado com id: " + objNew.getId());
 		} else {
 			obj.setIgreja(igreja);
-			System.err.println(obj);
 			obj = this.updateDto(objNew, obj);
 			obj.setAtivo(false);
+			if(igreja.getNome().equalsIgnoreCase("SEDE")) {
+				obj.addPerfil(Perfil.SEDE);
+			}
 			return repo.save(obj);
 		}
 	}
+	
 	
 	public Usuario updateDto(UsuarioNewDTO objDTO, Usuario user) {
 		Usuario obj = new Usuario(user.getId(), objDTO.getNome(), objDTO.getTelefone(), user.getEmail(), user.getSenha(), user.getIgreja());
@@ -238,7 +239,6 @@ public class UsuarioService {
 	}
 
 	public void salvarNoBanco(String nomeFoto, String contentType) {
-		System.err.println("entrando aqui");
 		UserSS user = UserService.authenticated();
 		if(user != null) {			
 			Usuario obj = repo.findOne(user.getId());
@@ -248,5 +248,15 @@ public class UsuarioService {
 				repo.save(obj);
 			}
 		}
+	}
+
+	public Usuario perfisADD(Usuario usuario, int perfil) {
+		if (perfil == 1) {
+			usuario.addPerfil(Perfil.ADMIN);
+		} else {
+			usuario.deletePerfil(Perfil.ADMIN);
+			usuario.addPerfil(Perfil.USUARIO);
+		}
+		return usuario;
 	}
 }

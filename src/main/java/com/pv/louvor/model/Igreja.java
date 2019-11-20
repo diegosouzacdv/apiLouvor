@@ -28,7 +28,7 @@ public class Igreja implements Serializable{
 	private Integer id;
 	
 	@NotEmpty(message="Nome é obrigatório")
-	@Length(min=5, max=80, message = "O tamanho deve ser entre 5 e 80 caracteres")
+	@Length(min=4, max=80, message = "O tamanho deve ser entre 5 e 80 caracteres")
 	@Column(name="igr_nome")
 	private String nome;
 	

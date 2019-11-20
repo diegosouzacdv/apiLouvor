@@ -1,0 +1,5 @@
+/AuthorizationException.class
+/DataIntegrityViolationException.class
+/FileException.class
+/ObjectFoundException.class
+/ObjectNotFoundException.class

@@ -166,14 +166,17 @@ public class DBService {
 				//Usuario
 				Usuario u1 = new Usuario( null, "Diego", "(xx)xxxxx-xxxx", "diegoguitaibanez@gmail.com", pe.encode("godemais"));
 				Usuario u2 = new Usuario( null, "Admin", "(61)98576-9860", "admin@gmail.com", pe.encode("admin"));
+				Usuario u3 = new Usuario( null, "Sede", "(61)98576-9860", "sede@gmail.com", pe.encode("sede"));
+				u3.addPerfil(Perfil.ADMIN);
 				u2.addPerfil(Perfil.ADMIN);
 				u1.setFuncao(Arrays.asList(f3,f1,f4,f5));
 				u2.setFuncao(Arrays.asList(f1,f2,f3,f6));
 				u1.setIgreja(i1);
 				u2.setIgreja(i1);
+				u3.setIgreja(i3);
 				u1.setDisponivel(false);
 				u2.setDisponivel(true);
-				usuarioRepository.save(Arrays.asList(u1, u2));
+				usuarioRepository.save(Arrays.asList(u1, u2, u3));
 				
 				//Equipe
 				Equipe eq1 = new Equipe();

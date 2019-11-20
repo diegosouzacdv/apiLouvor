@@ -1,0 +1,17 @@
+/AbstractEmailService.class
+/AuthService.class
+/CategoriaService.class
+/DBService.class
+/EmailService.class
+/FuncaoService.class
+/GrupoService.class
+/IgrejaService.class
+/ImageService.class
+/MockEmailService.class
+/MusicaService.class
+/RepertorioService.class
+/S3Services.class
+/SmtpEmailService.class
+/UserDetailsServiceImpl.class
+/UserService.class
+/UsuarioService.class

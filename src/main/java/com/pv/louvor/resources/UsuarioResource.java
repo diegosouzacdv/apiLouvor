@@ -97,7 +97,6 @@ public class UsuarioResource {
 	
 	@PutMapping
 	public ResponseEntity<Usuario> updateCadastro(@Valid @RequestBody UsuarioNewDTO objDTO) {
-		System.err.println(objDTO);
 		Usuario obj = service.updateRetornUser(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -127,13 +126,8 @@ public class UsuarioResource {
 	@PutMapping("/perfil/{perfil}/{id}")
 	public ResponseEntity<Usuario> updatePerfil(@PathVariable int perfil, @PathVariable Integer id) {
 		Usuario usuario = usuarioRepository.findOne(id);
-		if (perfil == 1) {
-			usuario.addPerfil(Perfil.ADMIN);
-		} else {
-			usuario.deletePerfil(Perfil.ADMIN);
-			usuario.addPerfil(Perfil.USUARIO);
-		}
-		usuario = service.update(usuario);
+		usuario = service.perfisADD(usuario, perfil);
+		service.update(usuario);
 		return ResponseEntity.noContent().build();
 	}
 	
