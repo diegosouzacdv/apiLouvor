@@ -52,25 +52,25 @@ public class MusicaResource {
 	
 	@GetMapping("/page")
 	public ResponseEntity<Page<Musica>> findPage(MusicaDTO musicaDto, Pageable pageable) {
-		Page<Musica> musicas = repo.filtrar(musicaDto, pageable);
+		Page<Musica> musicas = service.getMusicas(musicaDto, pageable);
 		return ResponseEntity.ok().body(musicas);
  	}
 	
 	@GetMapping("/anos")
 	public ResponseEntity<List<Filtro>> getAnos() {
-		List<Filtro> anos = repo.anosMusica();
+		List<Filtro> anos = service.getAnos();
 		return ResponseEntity.ok().body(anos);
  	}
 	
 	@GetMapping("/grupos")
 	public ResponseEntity<List<Filtro>> getGrupos() {
-		List<Filtro> grupos = repo.gruposMusica();
+		List<Filtro> grupos = service.getGrupos();
 		return ResponseEntity.ok().body(grupos);
  	}
 	
 	@GetMapping("/categorias")
 	public ResponseEntity<List<Filtro>> getCategorias() {
-		List<Filtro> categorias = repo.categoriasMusica();
+		List<Filtro> categorias = service.getCategorias();
 		return ResponseEntity.ok().body(categorias);
  	}
 	

@@ -8,11 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.dto.Filtro;
+import com.pv.louvor.model.dto.MusicaDTO;
+import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.MusicaRepository;
+import com.pv.louvor.security.UserSS;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -21,6 +27,9 @@ public class MusicaService {
 	
 	@Autowired
 	private MusicaRepository repo;
+	
+	@Autowired
+	private IgrejaRepository igrejaRepository;
 
 	public List<Musica> buscarTodos() {
 		List<Musica> obj = repo.findAll();
@@ -38,9 +47,18 @@ public class MusicaService {
 
 	@Transactional
 	public Musica insert(Musica obj) {
+		Igreja igreja = getIgreja();
+		obj.setIgreja(igreja);
 		obj = isExist(obj);
 		obj.setAtivo(true);
 		return repo.save(obj);
+	}
+	
+	public Page<Musica> getMusicas(MusicaDTO musicaDto, Pageable pageable) {
+		Igreja igreja = getIgreja();
+		Igreja sede = getSede();
+		Page<Musica> musicas = repo.filtrar(musicaDto, igreja, sede, pageable);
+		return musicas;
 	}
 
 	public Musica update(Musica obj) {
@@ -88,5 +106,33 @@ public class MusicaService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction) , orderBy);
 		boolean ativo = true;
 		return repo.findDistinctByNomeIgnoreCaseContainingAndAtivoIs(nome, ativo, pageRequest);
+	}
+	
+	public List<Filtro> getAnos() {
+		Igreja igreja = getIgreja();
+		return repo.anosMusica(igreja);
+	}
+	
+	public List<Filtro> getGrupos() {
+		Igreja igreja = getIgreja();
+		return repo.gruposMusica(igreja);
+	}
+	
+	public List<Filtro> getCategorias() {
+		Igreja igreja = getIgreja();
+		return repo.categoriasMusica(igreja);
+	}
+	
+	public Igreja getIgreja() {
+		UserSS user = getUsuario();
+		return igrejaRepository.findOne(user.getIgreja().getId());
+	}
+	
+	public UserSS getUsuario( ) {
+		return UserService.authenticated();
+	}
+	
+	public Igreja getSede() {
+		return igrejaRepository.findByNome("Sede");
 	}
 }

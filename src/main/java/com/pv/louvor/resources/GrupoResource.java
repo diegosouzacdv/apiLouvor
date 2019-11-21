@@ -44,16 +44,16 @@ public class GrupoResource {
 		return ResponseEntity.ok().body(obj);
  	}
 	
-	@GetMapping("/{igreja}/page")
-	public ResponseEntity<Page<Grupo>> findPage(@PathVariable Integer igreja, GrupoDTO grupoDto, Pageable pageable) {
-		Page<Grupo> obj = service.findPage(grupoDto, pageable, igreja);
+	@GetMapping("/page")
+	public ResponseEntity<Page<Grupo>> findPage(GrupoDTO grupoDto, Pageable pageable) {
+		Page<Grupo> obj = service.findPage(grupoDto, pageable);
 		return ResponseEntity.ok().body(obj);
  	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@PostMapping("/{igreja}")
-	public ResponseEntity<Grupo> insert(@Valid @RequestBody Grupo obj, @PathVariable Integer igreja) {
-		obj = service.insert(obj, igreja);
+	@PostMapping()
+	public ResponseEntity<Grupo> insert(@Valid @RequestBody Grupo obj) {
+		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);

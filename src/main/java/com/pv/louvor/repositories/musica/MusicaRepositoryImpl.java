@@ -18,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 import com.pv.louvor.model.Categoria_;
 import com.pv.louvor.model.Grupo_;
+import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.Musica_;
 import com.pv.louvor.model.dto.Filtro;
@@ -28,7 +29,7 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 	@PersistenceContext
 	private EntityManager manager;
 	@Override
-	public Page<Musica> filtrar(MusicaDTO musicaDto, Pageable pageable) {
+	public Page<Musica> filtrar(MusicaDTO musicaDto, Igreja igreja, Igreja sede, Pageable pageable) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Musica> criteria = builder.createQuery(Musica.class);
 		Root<Musica> root = criteria.from(Musica.class);
@@ -37,16 +38,16 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 		criteria.orderBy(order);
 		
 		//criar restrições
-		Predicate[] predicates = criarRestricoes(musicaDto, builder, root);
+		Predicate[] predicates = criarRestricoes(musicaDto, igreja, sede, builder, root);
 		criteria.where(predicates);
 		
 		TypedQuery<Musica> query = manager.createQuery(criteria);
 		
 		adicionarRestricoesdePaginacao(query, pageable);
-		return new PageImpl<>(query.getResultList(), pageable, total(musicaDto));
+		return new PageImpl<>(query.getResultList(), pageable, total(musicaDto, igreja, sede));
 	}
 
-	private Predicate[] criarRestricoes(MusicaDTO musicaDto, CriteriaBuilder builder, Root<Musica> root) {
+	private Predicate[] criarRestricoes(MusicaDTO musicaDto, Igreja igreja, Igreja sede, CriteriaBuilder builder, Root<Musica> root) {
 		List<Predicate> predicates = new ArrayList<>();
 		if(!StringUtils.isEmpty(musicaDto.getNome())) {
 			predicates.add(builder.like(
@@ -75,6 +76,11 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 			predicates.add(builder.like(
 				builder.lower(root.get(Musica_.dataInserida)),musicaDto.getData().toLowerCase()));
 		}
+		
+		if(igreja != null) {
+			predicates.add(builder.or(builder.equal(root.get("igreja"),igreja), builder.equal(root.get("sede"), true)));
+		}
+		
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}
 	
@@ -87,12 +93,12 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 		query.setMaxResults(totalRegistrosPorPagina);
 		}
 	
-	private Long total(MusicaDTO musicaDto) {
+	private Long total(MusicaDTO musicaDto, Igreja igreja, Igreja sede) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
 		Root<Musica> root = criteria.from(Musica.class);
 		
-		Predicate[] predicates = criarRestricoes(musicaDto, builder, root);
+		Predicate[] predicates = criarRestricoes(musicaDto, igreja, sede, builder, root);
 		criteria.where(predicates);
 		
 		criteria.select(builder.count(root));
@@ -111,25 +117,26 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 	}*/
 	
 	@Override
-	public List<Filtro> anosMusica() {
+	public List<Filtro> anosMusica(Igreja igreja) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Filtro> criteria = builder.createQuery(Filtro.class);
 		Root<Musica> root = criteria.from(Musica.class);
 		criteria.distinct(true);
 		criteria.multiselect(root.get(Musica_.dataInserida));
-		
+		criteria.where(builder.or(builder.equal(root.get("igreja"),igreja), builder.equal(root.get("sede"), true)));
 		TypedQuery<Filtro> query = manager.createQuery(criteria);
 		List<Filtro> anos = query.getResultList();
 		return anos;
 	}
 	
 	@Override
-	public List<Filtro> gruposMusica() {
+	public List<Filtro> gruposMusica(Igreja igreja) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Filtro> criteria = builder.createQuery(Filtro.class);
 		Root<Musica> root = criteria.from(Musica.class);
 		criteria.distinct(true);
 		criteria.multiselect(root.get(Musica_.grupo).get(Grupo_.nome));
+		criteria.where(builder.or(builder.equal(root.get("igreja"),igreja), builder.equal(root.get("sede"), true)));
 		
 		TypedQuery<Filtro> query = manager.createQuery(criteria);
 		List<Filtro> grupos = query.getResultList();
@@ -137,13 +144,13 @@ public class MusicaRepositoryImpl implements MusicaRepositoryQuery{
 	}
 	
 	@Override
-	public List<Filtro> categoriasMusica() {
+	public List<Filtro> categoriasMusica(Igreja igreja) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Filtro> criteria = builder.createQuery(Filtro.class);
 		Root<Musica> root = criteria.from(Musica.class);
 		criteria.distinct(true);
 		criteria.multiselect(root.get(Musica_.categorias).get(Categoria_.nome));
-		
+		criteria.where(builder.or(builder.equal(root.get("igreja"),igreja), builder.equal(root.get("sede"), true)));
 		TypedQuery<Filtro> query = manager.createQuery(criteria);
 		List<Filtro> categorias = query.getResultList();
 		return categorias;

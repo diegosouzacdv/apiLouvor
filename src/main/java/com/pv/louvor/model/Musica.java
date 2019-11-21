@@ -73,6 +73,9 @@ public class Musica implements Serializable{
 	@JoinColumn(name = "mus_igreja")
 	private Igreja igreja;
 	
+	@Column(name="mus_sede")
+	private boolean sede;
+	
 	public Musica () {
 		
 	}
@@ -192,6 +195,15 @@ public class Musica implements Serializable{
 
 	public void setIgreja(Igreja igreja) {
 		this.igreja = igreja;
+	}
+	
+	public boolean isSede() {
+		return sede;
+	}
+
+
+	public void setSede(boolean sede) {
+		this.sede = sede;
 	}
 
 

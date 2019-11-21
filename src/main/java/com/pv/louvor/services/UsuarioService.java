@@ -57,20 +57,23 @@ public class UsuarioService {
 	private Integer size;
 
 	public List<Usuario> buscarTodos() {
-		UserSS user = getUsuario();
-		Igreja igreja = getIgreja(user.getIgreja().getId());
+		Igreja igreja = getIgreja();
+		if(igreja != null) {
 		List<Usuario> obj = repo.findByAtivoAndIgrejaId(true, igreja.getId());
 		return obj;
+		} else {			
+			throw new ObjectNotFoundException("Igreja não existe!" + 
+					", Tipo: " + Igreja.class.getName());
+		}
 	}
 
 	public List<Usuario> novosUsuarios() {
-		UserSS user = getUsuario();
-		Igreja igreja = getIgreja(user.getIgreja().getId());
+		Igreja igreja = getIgreja();
 		if(igreja != null) {
 		List<Usuario> obj = repo.findByAtivoAndIgrejaId(false, igreja.getId());
 		return obj;
 		} else {			
-			throw new ObjectNotFoundException("Igreja não existe! Id: " + user.getIgreja().getId() + 
+			throw new ObjectNotFoundException("Igreja não existe!" + 
 					", Tipo: " + Igreja.class.getName());
 		}
 	}
@@ -257,12 +260,12 @@ public class UsuarioService {
 		return usuario;
 	}
 	
-	public Igreja getIgreja(Integer id) {
-		return igrejaRepository.findOne(id);
+	public Igreja getIgreja() {
+		UserSS user = getUsuario();
+		return igrejaRepository.findOne(user.getIgreja().getId());
 	}
 	
 	public UserSS getUsuario( ) {
-		UserSS user = UserService.authenticated();
-		return user;
+		return UserService.authenticated();
 	}
 }
