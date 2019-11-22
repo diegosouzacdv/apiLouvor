@@ -15,6 +15,7 @@ import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.dto.GrupoDTO;
 import com.pv.louvor.repositories.GrupoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
+import com.pv.louvor.security.UserSS;
 import com.pv.louvor.services.exceptions.ObjectFoundException;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
@@ -42,8 +43,8 @@ public class GrupoService {
 	}
 
 	@Transactional
-	public Grupo insert(Grupo obj, Integer id) {
-		Igreja igreja = getIgreja(id);
+	public Grupo insert(Grupo obj) {
+		Igreja igreja = getIgreja();
 		if(igreja != null) {			
 			obj.setIgreja(igreja);
 		}
@@ -95,15 +96,20 @@ public class GrupoService {
 		}
 	}
 	
-	public Page<Grupo> findPage(GrupoDTO grupoDto, Pageable pageable, Integer id){
-		Igreja igreja = getIgreja(id);
+	public Page<Grupo> findPage(GrupoDTO grupoDto, Pageable pageable){
+		Igreja igreja = getIgreja();
 		Igreja sede = getSede();
 		Page<Grupo> obj = repo.filtrar(grupoDto, igreja, sede, pageable);
 		return obj;
 	}
 	
-	public Igreja getIgreja(Integer id) {
-		return igrejaRepository.findOne(id);
+	public UserSS getUsuario() {
+		return UserService.authenticated();
+	}
+	
+	public Igreja getIgreja() {
+		UserSS user = getUsuario();
+		return igrejaRepository.findOne(user.getIgreja().getId());
 	}
 	
 	public Igreja getSede() {
