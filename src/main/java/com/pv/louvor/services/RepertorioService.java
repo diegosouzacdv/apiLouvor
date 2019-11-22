@@ -102,7 +102,7 @@ public class RepertorioService {
 				LocalDate dataRepertorio = LocalDate.parse(data,formatter);
 				long diferencaEmDias = ChronoUnit.DAYS.between(hoje, dataRepertorio);
 				if(diferencaEmDias <= -1) {
-					obj.setAtivo(false);
+					obj.setAtivo(true);
 					repo.save(obj);
 				}
 			}
