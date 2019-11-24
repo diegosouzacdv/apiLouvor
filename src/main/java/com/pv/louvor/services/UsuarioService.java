@@ -102,7 +102,6 @@ public class UsuarioService {
 	}
 
 	public Usuario update(Usuario obj) {
-
 		Usuario aux = repo.findOne(obj.getId());
 		if (aux != null) {
 			obj.setSenha(aux.getSenha());

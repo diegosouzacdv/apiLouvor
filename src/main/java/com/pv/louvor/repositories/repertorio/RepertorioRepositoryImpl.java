@@ -15,6 +15,8 @@ import javax.persistence.criteria.Root;
 
 import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Funcao_;
+import com.pv.louvor.model.Igreja;
+import com.pv.louvor.model.Igreja_;
 import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.Musica_;
 import com.pv.louvor.model.Usuario;
@@ -30,7 +32,7 @@ public class RepertorioRepositoryImpl implements RepertorioRepositoryQuery{
 	 *Essa consulta retorna os usuarios que tem determinada funcao.
 	 */
 	@Override
-	public List<Usuario> funcoes(Funcao funcao) {
+	public List<Usuario> funcoes(Funcao funcao, Igreja igreja) {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Usuario> criteria = builder.createQuery(Usuario.class);
 		Root<Usuario> root = criteria.from(Usuario.class);
@@ -38,18 +40,18 @@ public class RepertorioRepositoryImpl implements RepertorioRepositoryQuery{
 		
 		Join<Usuario, Funcao> join = root.join("funcao", JoinType.INNER);
 		//criar restrições
-		Predicate[] predicates = criarRestricoes(join, builder, funcao, root);
+		Predicate[] predicates = criarRestricoes(join, builder, funcao, root, igreja);
 		criteria.where(predicates);
 		TypedQuery<Usuario> query = manager.createQuery(criteria);
 		
 		return query.getResultList();
 	}
 
-	private Predicate[] criarRestricoes(Join<Usuario, Funcao> join, CriteriaBuilder builder, Funcao funcao, Root<Usuario> root ) {
+	private Predicate[] criarRestricoes(Join<Usuario, Funcao> join, CriteriaBuilder builder, Funcao funcao, Root<Usuario> root, Igreja igreja) {
 		List<Predicate> predicates = new ArrayList<>();
 		predicates.add(builder.equal(join.get(Funcao_.id), funcao.getId()));
 		predicates.add(builder.equal(root.get(Usuario_.disponivel), true));
-		
+		predicates.add(builder.equal(root.get(Usuario_.igreja).get(Igreja_.id), igreja.getId()));
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}	
 }

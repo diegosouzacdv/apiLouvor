@@ -35,7 +35,7 @@ public class Repertorio implements Serializable{
 	@Column(name="rep_data_semana")
 	private String dataSemana;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Equipe equipeDoDia;
 
 	@NotNull

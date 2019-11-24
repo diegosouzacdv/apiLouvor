@@ -139,7 +139,9 @@ public class RepertorioService {
 		String data = obj.getData();
 		data = data(data);
 		obj.setDataSemana(data);
-
+		
+		Igreja igreja = getIgreja();
+		obj.setIgreja(igreja);
 		
 		UserSS user = UserService.authenticated();
 		if(user != null && user.hasRole(Perfil.ADMIN)) {
@@ -156,10 +158,10 @@ public class RepertorioService {
 		}
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
 		
-		for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
+		/*for(UsuarioEmailDTO email: usuario.buscarTodosEmails()) {
 			System.err.println(email);
 		emailService.sendOrderConfirmationHtmlEmail(obj, email.getEmail());
-		}
+		}*/
 		
 		return obj;
 	}
@@ -257,9 +259,10 @@ public class RepertorioService {
 	 * @return
 	 */
 	public List<Usuario> getFuncao(Integer id) {
+		Igreja igreja = getIgreja();
 		int parseInt = Integer.valueOf(id);
 		Funcao funcao = funcaoRepository.findOne(parseInt);
-		List<Usuario> listDto = repo.funcoes(funcao);
+		List<Usuario> listDto = repo.funcoes(funcao, igreja);
 		return listDto;
 	}
 	

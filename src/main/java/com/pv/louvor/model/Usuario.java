@@ -62,7 +62,7 @@ public class Usuario implements Serializable{
 	private String email;
 	
 	@JsonIgnore
-	@NotEmpty(message="Senha é obrigatório")
+	//@NotEmpty(message="Senha é obrigatório")
 	private String senha;
 	
 	private boolean ativo = true;
