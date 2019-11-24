@@ -86,14 +86,13 @@ public class UsuarioService {
 	}
 
 	public Usuario find(Integer id) {
-
-		UserSS user = UserService.authenticated();
+		UserSS user = getUsuario();
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 
 			throw new AuthorizationException("Acesso Negado");
 		}
 
-		Usuario obj = repo.findOne(id);
+		Usuario obj = getUsuarioId(id);
 		if (obj == null) {
 			throw new ObjectNotFoundException(
 					"Usuário não encontrado! Id: " + id + ", Tipo: " + Usuario.class.getName());
@@ -102,7 +101,7 @@ public class UsuarioService {
 	}
 
 	public Usuario update(Usuario obj) {
-		Usuario aux = repo.findOne(obj.getId());
+		Usuario aux = getUsuarioId(obj.getId());
 		if (aux != null) {
 			obj.setSenha(aux.getSenha());
 		}
@@ -125,7 +124,7 @@ public class UsuarioService {
 	}
 	
 	public void disponivelRepertorio(Integer id) {
-		Usuario obj = repo.findOne(id);
+		Usuario obj = getUsuarioId(id);
 		if(obj.isDisponivel()) {
 			obj.setDisponivel(false);
 		System.err.println("Não disponivel ");
@@ -212,7 +211,7 @@ public class UsuarioService {
 	}
 
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		UserSS user = UserService.authenticated();
+		UserSS user = getUsuario();
 		if (user == null) {
 			throw new AuthorizationException("Acesso Negado");
 		}
@@ -225,7 +224,7 @@ public class UsuarioService {
 	}
 
 	public Usuario findByEmail(String email) {
-		UserSS user = UserService.authenticated();
+		UserSS user = getUsuario();
 		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
 			throw new AuthorizationException("Acesso negado");
 		}
@@ -238,7 +237,7 @@ public class UsuarioService {
 	}
 
 	public void salvarNoBanco(String nomeFoto, String contentType) {
-		UserSS user = UserService.authenticated();
+		UserSS user = getUsuario();
 		if(user != null) {			
 			Usuario obj = repo.findOne(user.getId());
 			if(obj != null) {
@@ -248,8 +247,20 @@ public class UsuarioService {
 			}
 		}
 	}
+	
+	public void changeIgreja(int id, int igr) {
+		Usuario user = getUsuarioId(id);
+		Igreja igreja = getIgrejaId(igr);
+		user.setIgreja(igreja);
+		user.deleteAllPerfil();
+		user.addPerfil(Perfil.USUARIO);
+		if(igreja.getNome().equalsIgnoreCase("SEDE"))
+			user.addPerfil(Perfil.SEDE);
+		repo.save(user);
+	}
 
-	public Usuario perfisADD(Usuario usuario, int perfil) {
+	public Usuario perfisADD(int id, int perfil) {
+		Usuario usuario = getUsuarioId(id);
 		if (perfil == 1) {
 			usuario.addPerfil(Perfil.ADMIN);
 		} else {
@@ -262,6 +273,14 @@ public class UsuarioService {
 	public Igreja getIgreja() {
 		UserSS user = getUsuario();
 		return igrejaRepository.findOne(user.getIgreja().getId());
+	}
+	
+	public Igreja getIgrejaId(int id) {
+		return igrejaRepository.findOne(id);
+	}
+	
+	public Usuario getUsuarioId(int id) {
+		return repo.findOne(id);
 	}
 	
 	public UserSS getUsuario( ) {

@@ -20,7 +20,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -173,6 +172,10 @@ public class Usuario implements Serializable{
 	}
 	
 	public void deletePerfil(Perfil perfil) {
+		perfis.clear();
+	}
+	
+	public void deleteAllPerfil() {
 		perfis.clear();
 	}
 	

@@ -124,9 +124,14 @@ public class UsuarioResource {
 	
 	@PutMapping("/perfil/{perfil}/{id}")
 	public ResponseEntity<Usuario> updatePerfil(@PathVariable int perfil, @PathVariable Integer id) {
-		Usuario usuario = usuarioRepository.findOne(id);
-		usuario = service.perfisADD(usuario, perfil);
+		Usuario usuario = service.perfisADD(id, perfil);
 		service.update(usuario);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/change/{id}/{idUser}")
+	public ResponseEntity<Usuario> changeIgreja(@PathVariable int id, @PathVariable Integer idUser) {
+		service.changeIgreja(idUser, id);
 		return ResponseEntity.noContent().build();
 	}
 	
