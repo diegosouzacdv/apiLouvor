@@ -110,9 +110,9 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	} 
 	
-	@PutMapping("/ativar/{id}/{igreja}")
-	public ResponseEntity<Usuario> ativarUsuario(@PathVariable Integer id, @PathVariable String igreja) {
-		service.ativarUsuario(id, igreja);
+	@PutMapping("/ativar/{id}")
+	public ResponseEntity<Usuario> ativarUsuario(@PathVariable Integer id) {
+		service.ativarUsuario(id);
 		return ResponseEntity.noContent().build();
 	}
 	

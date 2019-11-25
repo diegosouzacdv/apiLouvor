@@ -113,11 +113,16 @@ public class UsuarioService {
 		return repo.save(obj);
 	}
 
-	public void ativarUsuario(Integer id, String igreja) {
-		Igreja objIgreja = igrejaRepository.findByNome(igreja);
+	public void ativarUsuario(Integer id) {
 		Usuario obj = repo.findOne(id);
+		Igreja objIgreja = igrejaRepository.findOne(obj.getIgreja().getId());
+		
 		if(obj != null) {
-			obj.setAtivo(true);	
+			if(obj.isAtivo()) {
+				obj.setAtivo(false);
+			} else {				
+				obj.setAtivo(true);	
+			}
 			obj.setIgreja(objIgreja);
 		}
 		repo.save(obj); 
