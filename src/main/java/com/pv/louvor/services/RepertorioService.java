@@ -23,11 +23,11 @@ import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Igreja;
+import com.pv.louvor.model.Musica;
 import com.pv.louvor.model.MusicaRepertorio;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Repertorio;
 import com.pv.louvor.model.Usuario;
-import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.MusicaRepertorioRepository;
@@ -101,7 +101,7 @@ public class RepertorioService {
 				LocalDate dataRepertorio = LocalDate.parse(data,formatter);
 				long diferencaEmDias = ChronoUnit.DAYS.between(hoje, dataRepertorio);
 				if(diferencaEmDias <= -1) {
-					obj.setAtivo(true);
+					obj.setAtivo(false);
 					repo.save(obj);
 				}
 			}
@@ -109,8 +109,7 @@ public class RepertorioService {
 				retorno.add(repertorio);
 			}
 		}
-		
-		
+				
 	}
 
 	/**
@@ -247,8 +246,14 @@ public class RepertorioService {
 		if(segunda.equals("Segunda-Feira")) {
 			List<Usuario> users = usuarioRepository.findAll();
 			for (Usuario usuario : users) {
-				usuario.setDisponivel(false);
+				usuario.setDisponivel(true);
 				usuarioRepository.save(usuario);
+			}
+
+			List<Musica> musicas = musicaRepository.findAll();
+			for(Musica musica: musicas) {
+				musica.setNotaDia(null);
+				musicaRepository.save(musica);
 			}
 		}
 	}
