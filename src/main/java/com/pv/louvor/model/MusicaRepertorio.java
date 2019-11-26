@@ -2,6 +2,7 @@ package com.pv.louvor.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -16,20 +17,28 @@ public class MusicaRepertorio implements Serializable{
 	@EmbeddedId
 	private MusicaRepertorioPK id = new MusicaRepertorioPK();
 	
+	@Column(name="rep_notaDia")
+	private String notaDia;
+	
+	@Column(name="rep_ministro")
+	private String ministro;
+	
 	public MusicaRepertorio() {
 		
 	}
 
-	public MusicaRepertorio(Repertorio repertorio, Musica musica) {
+	public MusicaRepertorio(Repertorio repertorio, Musica musica, String notaDia) {
 		super();
 		id.setRepertorio(repertorio);
 		id.setMusica(musica);
+		this.notaDia = notaDia;
 	}
 	
 	@JsonIgnore
 	public Repertorio getRepertorio() {
 		return id.getRepertorio();
 	}
+	
 	
 	public void setRepertorio(Repertorio repertorio) {
 		id.setRepertorio(repertorio);
@@ -50,6 +59,22 @@ public class MusicaRepertorio implements Serializable{
 
 	public void setId(MusicaRepertorioPK id) {
 		this.id = id;
+	}
+
+	public String getNotaDia() {
+		return notaDia;
+	}
+
+	public void setNotaDia(String notaDia) {
+		this.notaDia = notaDia;
+	}
+
+	public String getMinistro() {
+		return ministro;
+	}
+
+	public void setMinistro(String ministro) {
+		this.ministro = ministro;
 	}
 
 	@Override

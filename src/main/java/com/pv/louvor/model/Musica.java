@@ -66,9 +66,6 @@ public class Musica implements Serializable{
 	@Column(name="mus_notaTocada")
 	private String notaTocada;	
 	
-	@Column(name="mus_notaDia")
-	private String notaDia;
-	
 	@JsonIgnore
 	private boolean ativo;
 	
@@ -209,14 +206,6 @@ public class Musica implements Serializable{
 		this.sede = sede;
 	}
 	
-	public String getNotaDia() {
-		return notaDia;
-	}
-
-
-	public void setNotaDia(String notaDia) {
-		this.notaDia = notaDia;
-	}
 
 
 	@Override

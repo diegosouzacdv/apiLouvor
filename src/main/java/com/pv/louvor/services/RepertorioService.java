@@ -249,12 +249,6 @@ public class RepertorioService {
 				usuario.setDisponivel(true);
 				usuarioRepository.save(usuario);
 			}
-
-			List<Musica> musicas = musicaRepository.findAll();
-			for(Musica musica: musicas) {
-				musica.setNotaDia(null);
-				musicaRepository.save(musica);
-			}
 		}
 	}
 	

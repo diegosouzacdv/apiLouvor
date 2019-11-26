@@ -2,6 +2,7 @@ package com.pv.louvor.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +21,7 @@ public class MusicaRepertorioPK implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="rep_id")
 	private Repertorio repertorio;
+	
 
 	public Repertorio getRepertorio() {
 		return repertorio;
@@ -35,7 +37,6 @@ public class MusicaRepertorioPK implements Serializable{
 	public void setMusica(Musica musica) {
 		this.musica = musica;
 	}
-
 
 	@Override
 	public int hashCode() {
