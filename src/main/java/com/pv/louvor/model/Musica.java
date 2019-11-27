@@ -76,6 +76,9 @@ public class Musica implements Serializable{
 	@Column(name="mus_sede")
 	private boolean sede;
 	
+	@Column(name="mus_observacao", length=5012)
+	private String observacao;
+	
 	public Musica () {
 		
 	}
@@ -205,7 +208,15 @@ public class Musica implements Serializable{
 	public void setSede(boolean sede) {
 		this.sede = sede;
 	}
-	
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 
 	@Override

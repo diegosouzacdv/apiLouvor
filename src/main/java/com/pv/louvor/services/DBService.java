@@ -209,13 +209,13 @@ public class DBService {
 				repertorioRepository.save(Arrays.asList(r1,r2));
 
 				//MusicaRepertorio
-				MusicaRepertorio ms1 = new MusicaRepertorio(r1, m1);
-				MusicaRepertorio ms2 = new MusicaRepertorio(r1, m2);
-				MusicaRepertorio ms3 = new MusicaRepertorio(r1, m3);
+				MusicaRepertorio ms1 = new MusicaRepertorio(r1, m1,null);
+				MusicaRepertorio ms2 = new MusicaRepertorio(r1, m2,null);
+				MusicaRepertorio ms3 = new MusicaRepertorio(r1, m3,null);
 				
-				MusicaRepertorio ms4 = new MusicaRepertorio(r2, m1);
-				MusicaRepertorio ms5 = new MusicaRepertorio(r2, m2);
-				MusicaRepertorio ms6 = new MusicaRepertorio(r2, m3);
+				MusicaRepertorio ms4 = new MusicaRepertorio(r2, m1,null);
+				MusicaRepertorio ms5 = new MusicaRepertorio(r2, m2,null);
+				MusicaRepertorio ms6 = new MusicaRepertorio(r2, m3,null);
 				
 				r1.getMusicasRepertorio().addAll(Arrays.asList(ms1,ms2,ms3));
 				r2.getMusicasRepertorio().addAll(Arrays.asList(ms4,ms5,ms6));

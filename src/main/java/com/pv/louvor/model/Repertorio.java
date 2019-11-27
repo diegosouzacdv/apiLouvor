@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -39,7 +40,7 @@ public class Repertorio implements Serializable{
 	private Equipe equipeDoDia;
 
 	@NotNull
-	@OneToMany(mappedBy = "id.repertorio", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "id.repertorio", cascade = CascadeType.ALL)
 	private Set<MusicaRepertorio> musicasRepertorio = new HashSet<>();
 	
 	@Column(name="rep_criador")
@@ -51,6 +52,9 @@ public class Repertorio implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "rep_igreja")
 	private Igreja igreja;
+	
+	@Column(name="rep_observacao", length=5012)
+	private String observacao;
 	
 	public Repertorio() {
 		
@@ -134,6 +138,14 @@ public class Repertorio implements Serializable{
 	public void setIgreja(Igreja igreja) {
 		this.igreja = igreja;
 	}
+	
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
 
 	@Override
 	public int hashCode() {
@@ -162,38 +174,17 @@ public class Repertorio implements Serializable{
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Repertorio número: ");
-		builder.append(getId());
-		builder.append("\n");
-		builder.append("Data: ");
-		builder.append(getData());
-		builder.append("\n");
-		builder.append("Equipe do Dia: ");
-		builder.append("\n");
-		builder.append("Ministros: ");
-		builder.append(getEquipeDoDia().getMinistro());
-		builder.append(" Instrumental: ");
-		builder.append("Baterista: ");
-		builder.append(getEquipeDoDia().getBaterista());
-		builder.append(" Guitarrista: ");
-		builder.append(getEquipeDoDia().getGuitarrista());
-		builder.append(" Tecladista: ");
-		builder.append(getEquipeDoDia().getTecladista());
-		builder.append(" Violinista: ");
-		builder.append(getEquipeDoDia().getViolonista());
-		builder.append("\n");
-		builder.append("Repertorio: ");
-		builder.append("\n");
-		for (MusicaRepertorio mr : getMusicasRepertorio()) {
-			builder.append(mr.toString() + " ");
-			builder.append("\n");
-		}
-		builder.append(" Total de Músicas: ");
-		builder.append(getTotalMusicas());
-
-		return builder.toString();
+		return "Repertorio [id=" + id + ", data=" + data + ", dataSemana=" + dataSemana + ", equipeDoDia=" + equipeDoDia
+				+ ", musicasRepertorio=" + musicasRepertorio + ", criador=" + criador + ", ativo=" + ativo + ", igreja="
+				+ igreja + ", observacao=" + observacao + ", getId()=" + getId() + ", getData()=" + getData()
+				+ ", getEquipeDoDia()=" + getEquipeDoDia() + ", getMusicasRepertorio()=" + getMusicasRepertorio()
+				+ ", getCriador()=" + getCriador() + ", isAtivo()=" + isAtivo() + ", getTotalMusicas()="
+				+ getTotalMusicas() + ", getDataSemana()=" + getDataSemana() + ", getIgreja()=" + getIgreja()
+				+ ", getObservacao()=" + getObservacao() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
+				+ ", toString()=" + super.toString() + "]";
 	}
+
+
 
 
 }

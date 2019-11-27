@@ -168,13 +168,26 @@ public class RepertorioService {
 	/**
 	 * Metodo desativa um repertorio
 	 * @param obj
+	 * @param id 
 	 * @return
 	 */
-	public Repertorio update(Repertorio obj) {
-		obj = repo.findOne(obj.getId());
-		obj.setAtivo(false);
-		repo.save(obj);
-		return obj;
+	@Transactional
+	public Repertorio update(Repertorio obj, Integer id) {
+		Repertorio rep = repo.getOne(id);
+		rep.getMusicasRepertorio().clear();
+		musicaRepertorioRepository.save(rep.getMusicasRepertorio());
+		
+		for (MusicaRepertorio mr : obj.getMusicasRepertorio()) {
+			mr.setMusica(musicaRepository.findOne(mr.getMusica().getId()));
+			mr.setRepertorio(obj);
+		}
+		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
+		rep = obj;
+		return repo.save(rep);
+	}
+	
+	public Repertorio getRepertorio(int id) {
+		return repo.findOne(id);
 	}
 	
 	
