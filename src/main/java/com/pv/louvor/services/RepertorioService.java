@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -174,6 +175,7 @@ public class RepertorioService {
 	@Transactional
 	public Repertorio update(Repertorio obj, Integer id) {
 		Repertorio rep = repo.getOne(id);
+		
 		rep.getMusicasRepertorio().clear();
 		musicaRepertorioRepository.save(rep.getMusicasRepertorio());
 		
