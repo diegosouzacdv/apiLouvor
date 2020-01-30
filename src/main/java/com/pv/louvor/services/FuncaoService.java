@@ -20,6 +20,7 @@ public class FuncaoService  {
 	private FuncaoRepository repo;
 	
 	public List<Funcao> buscarTodos() {
+		System.err.println("Entrnado no service");
 		List<Funcao> obj = repo.findAll();
 		return obj;
 	}

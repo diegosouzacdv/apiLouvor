@@ -55,7 +55,6 @@ public class IgrejaResource {
 		return ResponseEntity.ok().body(obj);
  	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Igreja> insert(@Valid @RequestBody Igreja obj) {
 		obj = service.insert(obj);
@@ -64,7 +63,6 @@ public class IgrejaResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Igreja> update(@RequestBody Igreja obj, @PathVariable Integer id) {
 		obj.setId(id);
@@ -72,7 +70,6 @@ public class IgrejaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);

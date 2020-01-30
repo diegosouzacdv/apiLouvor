@@ -7,7 +7,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,8 +27,10 @@ public class FuncaoResource  {
 	@Autowired
 	private FuncaoService service;
 	
+	
 	@GetMapping
 	public ResponseEntity<List<Funcao>> findAll() {
+		System.err.println("Entrnado no resource");
 		List<Funcao> obj = service.buscarTodos();
 		return ResponseEntity.ok().body(obj);
  	}
@@ -41,7 +42,6 @@ public class FuncaoResource  {
 		return ResponseEntity.ok().body(obj);
  	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<Funcao> insert(@Valid @RequestBody Funcao obj) {
 		obj = service.insert(obj);
@@ -50,7 +50,6 @@ public class FuncaoResource  {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Funcao> update(@RequestBody Funcao obj, @PathVariable Integer id) {
 		obj.setId(id);
@@ -58,7 +57,6 @@ public class FuncaoResource  {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);

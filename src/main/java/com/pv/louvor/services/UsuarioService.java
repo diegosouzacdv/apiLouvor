@@ -2,6 +2,7 @@ package com.pv.louvor.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,11 +21,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
+import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
+import com.pv.louvor.model.dto.UsuarioNovasFuncoesDTO;
+import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.IgrejaRepository;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.security.UserSS;
@@ -40,6 +44,9 @@ public class UsuarioService {
 
 	@Autowired
 	private IgrejaRepository igrejaRepository;
+	
+	@Autowired
+	private FuncaoRepository funcaoRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder pe;
@@ -87,7 +94,7 @@ public class UsuarioService {
 
 	public Usuario find(Integer id) {
 		UserSS user = getUsuario();
-		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+		if (user == null && !id.equals(user.getId())) {
 
 			throw new AuthorizationException("Acesso Negado");
 		}
@@ -180,6 +187,16 @@ public class UsuarioService {
 			}
 			return repo.save(obj);
 		}
+	}
+	
+	@Transactional
+	public Usuario novasFuncoes(UsuarioNovasFuncoesDTO obj, Integer id) {
+		System.err.println(obj.getFuncao());
+		Usuario user = getUsuarioId(id);
+		if(user != null) {			
+			user.setFuncao(obj.getFuncao());
+		}
+		return repo.save(user);
 	}
 	
 	
@@ -291,4 +308,6 @@ public class UsuarioService {
 	public UserSS getUsuario( ) {
 		return UserService.authenticated();
 	}
+
+	
 }

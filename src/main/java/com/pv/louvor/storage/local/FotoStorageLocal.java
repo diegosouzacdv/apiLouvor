@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pv.louvor.model.Musica;
 import com.pv.louvor.security.UserSS;
+import com.pv.louvor.services.exceptions.NoSuchFileException;
 import com.pv.louvor.storage.FotoStorage;
 
 public class FotoStorageLocal implements FotoStorage{
@@ -65,11 +67,16 @@ public class FotoStorageLocal implements FotoStorage{
 	@Override
 	public byte[] recuperarFotoTemporaria(String nome) {
 		System.err.println("entrando");
+		
 		try {
-			return Files.readAllBytes(this.local.resolve(nome));
+			if(Files.readAllBytes(this.local.resolve(nome)) != null) {
+				return Files.readAllBytes(this.local.resolve(nome));
+			} else {
+				return null;
+			}
 		} catch (IOException e) {
-			System.err.println("erro " + e);
-			throw new RuntimeException("Erro lendo a foto", e);
+			
+			throw new NoSuchFileException("Foto na encontrada! Id: ");
 		}
 	}
 	

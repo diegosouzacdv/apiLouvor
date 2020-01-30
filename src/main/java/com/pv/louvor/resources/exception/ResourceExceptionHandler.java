@@ -1,5 +1,7 @@
 package com.pv.louvor.resources.exception;
 
+import java.nio.file.NoSuchFileException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -83,5 +85,11 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<StandardError> multiPart(MultipartException e, HttpServletRequest request) {
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_ACCEPTABLE.value(), "Arquivo não aceitado",e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(err);
+	}
+	
+	@ExceptionHandler(NoSuchFileException.class)
+	public ResponseEntity<StandardError> noFile(NoSuchFileException e, HttpServletRequest request) {
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.CONTINUE.value(), "Arquivo não achado",e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.CONTINUE).body(err);
 	}
 }

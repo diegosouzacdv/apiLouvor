@@ -22,10 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioDTO;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
+import com.pv.louvor.model.dto.UsuarioNovasFuncoesDTO;
+import com.pv.louvor.repositories.FuncaoRepository;
 import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.services.UsuarioService;
 
@@ -39,7 +42,16 @@ public class UsuarioResource {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@Autowired
+	private FuncaoRepository funcaoRepository;
+	
+
+	@GetMapping("/funcoes/all")
+	public ResponseEntity<List<Funcao>> findTodasFuncoes() {
+		List<Funcao> obj = funcaoRepository.findAll();
+		return ResponseEntity.ok().body(obj);
+ 	}
+	
 	@GetMapping("/all")
 	public ResponseEntity<List<UsuarioDTO>> findAll() {
 		List<Usuario> list = service.buscarTodos();
@@ -47,7 +59,6 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(listDto);
  	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/novosusuarios")
 	public ResponseEntity<List<UsuarioDTO>> novosUsuarios() {
 		List<Usuario> list = service.novosUsuarios();
@@ -55,7 +66,6 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(listDto);
  	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/allemail")
 	public ResponseEntity<List<UsuarioEmailDTO>> findAllEmail() {
 		List<Usuario> list = service.buscarTodos();
@@ -65,6 +75,7 @@ public class UsuarioResource {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> find(@PathVariable Integer id) {
+		System.err.println("Entrando no usuario id");
 		Usuario obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
  	}
@@ -108,6 +119,14 @@ public class UsuarioResource {
 		obj.setId(id);   
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping("/funcoes/{id}")
+	public ResponseEntity<Usuario> update(@Valid @RequestBody UsuarioNovasFuncoesDTO obj, @PathVariable Integer id) {
+		Usuario usuario = service.novasFuncoes(obj, id);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(usuario.getId()).toUri();
+		return ResponseEntity.created(uri).body(usuario);
 	} 
 	
 	@PutMapping("/ativar/{id}")
