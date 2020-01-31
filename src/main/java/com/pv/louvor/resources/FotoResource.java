@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.FotoDTO;
+import com.pv.louvor.repositories.UsuarioRepository;
 import com.pv.louvor.storage.FotoStorage;
 import com.pv.louvor.storage.FotoStorageRunnable;
 
@@ -20,13 +22,26 @@ public class FotoResource {
 	
 	@Autowired
 	private FotoStorage fotoStorage;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 			
 	@PostMapping
 	public DeferredResult<FotoDTO> upload(@RequestParam("file") MultipartFile foto) {	
-		
+		Usuario usuario = new Usuario();
 		DeferredResult<FotoDTO> resultado = new DeferredResult<>();
 		
-		Thread thread = new Thread(new FotoStorageRunnable(foto, resultado, fotoStorage));
+		Thread thread = new Thread(new FotoStorageRunnable(foto, resultado, fotoStorage, usuario));
+		thread.start();
+		return resultado;
+	}
+	
+	@PostMapping("/{id}")
+	public DeferredResult<FotoDTO> uploadUseNew(@RequestParam("file") MultipartFile foto, @PathVariable Integer id) {	
+		Usuario usuario = usuarioRepository.findById(id);
+		DeferredResult<FotoDTO> resultado = new DeferredResult<>();
+		
+		Thread thread = new Thread(new FotoStorageRunnable(foto, resultado, fotoStorage, usuario));
 		thread.start();
 		return resultado;
 	}

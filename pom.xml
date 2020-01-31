@@ -12,7 +12,7 @@
 	<groupId>com.diegosouza.api</groupId>
 	<artifactId>ApiLouvor</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-<!-- 	<packaging>war</packaging> -->
+	<packaging>war</packaging>
 	<name>ApiLouvor</name>
 	<description>Api Rest Vendas</description>
 
@@ -29,11 +29,11 @@
 		    <scope>provided</scope>
 		</dependency>
 	
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.apache.maven.plugins</groupId> -->
-<!-- 			<artifactId>maven-war-plugin</artifactId> -->
-<!-- 			<version>3.2.3</version> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-war-plugin</artifactId>
+			<version>3.2.3</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

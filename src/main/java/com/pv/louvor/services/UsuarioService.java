@@ -2,7 +2,6 @@ package com.pv.louvor.services;
 
 import java.awt.image.BufferedImage;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,11 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
-import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Igreja;
 import com.pv.louvor.model.Perfil;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
+import com.pv.louvor.model.dto.UsuarioIgrejaDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
 import com.pv.louvor.model.dto.UsuarioNovasFuncoesDTO;
 import com.pv.louvor.repositories.FuncaoRepository;
@@ -181,10 +180,12 @@ public class UsuarioService {
 		} else {
 			obj.setIgreja(igreja);
 			obj = this.updateDto(objNew, obj);
+			obj.setFuncao(objNew.getFuncao());
 			obj.setAtivo(false);
 			if(igreja.getNome().equalsIgnoreCase("SEDE")) {
 				obj.addPerfil(Perfil.SEDE);
 			}
+			System.err.println(obj.getFuncao());
 			return repo.save(obj);
 		}
 	}
@@ -195,6 +196,15 @@ public class UsuarioService {
 		Usuario user = getUsuarioId(id);
 		if(user != null) {			
 			user.setFuncao(obj.getFuncao());
+		}
+		return repo.save(user);
+	}
+	
+	@Transactional
+	public Usuario usuarioIgreja(UsuarioIgrejaDTO obj, Integer id) {
+		Usuario user = getUsuarioId(id);
+		if(user != null) {			
+			user.setIgreja(obj.getIgreja());
 		}
 		return repo.save(user);
 	}

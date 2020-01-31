@@ -26,6 +26,7 @@ import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Usuario;
 import com.pv.louvor.model.dto.UsuarioDTO;
 import com.pv.louvor.model.dto.UsuarioEmailDTO;
+import com.pv.louvor.model.dto.UsuarioIgrejaDTO;
 import com.pv.louvor.model.dto.UsuarioNewDTO;
 import com.pv.louvor.model.dto.UsuarioNovasFuncoesDTO;
 import com.pv.louvor.repositories.FuncaoRepository;
@@ -82,7 +83,7 @@ public class UsuarioResource {
 	
 	@GetMapping("/email")
 	public ResponseEntity<Usuario> findByEmail(@RequestParam(value="value") String email) {
-		Usuario obj = service.findByEmail(email);
+		Usuario obj = service.findByEmail(email);	
 		return ResponseEntity.ok().body(obj);
  	}
 	
@@ -107,6 +108,7 @@ public class UsuarioResource {
 	
 	@PutMapping
 	public ResponseEntity<Usuario> updateCadastro(@Valid @RequestBody UsuarioNewDTO objDTO) {
+		System.err.println(objDTO.getFuncao());
 		Usuario obj = service.updateRetornUser(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -122,8 +124,16 @@ public class UsuarioResource {
 	}
 	
 	@PutMapping("/funcoes/{id}")
-	public ResponseEntity<Usuario> update(@Valid @RequestBody UsuarioNovasFuncoesDTO obj, @PathVariable Integer id) {
+	public ResponseEntity<Usuario> updateUsuarioFuncao(@Valid @RequestBody UsuarioNovasFuncoesDTO obj, @PathVariable Integer id) {
 		Usuario usuario = service.novasFuncoes(obj, id);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(usuario.getId()).toUri();
+		return ResponseEntity.created(uri).body(usuario);
+	} 
+	
+	@PutMapping("/igreja/{id}")
+	public ResponseEntity<Usuario> updateUsuarioIgreja(@Valid @RequestBody UsuarioIgrejaDTO obj, @PathVariable Integer id) {
+		Usuario usuario = service.usuarioIgreja(obj, id);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(usuario.getId()).toUri();
 		return ResponseEntity.created(uri).body(usuario);

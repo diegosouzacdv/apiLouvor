@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pv.louvor.model.Musica;
+import com.pv.louvor.model.Usuario;
 import com.pv.louvor.security.UserSS;
 import com.pv.louvor.services.exceptions.NoSuchFileException;
 import com.pv.louvor.storage.FotoStorage;
@@ -49,12 +50,16 @@ public class FotoStorageLocal implements FotoStorage{
 	}
 
 	@Override
-	public String salvarTemporariamente(MultipartFile file,  UserSS user) {
+	public String salvarTemporariamente(MultipartFile file,  UserSS user, Usuario usuario) {
 		criarPastas();
 		String novoNome = null;
 		if(file != null) {
 			MultipartFile arquivo = file;
-			novoNome = user.getUsername() +"_"+ user.getId()+".jpg";
+			if (user != null) {
+				novoNome = user.getUsername() +"_"+ user.getId()+".jpg";
+			} else if (usuario != null) {
+				novoNome = usuario.getEmail() +"_"+ usuario.getId()+".jpg";
+			}
 			try {
 				arquivo.transferTo(new File(this.local.toAbsolutePath().toString() + getDefault().getSeparator() + novoNome));
 			} catch (IllegalStateException | IOException e) {

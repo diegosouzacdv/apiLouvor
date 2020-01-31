@@ -1,7 +1,9 @@
 package com.pv.louvor.model.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.pv.louvor.model.Funcao;
 import com.pv.louvor.model.Usuario;
 
 public class UsuarioNewDTO implements Serializable{
@@ -20,6 +22,8 @@ public class UsuarioNewDTO implements Serializable{
 	
 	private int igreja;
 	
+	private List<Funcao> funcao;
+	
 	
 	public UsuarioNewDTO() {
 	}
@@ -30,6 +34,7 @@ public class UsuarioNewDTO implements Serializable{
 		telefone = obj.getPessoa().getTelefone();
 		email = obj.getEmail();
 		senha = obj.getSenha();
+		funcao = obj.getFuncao();
 	}
 	
 	public int getId() {
@@ -80,6 +85,14 @@ public class UsuarioNewDTO implements Serializable{
 		this.igreja = igreja;
 	}
 	
+	public List<Funcao> getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(List<Funcao> funcao) {
+		this.funcao = funcao;
+	}
+
 	@Override
 	public String toString() {
 		return "UsuarioNewDTO [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", email=" + email + ", senha="

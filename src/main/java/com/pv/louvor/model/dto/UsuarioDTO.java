@@ -16,6 +16,7 @@ public class UsuarioDTO implements Serializable{
 	private boolean ativo;
 	private String telefone;
 	private Set<Perfil> perfil;
+	private String email;
 	
 	public UsuarioDTO() {
 		
@@ -27,6 +28,7 @@ public class UsuarioDTO implements Serializable{
 		ativo = obj.isAtivo();
 		telefone = obj.getPessoa().getTelefone();
 		perfil = obj.getPerfis();
+		email = obj.getEmail();
 	}
 	
 	public boolean isAtivo() {
@@ -70,5 +72,13 @@ public class UsuarioDTO implements Serializable{
 
 	public void setPerfil(Set<Perfil> perfil) {
 		this.perfil = perfil;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}	
 }
