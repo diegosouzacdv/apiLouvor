@@ -120,6 +120,7 @@ public class UsuarioResource {
 	public ResponseEntity<Usuario> update(@Valid @RequestBody Usuario obj, @PathVariable Integer id) {
 		obj.setId(id);   
 		obj = service.update(obj);
+		System.err.println(obj.getPerfis());
 		return ResponseEntity.noContent().build();
 	}
 	

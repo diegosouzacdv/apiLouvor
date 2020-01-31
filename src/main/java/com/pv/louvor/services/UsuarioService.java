@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -112,9 +113,14 @@ public class UsuarioService {
 			obj.setSenha(aux.getSenha());
 		}
 		this.isExistePorId(obj);
-		find(obj.getId());
-		if (aux.getPerfis().size() > 1) {
-			obj.addPerfil(Perfil.ADMIN);
+		find(obj.getId()); 
+
+		for (Perfil perfis : aux.getPerfis()) {
+			if (perfis == Perfil.ADMIN) {
+				obj.addPerfil(Perfil.ADMIN);
+			} else if(perfis == Perfil.SEDE) {
+				obj.addPerfil(Perfil.SEDE);
+			}
 		}
 		return repo.save(obj);
 	}
@@ -138,10 +144,8 @@ public class UsuarioService {
 		Usuario obj = getUsuarioId(id);
 		if(obj.isDisponivel()) {
 			obj.setDisponivel(false);
-		System.err.println("Não disponivel ");
 		} else {
 			obj.setDisponivel(true);
-		System.err.println("disponivel para o repertorio");
 		}
 		repo.save(obj); 
 	}
@@ -185,14 +189,12 @@ public class UsuarioService {
 			if(igreja.getNome().equalsIgnoreCase("SEDE")) {
 				obj.addPerfil(Perfil.SEDE);
 			}
-			System.err.println(obj.getFuncao());
 			return repo.save(obj);
 		}
 	}
 	
 	@Transactional
 	public Usuario novasFuncoes(UsuarioNovasFuncoesDTO obj, Integer id) {
-		System.err.println(obj.getFuncao());
 		Usuario user = getUsuarioId(id);
 		if(user != null) {			
 			user.setFuncao(obj.getFuncao());
