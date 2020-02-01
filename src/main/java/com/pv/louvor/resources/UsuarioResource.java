@@ -76,7 +76,6 @@ public class UsuarioResource {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Usuario> find(@PathVariable Integer id) {
-		System.err.println("Entrando no usuario id");
 		Usuario obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
  	}
@@ -112,6 +111,7 @@ public class UsuarioResource {
 		Usuario obj = service.updateRetornUser(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		System.err.println(obj);
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
@@ -120,7 +120,7 @@ public class UsuarioResource {
 	public ResponseEntity<Usuario> update(@Valid @RequestBody Usuario obj, @PathVariable Integer id) {
 		obj.setId(id);   
 		obj = service.update(obj);
-		System.err.println(obj.getPerfis());
+		System.err.println(obj);
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -155,6 +155,7 @@ public class UsuarioResource {
 	@PutMapping("/perfil/{perfil}/{id}")
 	public ResponseEntity<Usuario> updatePerfil(@PathVariable int perfil, @PathVariable Integer id) {
 		Usuario usuario = service.perfisADD(id, perfil);
+		System.err.println(usuario);
 		service.update(usuario);
 		return ResponseEntity.noContent().build();
 	}

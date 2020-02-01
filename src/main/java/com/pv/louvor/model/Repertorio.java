@@ -172,19 +172,4 @@ public class Repertorio implements Serializable{
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Repertorio [id=" + id + ", data=" + data + ", dataSemana=" + dataSemana + ", equipeDoDia=" + equipeDoDia
-				+ ", musicasRepertorio=" + musicasRepertorio + ", criador=" + criador + ", ativo=" + ativo + ", igreja="
-				+ igreja + ", observacao=" + observacao + ", getId()=" + getId() + ", getData()=" + getData()
-				+ ", getEquipeDoDia()=" + getEquipeDoDia() + ", getMusicasRepertorio()=" + getMusicasRepertorio()
-				+ ", getCriador()=" + getCriador() + ", isAtivo()=" + isAtivo() + ", getTotalMusicas()="
-				+ getTotalMusicas() + ", getDataSemana()=" + getDataSemana() + ", getIgreja()=" + getIgreja()
-				+ ", getObservacao()=" + getObservacao() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
-				+ ", toString()=" + super.toString() + "]";
-	}
-
-
-
-
 }

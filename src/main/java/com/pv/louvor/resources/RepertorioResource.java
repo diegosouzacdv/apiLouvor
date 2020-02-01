@@ -88,12 +88,10 @@ public class RepertorioResource {
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{id}")
-	public ResponseEntity<Repertorio> update(@RequestBody Repertorio obj, @PathVariable Integer id) {
+	public ResponseEntity<String> update(@RequestBody Repertorio obj, @PathVariable Integer id) {
 		obj.setId(id);
-		obj = service.update(obj, id);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+		service.update(obj, id);
+		return ResponseEntity.ok("Atualizado");
 	}
 	
 	

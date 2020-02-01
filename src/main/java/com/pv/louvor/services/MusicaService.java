@@ -51,6 +51,9 @@ public class MusicaService {
 		obj.setIgreja(igreja);
 		obj = isExist(obj);
 		obj.setAtivo(true);
+		if(igreja.getNome().equals("Sede")) {
+			obj.setSede(true);
+		}
 		return repo.save(obj);
 	}
 	
@@ -62,6 +65,7 @@ public class MusicaService {
 	}
 
 	public Musica update(Musica obj) {
+		System.err.println(obj);
 		obj.setAtivo(true);
 		return repo.save(obj);
 	}

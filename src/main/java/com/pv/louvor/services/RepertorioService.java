@@ -173,19 +173,18 @@ public class RepertorioService {
 	 * @return
 	 */
 	@Transactional
-	public Repertorio update(Repertorio obj, Integer id) {
+	public void update(Repertorio obj, Integer id) {
 		Repertorio rep = repo.getOne(id);
-		
-		rep.getMusicasRepertorio().clear();
-		musicaRepertorioRepository.save(rep.getMusicasRepertorio());
+		musicaRepertorioRepository.deleteInBatch(rep.getMusicasRepertorio());
+		rep.setMusicasRepertorio(obj.getMusicasRepertorio());
+		rep = obj;
+		repo.save(rep);
 		
 		for (MusicaRepertorio mr : obj.getMusicasRepertorio()) {
 			mr.setMusica(musicaRepository.findOne(mr.getMusica().getId()));
 			mr.setRepertorio(obj);
 		}
 		musicaRepertorioRepository.save(obj.getMusicasRepertorio());
-		rep = obj;
-		return repo.save(rep);
 	}
 	
 	public Repertorio getRepertorio(int id) {
@@ -274,6 +273,7 @@ public class RepertorioService {
 	 */
 	public List<Usuario> getFuncao(Integer id) {
 		Igreja igreja = getIgreja();
+		System.err.println(igreja.getNome());
 		int parseInt = Integer.valueOf(id);
 		Funcao funcao = funcaoRepository.findOne(parseInt);
 		List<Usuario> listDto = repo.funcoes(funcao, igreja);

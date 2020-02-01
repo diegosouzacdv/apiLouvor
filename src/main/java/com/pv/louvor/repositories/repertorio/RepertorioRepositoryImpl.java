@@ -50,7 +50,6 @@ public class RepertorioRepositoryImpl implements RepertorioRepositoryQuery{
 	private Predicate[] criarRestricoes(Join<Usuario, Funcao> join, CriteriaBuilder builder, Funcao funcao, Root<Usuario> root, Igreja igreja) {
 		List<Predicate> predicates = new ArrayList<>();
 		predicates.add(builder.equal(join.get(Funcao_.id), funcao.getId()));
-		predicates.add(builder.equal(root.get(Usuario_.disponivel), true));
 		predicates.add(builder.equal(root.get(Usuario_.igreja).get(Igreja_.id), igreja.getId()));
 		return predicates.toArray(new Predicate[predicates.size()]);
 	}	

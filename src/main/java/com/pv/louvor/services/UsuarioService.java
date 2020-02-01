@@ -301,6 +301,9 @@ public class UsuarioService {
 			usuario.deletePerfil(Perfil.ADMIN);
 			usuario.addPerfil(Perfil.USUARIO);
 		}
+		if (usuario.getIgreja().getNome().equalsIgnoreCase("SEDE")) {
+			usuario.addPerfil(Perfil.SEDE);
+		}
 		return usuario;
 	}
 	
