@@ -7,8 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pv.louvor.model.Usuario;
+import com.pv.louvor.model.dto.UsuarioMudaSenha;
 import com.pv.louvor.model.dto.UsuarioRecuperarSenha;
 import com.pv.louvor.repositories.UsuarioRepository;
+import com.pv.louvor.security.UserSS;
 import com.pv.louvor.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -26,8 +28,30 @@ public class AuthService {
 	private Random rand = new Random();
 	
 	
-	public void sendNewPassword(UsuarioRecuperarSenha objDto) {
+	public String sendNewPassword(UsuarioRecuperarSenha objDto) {
 		Usuario usuario = usuarioRepository.findByEmail(objDto.getEmail());
+	
+		if( usuario == null) {
+			throw new ObjectNotFoundException("E-mail não encontrado!");
+		}
+		String novaSenha = newPassword();
+		
+		if(usuario.getPessoa().getTelefone().equalsIgnoreCase(objDto.getTelefone())) {
+			usuario.setSenha(null);
+			usuario.setSenha(pe.encode(novaSenha));
+			usuarioRepository.save(usuario);
+		} else {
+			throw new ObjectNotFoundException("Telefone é diferente do cadastro deste usuário " + usuario.getPessoa().getNome());
+		}
+		return novaSenha;
+				
+		//emailService.sendNewPasswordEmail(usuario, newPass);
+	}
+	
+	public void novaPassword(UsuarioMudaSenha objDto) {
+		
+		UserSS user = this.getUsuario();
+		Usuario usuario = usuarioRepository.findById(user.getId());
 		if( usuario == null) {
 			throw new ObjectNotFoundException("E-mail não encontrado!");
 		}
@@ -37,6 +61,11 @@ public class AuthService {
 		usuarioRepository.save(usuario);
 		//emailService.sendNewPasswordEmail(usuario, newPass);
 	}
+	
+	public UserSS getUsuario( ) {
+		return UserService.authenticated();
+	}
+	
 
 	private String newPassword() {
 		char[] vet = new char[10];
