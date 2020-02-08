@@ -23,4 +23,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
 	List<Usuario> findByAtivoAndIgrejaId(boolean ativo, Integer id);
 
+	List<Usuario> findByAtivoAndIgrejaIdOrderByIdDesc(boolean b, Integer id);
+
 }

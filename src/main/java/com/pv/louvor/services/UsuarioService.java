@@ -66,7 +66,7 @@ public class UsuarioService {
 	public List<Usuario> buscarTodos() {
 		Igreja igreja = getIgreja();
 		if(igreja != null) {
-		List<Usuario> obj = repo.findByAtivoAndIgrejaId(true, igreja.getId());
+		List<Usuario> obj = repo.findByAtivoAndIgrejaIdOrderByIdDesc(true, igreja.getId());
 		return obj;
 		} else {			
 			throw new ObjectNotFoundException("Igreja não existe!" + 
